@@ -1,5 +1,5 @@
-import { MapPin, Globe } from 'lucide-react';
-import { WorldMap } from './ui/WorldMap';
+import { MapPin, Globe } from "lucide-react";
+import { WorldMap } from "./ui/WorldMap";
 
 const mapDots = [
   {
@@ -32,48 +32,119 @@ const mapDots = [
   },
 ];
 
+const regions = [
+  "India",
+  "United Arab Emirates",
+  "Saudi Arabia",
+  "Qatar",
+  "Kuwait",
+  "United Kingdom",
+  "United States",
+  "Singapore",
+];
+
 const GlobalCoverage = () => {
   return (
-    <section id="global" className="py-24 bg-white overflow-hidden">
-      <div className="container mx-auto px-4 md:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+    <section
+      id="global"
+      className="relative overflow-hidden py-28
+      bg-gradient-to-br from-indigo-50 via-white to-violet-50"
+    >
+      {/* Ambient background glows */}
+      <div className="pointer-events-none absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-indigo-300/20 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-violet-300/20 blur-3xl" />
+
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-14 items-center">
           
-          {/* Left Column: Content */}
-          <div className="text-left relative z-10">
+          {/* LEFT CONTENT */}
+          <div className="text-left max-w-xl">
             
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 tracking-tight leading-tight">
-              Built for <span className="text-brand-600">freelancers</span> <br /> working across borders.
+            {/* Status badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-6
+              bg-emerald-50 text-emerald-700
+              border border-emerald-100 rounded-full text-sm font-medium">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              Live coverage expanding globally
+            </div>
+
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-slate-900 tracking-tight leading-tight">
+              Built for{" "}
+              <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
+                freelancers
+              </span>
+              <br />
+              working across borders.
             </h2>
-            <p className="text-slate-600 text-lg mb-10 leading-relaxed max-w-xl">
-              We are expanding rapidly to ensure you can work with clients anywhere. <span className="text-slate-900 font-medium">Start local, go global.</span>
+
+            <p className="text-slate-600 text-lg mb-10 leading-relaxed">
+              We are expanding rapidly to ensure you can work with clients
+              anywhere in the world.{" "}
+              <span className="text-slate-900 font-medium">
+                Start local, go global.
+              </span>
             </p>
 
+            {/* Regions */}
             <div className="flex flex-wrap gap-3 mb-10">
-              {['India', 'United Arab Emirates', 'Saudi Arabia', 'Qatar', 'Kuwait', 'United Kingdom', 'United States', 'Singapore'].map((region, idx) => (
-                 <div key={idx} className="flex items-center gap-2 px-4 py-2 bg-slate-50 rounded-full border border-slate-100 hover:border-brand-200 hover:bg-white hover:text-brand-700 transition-colors cursor-default group">
-                   <MapPin size={14} className="text-slate-400 group-hover:text-brand-500 transition-colors" />
-                   <span className="font-medium text-sm text-slate-700 group-hover:text-brand-900">{region}</span>
-                 </div>
+              {regions.map((region, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-2 px-4 py-2
+                  bg-white/70 backdrop-blur rounded-full
+                  border border-slate-200
+                  hover:-translate-y-0.5 hover:shadow-md
+                  hover:border-indigo-300 transition-all duration-200
+                  cursor-default group"
+                >
+                  <MapPin
+                    size={14}
+                    className="text-slate-400 group-hover:text-indigo-500 transition-colors"
+                  />
+                  <span className="font-medium text-sm text-slate-700 group-hover:text-slate-900">
+                    {region}
+                  </span>
+                </div>
               ))}
-              <div className="flex items-center gap-2 px-4 py-2 bg-brand-50 text-brand-700 rounded-full border border-brand-100 font-semibold text-sm">
-                <Globe size={14} /> + More
+
+              <div className="flex items-center gap-2 px-4 py-2
+                bg-indigo-50 text-indigo-700
+                rounded-full border border-indigo-100
+                font-semibold text-sm">
+                <Globe size={14} />
+                + More
               </div>
             </div>
-            
-            <div className="flex items-center gap-6 text-sm font-semibold text-slate-900 opacity-60">
-               <span className="flex items-center gap-2">India <span className="text-slate-300">→</span></span>
-               <span className="flex items-center gap-2">GCC <span className="text-slate-300">→</span></span>
-               <span className="text-brand-600 opacity-100">Global</span>
+
+            {/* Expansion path */}
+            <div className="flex items-center gap-4 text-sm font-semibold text-slate-700">
+              <span className="px-3 py-1 rounded-full bg-slate-100">
+                India
+              </span>
+              <span className="text-slate-400">→</span>
+              <span className="px-3 py-1 rounded-full bg-slate-100">
+                GCC
+              </span>
+              <span className="text-slate-400">→</span>
+              <span className="px-3 py-1 rounded-full bg-indigo-100 text-indigo-700">
+                Global
+              </span>
             </div>
           </div>
 
-          {/* Right Column: Animated World Map */}
+          {/* RIGHT: WORLD MAP */}
           <div className="relative w-full flex items-center justify-center lg:justify-end mt-12 lg:mt-0">
-             <div className="w-full sm:w-[110%] lg:w-[140%] lg:-mr-[20%] p-4 sm:p-8 bg-slate-50/50 rounded-3xl border border-slate-100 shadow-sm backdrop-blur-sm">
-                <WorldMap dots={mapDots} lineColor="#4f46e5" />
-             </div>
+            <div
+              className="w-full lg:w-[140%] lg:-mr-[20%]
+              p-6 sm:p-10
+              bg-white/60 backdrop-blur-xl
+              rounded-[2rem]
+              border border-slate-200
+              animate-[float_6s_ease-in-out_infinite]"
+            >
+              <WorldMap dots={mapDots} lineColor="#4f46e5" />
+            </div>
           </div>
-
         </div>
       </div>
     </section>

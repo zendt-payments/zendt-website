@@ -32,11 +32,11 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 pt-2 justify-center lg:justify-start">
             <button 
               onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-brand-600 text-white text-lg font-semibold px-8 py-4 rounded-full shadow-xl shadow-brand-600/30 hover:bg-brand-700 hover:shadow-brand-600/50 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2 group"
+              className="bg-brand-600 text-white text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4 rounded-full shadow-xl shadow-brand-600/30 hover:bg-brand-700 hover:shadow-brand-600/50 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2 group"
             >
               Get Started <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </button>
-            <button className="bg-white text-slate-700 border border-slate-200 text-lg font-semibold px-8 py-4 rounded-full hover:bg-slate-50 hover:border-slate-300 transition-all duration-300 flex items-center justify-center gap-2">
+            <button className="bg-white text-slate-700 border border-slate-200 text-base md:text-lg font-semibold px-6 md:px-8 py-3 md:py-4 rounded-full hover:bg-slate-50 hover:border-slate-300 transition-all duration-300 flex items-center justify-center gap-2">
               <Globe2 size={20} className="text-brand-500" /> View Coverage
             </button>
           </div>

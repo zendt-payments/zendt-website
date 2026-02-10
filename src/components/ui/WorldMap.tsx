@@ -79,23 +79,23 @@ export function WorldMap({
               <defs>
                 <linearGradient id={`grad-${i}`} x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor={lineColor} stopOpacity="0" />
-                  <stop offset="50%" stopColor={lineColor} stopOpacity="0.5" />
+                  <stop offset="50%" stopColor={lineColor} stopOpacity="0.7" />
                   <stop offset="100%" stopColor={lineColor} stopOpacity="0" />
                 </linearGradient>
               </defs>
               <motion.path
                 d={path}
                 stroke={lineColor}
-                strokeWidth="1.5"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 0.3 }}
+                animate={{ pathLength: 1, opacity: 0.5 }}
                 transition={{ duration: 1.5, delay: i * 0.2 }}
               />
               <motion.path
                 d={path}
                 stroke={`url(#grad-${i})`}
-                strokeWidth="3"
+                strokeWidth="4.5"
                 strokeLinecap="round"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: [0, 1], opacity: [0, 1, 0] }}
@@ -118,26 +118,26 @@ export function WorldMap({
           return (
             <g key={`nodes-${i}`}>
               {/* Hub Pulsing Effect */}
-              <circle cx={start.x} cy={start.y} r="8" fill={lineColor} className="opacity-30" />
+              <circle cx={start.x} cy={start.y} r="12" fill={lineColor} className="opacity-30" />
               <motion.circle
                 cx={start.x}
                 cy={start.y}
-                r="8"
+                r="12"
                 stroke={lineColor}
-                strokeWidth="3"
+                strokeWidth="4"
                 initial={{ scale: 1, opacity: 0.8 }}
                 animate={{ scale: 3, opacity: 0 }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
               />
               
               {/* Secondary Node Pulsing */}
-              <circle cx={end.x} cy={end.y} r="5" fill={lineColor} className="opacity-30" />
+              <circle cx={end.x} cy={end.y} r="8" fill={lineColor} className="opacity-30" />
               <motion.circle
                 cx={end.x}
                 cy={end.y}
-                r="5"
+                r="8"
                 stroke={lineColor}
-                strokeWidth="2"
+                strokeWidth="3"
                 initial={{ scale: 1, opacity: 0.6 }}
                 animate={{ scale: 4, opacity: 0 }}
                 transition={{ duration: 2, repeat: Infinity, delay: 0.5, ease: "easeOut" }}
