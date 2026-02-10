@@ -68,7 +68,7 @@
     @apply backdrop-blur-2xl shadow-[0_8px_40px_0_rgba(148,163,184,0.05)];
     /* Infused with a violet brand tint */
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(246, 240, 255, 0.4) 50%, rgba(237, 217, 255, 0.3) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    
   }
 
   .container {
