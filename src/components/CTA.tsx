@@ -52,7 +52,7 @@ const CTA = () => {
               transition={{ delay: 0.4 }}
               className="text-lg md:text-xl text-slate-600 mb-14 max-w-2xl mx-auto leading-relaxed font-light"
             >
-              Join 10,000+ freelancers building their global business on Zendt. <br className="hidden md:block" /> Secure. Transparent. Borderless.
+              Building the global business of the future on Zendt. <br className="hidden md:block" /> Secure. Transparent. Borderless.
             </motion.p>
 
             <motion.div 

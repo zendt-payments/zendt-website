@@ -67,14 +67,6 @@ const Mission = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-20 flex flex-col items-center text-center"
         >
-           <div className="flex -space-x-3 mb-6">
-              {[1,2,3,4].map(i => (
-                <div key={i} className="w-10 h-10 rounded-full border-2 border-slate-950 bg-slate-800 flex items-center justify-center overflow-hidden">
-                   <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" />
-                </div>
-              ))}
-              <div className="w-10 h-10 rounded-full border-2 border-slate-950 bg-brand-600 flex items-center justify-center text-xs font-bold">+10k</div>
-           </div>
            <p className="text-slate-500 text-sm font-medium flex items-center gap-2">
              <Sparkles size={14} className="text-brand-400" />
              Trusted by the next generation of global builders

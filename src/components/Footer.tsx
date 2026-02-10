@@ -17,14 +17,26 @@ const Footer = () => {
               The financial operating system for global citizens. Building the future of borderless work.
             </p>
             <div className="flex gap-4 pt-2">
-               {[Twitter, Linkedin, Instagram].map((Icon, i) => (
-                 <a key={i} href="#" className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-brand-600 hover:text-white transition-all duration-300">
-                   <Icon size={18} />
+               {[
+                 { 
+                   Icon: (props: any) => (
+                     <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+                       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                     </svg>
+                   ), 
+                   url: 'https://x.com/zendtpayments' 
+                 },
+                 { Icon: Linkedin, url: 'https://www.linkedin.com/company/zendtpayments/' },
+                 { Icon: Instagram, url: 'https://www.instagram.com/zendt.hq/' }
+               ].map(({ Icon, url }, i) => (
+                 <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-brand-600 hover:text-white transition-all duration-300 p-2.5">
+                   <Icon className="w-full h-full" />
                  </a>
                ))}
             </div>
           </div>
           
+          {/* 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 lg:col-span-3">
             <div>
               <h4 className="font-semibold text-slate-900 mb-6">Product</h4>
@@ -53,13 +65,11 @@ const Footer = () => {
               </ul>
             </div>
           </div>
+          */}
         </div>
         
         <div className="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-400">
           <p>© {new Date().getFullYear()} Zendt Financial Inc. All rights reserved.</p>
-          <div className="flex gap-8">
-            <span>Designed with precision.</span>
-          </div>
         </div>
       </div>
     </footer>

@@ -16,7 +16,7 @@ const Navbar = () => {
   return (
     <>
       <nav className={`fixed top-4 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'px-4 md:px-8' : 'px-4 md:px-12'}`}>
-        <div className={`mx-auto max-w-7xl rounded-2xl transition-all duration-300 ${scrolled ? 'liquid-glass shadow-lg py-2.5 pl-4 pr-2.5' : 'bg-transparent py-5'}`}>
+        <div className={`mx-auto max-w-7xl rounded-2xl transition-all duration-300 ${scrolled ? 'liquid-glass py-2.5 pl-4 pr-2.5' : 'bg-transparent py-5'}`}>
             <div className="flex items-center justify-between">
                 
                 {/* Logo */}
@@ -47,7 +47,10 @@ const Navbar = () => {
                 <a href="/login" className={`text-sm font-semibold px-4 py-2 rounded-full transition-colors ${scrolled ? 'text-slate-600 hover:text-brand-700 hover:bg-black/5' : 'text-slate-700 hover:bg-white/50'}`}>
                     Log in
                 </a>
-                <button className="bg-slate-900 text-white text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-brand-600 transition-all duration-300 shadow-lg shadow-slate-900/20 hover:shadow-brand-600/30 hover:-translate-y-0.5 active:scale-95">
+                <button 
+                  onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="bg-slate-900 text-white text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-brand-600 transition-all duration-300 shadow-lg shadow-slate-900/20 hover:shadow-brand-600/30 hover:-translate-y-0.5 active:scale-95"
+                >
                     Join Waitlist
                 </button>
                 </div>
@@ -74,7 +77,12 @@ const Navbar = () => {
                 ))}
                 <div className="flex flex-col gap-3 mt-4">
                     <a href="/login" className="w-full text-center py-3 font-semibold text-slate-600 bg-slate-50 rounded-xl">Log in</a>
-                    <button className="w-full py-3 bg-brand-600 text-white font-bold rounded-xl shadow-lg shadow-brand-600/30">Join Waitlist</button>
+                    <button 
+                      onClick={() => { setMobileMenuOpen(false); document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }); }}
+                      className="w-full py-3 bg-brand-600 text-white font-bold rounded-xl shadow-lg shadow-brand-600/30"
+                    >
+                      Join Waitlist
+                    </button>
                 </div>
             </div>
         </div>

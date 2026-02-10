@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Globe2, Briefcase, CreditCard, Building2, Shield, Sparkles } from 'lucide-react';
+import { Globe2, Briefcase, CreditCard, Building2, Sparkles } from 'lucide-react';
 
 const capabilities = [
   {
@@ -69,16 +69,6 @@ const Capabilities = () => {
               </span>
             </motion.h2>
           </div>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-          >
-            <a href="#" className="inline-flex items-center gap-2 font-bold text-slate-900 hover:text-brand-600 transition-colors group px-6 py-3 bg-slate-50 rounded-full border border-slate-100">
-              Explore Enterprise Solutions <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-            </a>
-          </motion.div>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
@@ -112,43 +102,11 @@ const Capabilities = () => {
                   {cap.description}
                 </p>
 
-                <div className="mt-auto w-full hidden md:block">
-                  <div className="h-[1px] w-full bg-slate-100 mb-6 group-hover:bg-brand-100 transition-colors" />
-                  <a href="#" className="flex items-center justify-between font-bold text-sm text-slate-900 hover:text-brand-600 transition-colors w-full">
-                    <span>Get details</span>
-                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                  </a>
-                </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Global Security Highlight */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="mt-12 p-10 rounded-[2.5rem] bg-slate-900 text-white flex flex-col lg:flex-row items-center justify-between gap-12 overflow-hidden relative shadow-2xl"
-        >
-          {/* Accent Blobs */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-600 rounded-full blur-[80px] opacity-20 -mr-20 -mt-20" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600 rounded-full blur-[80px] opacity-20 -ml-20 -mb-20" />
-
-          <div className="flex items-center gap-6 relative z-10 max-w-2xl">
-            <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-brand-400">
-              <Shield size={32} />
-            </div>
-            <div>
-              <h4 className="text-2xl font-bold mb-2">Military-grade protection for your global funds.</h4>
-              <p className="text-slate-400">All accounts are fully regulated and protected by deep encryption and 2FA security.</p>
-            </div>
-          </div>
-          <button className="whitespace-nowrap bg-white text-slate-900 px-10 py-5 rounded-2xl font-bold hover:bg-brand-50 transition-all hover:-translate-y-1 relative z-10 shadow-xl active:scale-95">
-            Security Compliance Center
-          </button>
-        </motion.div>
       </div>
     </section>
   );

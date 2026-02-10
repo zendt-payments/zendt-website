@@ -40,10 +40,6 @@ const GlobalCoverage = () => {
           
           {/* Left Column: Content */}
           <div className="text-left relative z-10">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white border border-slate-200 text-green-700 text-sm font-semibold mb-8 shadow-sm">
-              <span className="flex h-2 w-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
-              Live in 30+ Countries
-            </div>
             
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 tracking-tight leading-tight">
               Built for <span className="text-brand-600">freelancers</span> <br /> working across borders.
@@ -53,7 +49,7 @@ const GlobalCoverage = () => {
             </p>
 
             <div className="flex flex-wrap gap-3 mb-10">
-              {['United States', 'United Kingdom', 'European Union', 'India', 'UAE', 'Canada', 'Australia', 'Singapore'].map((region, idx) => (
+              {['India', 'United Arab Emirates', 'Saudi Arabia', 'Qatar', 'Kuwait', 'United Kingdom', 'United States', 'Singapore'].map((region, idx) => (
                  <div key={idx} className="flex items-center gap-2 px-4 py-2 bg-slate-50 rounded-full border border-slate-100 hover:border-brand-200 hover:bg-white hover:text-brand-700 transition-colors cursor-default group">
                    <MapPin size={14} className="text-slate-400 group-hover:text-brand-500 transition-colors" />
                    <span className="font-medium text-sm text-slate-700 group-hover:text-brand-900">{region}</span>
