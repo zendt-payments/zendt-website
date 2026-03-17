@@ -62,7 +62,7 @@ const Footer = () => {
           <div className="lg:col-span-2 space-y-5 md:space-y-6 flex flex-col items-center md:items-start text-center md:text-left">
             <a href="/" className="flex items-center gap-2.5">
               <div className="w-10 h-10 rounded-xl overflow-hidden shadow-md">
-                <img src="/logo-filled.png" alt="Zendt Logo" className="w-full h-full object-cover" />
+                <img src="/logo-filled.png" alt="Zendt Payments Logo - Global Freelancer Financial OS" className="w-full h-full object-cover" />
               </div>
               <span className="font-bold text-xl tracking-tight text-white">Zendt</span>
             </a>

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Shield, Globe, Zap, HeartHandshake, CheckCircle, ArrowRight, MapPin } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import SEO from '@/components/SEO';
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -23,6 +24,11 @@ const AboutPage = () => {
 
   return (
     <div className="bg-white min-h-screen text-slate-900">
+      <SEO 
+        title="Our Story | Zendt Payments" 
+        description="We're on a mission to make borders irrelevant. Zendt is the modern financial OS built by a freelancer, for freelancers."
+      />
+
 
       {/* ── 1. HERO ─────────────────────────────────────────────── */}
       <section className="pt-40 pb-20 md:pt-52 md:pb-28 border-b border-slate-200 relative overflow-hidden">

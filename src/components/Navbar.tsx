@@ -62,7 +62,7 @@ const Navbar = () => {
                   className="flex items-center gap-2.5 group"
                 >
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md">
-                    <img src="/logo-filled.png" alt="Zendt Logo" className="w-full h-full object-cover" />
+                    <img src="/logo-filled.png" alt="Zendt Payments Logo - Global Freelancer Financial OS" className="w-full h-full object-cover" />
                 </div>
                 <span className={`font-bold text-xl tracking-tight transition-colors ${isDarkSection ? 'text-white' : 'text-slate-900'}`}>Zendt Payments</span>
                 </a>

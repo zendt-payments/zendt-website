@@ -13,10 +13,12 @@ import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
 import AboutPage from '@/pages/AboutPage';
 import ScrollToTop from '@/components/ScrollToTop';
+import SEO from '@/components/SEO';
 
 function HomePage() {
   return (
     <>
+      <SEO />
       <Hero />
       <GlobalCoverage />
       <Features />
