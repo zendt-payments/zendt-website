@@ -10,8 +10,8 @@ interface SEOProps {
 }
 
 const SEO = ({ 
-  title = 'Zendt | Global Payments for Freelancers Everywhere', 
-  description = 'Receive international payments, manage multiple currencies, and spend globally without borders. Zendt is the modern financial OS built specifically for creators and freelancers.',
+  title = 'Zendt | The #1 Payment Solution for Freelancers', 
+  description = 'Zendt is the ultimate payment solution for freelancers. Receive international freelancer payments, manage multiple currencies, and spend globally with zero borders.',
   name = 'Zendt Payments',
   type = 'website',
   image = 'https://zendtpayments.com/logo-filled.png',
@@ -22,6 +22,7 @@ const SEO = ({
       {/* Standard metadata tags */}
       <title>{title}</title>
       <meta name='description' content={description} />
+      <meta name='keywords' content="freelancer payments, payment solution for freelancers, international payments, receive funds globally, freelancer business account, freelancer finance" />
       
       {/* OpenGraph tags */}
       <meta property="og:title" content={title} />
