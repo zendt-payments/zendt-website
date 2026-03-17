@@ -107,7 +107,7 @@ const GlobalCoverage = () => {
           transition={{ delay: 0.2 }}
           className="text-slate-400 text-base md:text-lg lg:text-xl max-w-2xl mx-auto mb-10 leading-relaxed px-2"
         >
-          Zendt provides the ultimate payment solution for freelancers. Accept client payments globally and manage multiple currencies with the exact facilities an independent business needs.
+          Zendt provides the ultimate payment solution for freelancers. Accept client payments globally and manage multiple currencies with the exact facilities an independent professional needs.
         </motion.p>
 
         {/* World Map Visualization */}

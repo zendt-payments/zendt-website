@@ -18,7 +18,7 @@ const Hero = () => {
           </h1>
 
           <p className="text-lg md:text-xl text-slate-600 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-            Zendt provides every facility a freelancer needs for international payments. Receive funds globally, manage multiple currencies, and run your freelance business seamlessly.
+            Zendt provides every facility a freelancer needs for international payments. Receive funds globally, manage multiple currencies, and run your freelance career seamlessly.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-2 justify-center lg:justify-start">

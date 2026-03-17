@@ -22,7 +22,7 @@ const SEO = ({
       {/* Standard metadata tags */}
       <title>{title}</title>
       <meta name='description' content={description} />
-      <meta name='keywords' content="freelancer payments, payment solution for freelancers, international payments, receive funds globally, freelancer business account, freelancer finance" />
+      <meta name='keywords' content="freelancer payments, payment solution for freelancers, international payments, receive funds globally, freelancer global account, freelancer finance" />
       
       {/* OpenGraph tags */}
       <meta property="og:title" content={title} />
