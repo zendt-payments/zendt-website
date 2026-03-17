@@ -26,7 +26,7 @@ const Features = () => {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-brand-400">get paid globally.</span>
           </motion.h2>
           <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-slate-500 text-base sm:text-lg md:text-xl leading-relaxed">
-            A modern payments account designed for freelancers working globally.
+            A comprehensive payment solution providing every facility an independent freelancer needs to work globally.
           </motion.p>
         </div>
 
