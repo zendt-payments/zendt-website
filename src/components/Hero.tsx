@@ -38,7 +38,7 @@ const Hero = () => {
 
           <div className="flex items-center gap-2 justify-center lg:justify-start">
             <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-            <p className="text-sm text-slate-500 font-medium">Launching April 2026</p>
+            <p className="text-sm text-slate-500 font-medium">Launching May 2026</p>
           </div>
         </div>
 

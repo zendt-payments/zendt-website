@@ -29,7 +29,7 @@ const BetaBanner = () => {
     <div className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-brand-600 via-indigo-600 to-brand-500 text-white py-2.5 px-6 md:px-8 flex items-center justify-center gap-4 text-sm font-medium shadow-lg">
       <div className="flex items-center gap-2">
         <Rocket size={15} className="shrink-0 animate-bounce" style={{ animationDuration: '2s' }} />
-        <span className="hidden sm:inline font-semibold">Beta launches end of April!</span>
+        <span className="hidden sm:inline font-semibold">Beta launches end of May!</span>
         <span className="sm:hidden font-semibold">Beta launching soon!</span>
       </div>
 

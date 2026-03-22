@@ -43,7 +43,7 @@ const CTA = () => {
  
           <div className="relative z-10 max-w-4xl mx-auto">
             <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 border border-white/80 text-brand-700 text-xs font-bold uppercase tracking-widest mb-6 sm:mb-10 backdrop-blur-sm">
-              <Sparkles size={14} className="text-brand-500" /> Launching April 2026
+              <Sparkles size={14} className="text-brand-500" /> Launching May 2026
             </motion.div>
 
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 text-slate-900 tracking-tight leading-[1.1]">

@@ -35,7 +35,7 @@ const Footer = () => {
         {/* Top CTA strip */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-12 md:pb-16 border-b border-white/10 mb-12 md:mb-16 text-center md:text-left">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-brand-400 mb-2">Beta launching April 2026</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-brand-400 mb-2">Beta launching May 2026</p>
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">
               Be among the first to go <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-indigo-400">borderless.</span>
@@ -141,7 +141,7 @@ const Footer = () => {
             <p>© {new Date().getFullYear()} Zendt Payments Pvt. Ltd. All rights reserved.</p>
             <div className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-              <span>Beta launching April 2026</span>
+              <span>Beta launching May 2026</span>
             </div>
           </div>
         </div>

@@ -318,7 +318,7 @@ const AboutPage = () => {
             <div className="relative z-10">
               <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">Be the first to go borderless.</h2>
               <p className="text-brand-100 text-lg md:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
-                Join the waitlist and get early access when we launch in April 2026. Your global payments, simplified.
+                Join the waitlist and get early access when we launch in May 2026. Your global payments, simplified.
               </p>
               <button
                 onClick={scrollToPricing}
