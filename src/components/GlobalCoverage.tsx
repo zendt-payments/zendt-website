@@ -50,13 +50,13 @@ const mapConnections = [
   { end: { lat: 47.5, lng: 19.0 },    core: false },  // HUF – Hungary (Budapest)
 ];
 
-const INDIA = { lat: 10.0, lng: 76.3 };
+const INDIA = { lat: 19.1, lng: 72.9 };
 
 
 // Projection for world.svg (2000x857)
 const project = (lat: number, lng: number) => {
   const x = (lng + 180) * (2000 / 360);
-  const y = (90 - lat) * (857 / 180) + 45;
+  const y = (90 - lat) * (857 / 180);
   return { x, y };
 };
 
