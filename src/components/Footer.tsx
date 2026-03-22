@@ -64,7 +64,7 @@ const Footer = () => {
               <div className="w-10 h-10 rounded-xl overflow-hidden shadow-md">
                 <img src="/logo-filled.png" alt="Zendt Payments Logo - Global Freelancer Financial OS" className="w-full h-full object-cover" />
               </div>
-              <span className="font-bold text-xl tracking-tight text-white">Zendt</span>
+              <span className="font-bold text-xl tracking-tight text-white">Zendt Payments</span>
             </a>
 
             <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-xs">
