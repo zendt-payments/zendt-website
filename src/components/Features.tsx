@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
-import { Globe, Wallet, RefreshCw, FileText, Link, IndianRupee, Sparkles } from 'lucide-react';
+import { Globe, Wallet, BarChart2, FileText, Link, IndianRupee, Sparkles } from 'lucide-react';
 
 const features = [
   { icon: <Globe size={24} />, title: "Global Receiving Accounts", description: "Receive international payments using global account details.", bg: "bg-blue-50/50", color: "text-blue-500" },
   { icon: <Wallet size={24} />, title: "Multi-Currency Wallet", description: "Hold and manage balances across multiple currencies.", bg: "bg-purple-50/50", color: "text-purple-500" },
-  { icon: <RefreshCw size={24} />, title: "Smart Currency Conversion", description: "Convert currencies with transparent exchange rates.", bg: "bg-teal-50/50", color: "text-teal-500" },
+  { icon: <BarChart2 size={24} />, title: "Freelancer Analytics", description: "Understand your earnings, client trends, and cash flow at a glance.", bg: "bg-teal-50/50", color: "text-teal-500" },
   { icon: <FileText size={24} />, title: "Professional Invoicing", description: "Create and send invoices to clients worldwide.", bg: "bg-orange-50/50", color: "text-orange-500" },
   { icon: <Link size={24} />, title: "Payment Links", description: "Accept payments instantly through shareable payment links.", bg: "bg-green-50/50", color: "text-green-500" },
   { icon: <IndianRupee size={24} />, title: "Fast INR Withdrawals", description: "Transfer your earnings to your local bank account easily.", bg: "bg-brand-50/50", color: "text-brand-500" },

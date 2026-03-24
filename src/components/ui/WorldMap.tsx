@@ -21,7 +21,7 @@ export function WorldMap({
     // y: (90 - lat) * (height / 180) + offset
     const x = (lng + 180) * (2000 / 360);
     // The simplemaps world.svg is slightly shifted and uses a specific scale
-    const y = (90 - lat) * (857 / 180);
+    const y = (90 - lat) * (857 / 180) + 45; 
     return { x, y };
   };
 
