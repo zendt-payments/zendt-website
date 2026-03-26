@@ -12,6 +12,9 @@ import Contact from '@/components/Contact';
 import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
 import AboutPage from '@/pages/AboutPage';
+import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
+import TermsAndConditionsPage from '@/pages/TermsAndConditionsPage';
+import RefundPolicyPage from '@/pages/RefundPolicyPage';
 import ScrollToTop from '@/components/ScrollToTop';
 import SEO from '@/components/SEO';
 
@@ -41,6 +44,9 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about-us" element={<AboutPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
+        <Route path="/refund-policy" element={<RefundPolicyPage />} />
       </Routes>
       <Footer />
     </>

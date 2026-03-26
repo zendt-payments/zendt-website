@@ -5,8 +5,9 @@ const footerLinks = {
   Company: [
     { label: 'About Zendt', href: '/about-us' },
     { label: 'Contact', href: '/#contact' },
-    { label: 'Privacy Policy', href: '#' },
-    { label: 'Terms of Service', href: '#' },
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Terms of Service', href: '/terms-and-conditions' },
+    { label: 'Refund Policy', href: '/refund-policy' },
   ],
   Product: [
     { label: 'Features', href: '/#features' },
