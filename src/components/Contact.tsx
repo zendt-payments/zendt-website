@@ -151,7 +151,7 @@ const Contact = () => {
               {
                 icon: <MapPin size={20} />,
                 label: 'Address',
-                value: 'Zendt Payments Pvt Ltd, Infopark Phase 1, Kakkanad, Kerala, India',
+                value: 'Zendt Payments Pvt Ltd, Rajagiri Orbiit, Rajagiri Valley, Infopark Phase 1, Kakkanad, Kerala, India',
                 href: undefined,
                 color: 'bg-orange-50 text-orange-600',
               },
