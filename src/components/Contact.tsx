@@ -13,7 +13,7 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
-    
+
     try {
       await fetch('https://formsubmit.co/ajax/contact@zendtpayments.com', {
         method: 'POST',
@@ -151,7 +151,7 @@ const Contact = () => {
               {
                 icon: <MapPin size={20} />,
                 label: 'Address',
-                value: 'Zendt Payments Pvt Ltd, Rajagiri Orbiit, Rajagiri Valley, Infopark Phase 1, Kakkanad, Kerala, India',
+                value: 'Rajagiri Orbiit, KE-Extn Block, Rajagiri Valley, Infopark Phase 1, Kakkanad, Kerala, India',
                 href: undefined,
                 color: 'bg-orange-50 text-orange-600',
               },
