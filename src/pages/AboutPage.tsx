@@ -24,8 +24,8 @@ const AboutPage = () => {
 
   return (
     <div className="bg-white min-h-screen text-slate-900">
-      <SEO 
-        title="Our Story | Zendt Payments" 
+      <SEO
+        title="Our Story | Zendt Payments"
         description="We're on a mission to make borders irrelevant. Zendt is the modern financial OS built by a freelancer, for freelancers."
       />
 
@@ -259,7 +259,7 @@ const AboutPage = () => {
               { date: "Dec 2025", title: "MVP Ready", desc: "Core platform infrastructure and workflows completed for early testing." },
               { date: "Jan 2026", title: "International Rails Secured", desc: "Established key partnerships enabling global collections and account-to-account payment capabilities." },
               { date: "Feb 2026", title: "Beta Development Begins", desc: "Started building the beta version of the product with live integrations and workflow testing." },
-              { date: "Apr 2026", title: "Beta Release to Public", desc: "First public beta release, onboarding early users and validating the platform in real-world scenarios.", active: true },
+              { date: "May 2026", title: "Beta Release to Public", desc: "First public beta release, onboarding early users and validating the platform in real-world scenarios.", active: true },
             ].map((item, i) => (
               <motion.div
                 key={item.title}
@@ -276,7 +276,7 @@ const AboutPage = () => {
                 <div className={`md:w-[45%] ${i % 2 === 0 ? 'md:text-right md:pr-12' : 'md:order-2 md:pl-12'} mb-2 md:mb-0`}>
                   <span className={`text-sm font-bold uppercase tracking-widest ${item.active ? 'text-brand-600' : 'text-slate-400'}`}>{item.date}</span>
                 </div>
-                
+
                 <div className={`md:w-[45%] ${i % 2 === 0 ? 'md:order-2 md:pl-12' : 'md:text-right md:pr-12'}`}>
                   <div className={`p-6 rounded-2xl border transition-shadow ${item.active ? 'bg-white border-brand-200 shadow-md shadow-brand-500/5' : 'bg-white/50 border-slate-200 group-hover:bg-white group-hover:shadow-sm'}`}>
                     <h4 className="text-lg font-bold mb-2 text-slate-900">{item.title}</h4>
@@ -285,7 +285,7 @@ const AboutPage = () => {
                 </div>
               </motion.div>
             ))}
-            
+
             {/* Future Indicator */}
             <motion.div
               initial={{ opacity: 0 }}
