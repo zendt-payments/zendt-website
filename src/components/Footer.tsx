@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const footerLinks = {
   Company: [
     { label: 'About Zendt', href: '/about-us' },
+    { label: 'Blog', href: '/blog' },
     { label: 'Contact', href: '/#contact' },
     { label: 'Privacy Policy', href: '/privacy-policy' },
     { label: 'Terms of Service', href: '/terms-and-conditions' },
