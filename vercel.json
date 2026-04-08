@@ -1,6 +1,10 @@
 {
   "framework": "vite",
   "functions": {
+    "api/email/webhook.ts": {
+      "runtime": "@vercel/node@5.7.0",
+      "maxDuration": 30
+    },
     "api/**/*.ts": {
       "runtime": "@vercel/node@5.7.0",
       "maxDuration": 10
