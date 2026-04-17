@@ -1,4 +1,18 @@
 User-agent: *
 Allow: /
+Allow: /blog
+Allow: /about-us
 
+# Sitemaps
 Sitemap: https://zendtpayments.com/sitemap.xml
+
+# Crawl-delay (be polite to server)
+Crawl-delay: 1
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+
+# Bing specific
+User-agent: Bingbot
+Allow: /

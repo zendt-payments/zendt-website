@@ -25,8 +25,43 @@ const AboutPage = () => {
   return (
     <div className="bg-white min-h-screen text-slate-900">
       <SEO
-        title="Our Story | Zendt Payments"
-        description="We're on a mission to make borders irrelevant. Zendt is the modern financial OS built by a freelancer, for freelancers."
+        title="About Zendt Payments | Built in India for Indian Freelancers"
+        description="Zendt Payments was founded in Kochi, Kerala by a freelancer who lost thousands in international payment fees. We're building the modern financial OS for Indian freelancers to receive payments globally."
+        url="https://zendtpayments.com/about-us"
+      />
+
+      {/* JSON-LD for About Page */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'AboutPage',
+            name: 'About Zendt Payments',
+            description: 'Zendt Payments was founded in Kochi, Kerala by a freelancer to solve the cross-border payment challenges faced by Indian freelancers.',
+            url: 'https://zendtpayments.com/about-us',
+            mainEntity: {
+              '@type': 'Organization',
+              name: 'Zendt Payments',
+              founder: {
+                '@type': 'Person',
+                name: 'Alen Thomas',
+                jobTitle: 'Founder',
+              },
+              foundingDate: '2024',
+              foundingLocation: {
+                '@type': 'Place',
+                address: {
+                  '@type': 'PostalAddress',
+                  addressLocality: 'Kochi',
+                  addressRegion: 'Kerala',
+                  addressCountry: 'IN',
+                },
+              },
+              description: 'The modern payment platform built for Indian freelancers to receive, manage, and spend international payments.',
+            },
+          }),
+        }}
       />
 
 

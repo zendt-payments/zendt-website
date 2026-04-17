@@ -31,7 +31,7 @@ const SEO = ({
       {/* Standard metadata tags */}
       <title>{title}</title>
       <meta name='description' content={description} />
-      <meta name='keywords' content="freelancer payments, payment solution for freelancers, international payments, receive funds globally, freelancer global account, freelancer finance" />
+      <meta name='keywords' content="freelancer payments India, receive international payments India, international payment solution freelancers, receive USD in India, freelancer global account, cross-border payments India, GCC payments India, receive AED in India, multi-currency wallet India, payment platform freelancers, INR withdrawal, RBI compliant payments, Payoneer alternative India, Wise alternative India" />
       
       {/* Canonical URL */}
       <link rel="canonical" href={url} />
