@@ -79,19 +79,24 @@ const BlogPostPage = () => {
   const readingTime = estimateReadingTime(post.content);
   const postUrl = `https://zendtpayments.com/blog/${post.slug}`;
 
+  const wordCount = post.content.split(/\s+/).length;
+
   // JSON-LD structured data for SEO
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.metaDescription,
+    image: 'https://zendtpayments.com/logo-filled.png',
     author: {
       '@type': 'Organization',
       name: post.author,
+      url: 'https://zendtpayments.com',
     },
     publisher: {
       '@type': 'Organization',
       name: 'Zendt Payments',
+      url: 'https://zendtpayments.com',
       logo: {
         '@type': 'ImageObject',
         url: 'https://zendtpayments.com/logo-filled.png',
@@ -99,7 +104,16 @@ const BlogPostPage = () => {
     },
     datePublished: post.publishDate,
     dateModified: post.updatedAt,
-    mainEntityOfPage: postUrl,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': postUrl,
+    },
+    wordCount,
+    inLanguage: 'en',
+    ...(post.tags && post.tags.length > 0 && {
+      keywords: post.tags.join(', '),
+      articleSection: post.tags[0],
+    }),
   };
 
   return (
@@ -109,6 +123,10 @@ const BlogPostPage = () => {
         description={post.metaDescription}
         url={postUrl}
         type="article"
+        publishedTime={post.publishDate}
+        modifiedTime={post.updatedAt}
+        author={post.author}
+        tags={post.tags}
       />
 
       {/* JSON-LD */}

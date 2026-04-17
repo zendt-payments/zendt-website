@@ -7,6 +7,11 @@ interface SEOProps {
   type?: string;
   image?: string;
   url?: string;
+  // Article-specific props for blog posts
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  tags?: string[];
 }
 
 const SEO = ({ 
@@ -15,7 +20,11 @@ const SEO = ({
   name = 'Zendt Payments',
   type = 'website',
   image = 'https://zendtpayments.com/logo-filled.png',
-  url = 'https://zendtpayments.com'
+  url = 'https://zendtpayments.com',
+  publishedTime,
+  modifiedTime,
+  author,
+  tags,
 }: SEOProps) => {
   return (
     <Helmet>
@@ -24,12 +33,31 @@ const SEO = ({
       <meta name='description' content={description} />
       <meta name='keywords' content="freelancer payments, payment solution for freelancers, international payments, receive funds globally, freelancer global account, freelancer finance" />
       
+      {/* Canonical URL */}
+      <link rel="canonical" href={url} />
+      
       {/* OpenGraph tags */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content={type} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={image} />
+      <meta property="og:site_name" content="Zendt Payments" />
+      <meta property="og:locale" content="en_US" />
+      
+      {/* Article-specific OG tags */}
+      {type === 'article' && publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+      )}
+      {type === 'article' && modifiedTime && (
+        <meta property="article:modified_time" content={modifiedTime} />
+      )}
+      {type === 'article' && author && (
+        <meta property="article:author" content={author} />
+      )}
+      {type === 'article' && tags && tags.map((tag) => (
+        <meta key={tag} property="article:tag" content={tag} />
+      ))}
       
       {/* Twitter cards */}
       <meta name="twitter:creator" content={name} />

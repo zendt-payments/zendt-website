@@ -47,6 +47,36 @@ const BlogPage = () => {
         url="https://zendtpayments.com/blog"
       />
 
+      {/* JSON-LD Collection Page */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'CollectionPage',
+            name: 'Zendt Payments Blog',
+            description:
+              'Expert insights on international payments, freelancer finance, cross-border banking, and building a borderless career.',
+            url: 'https://zendtpayments.com/blog',
+            isPartOf: {
+              '@type': 'WebSite',
+              name: 'Zendt Payments',
+              url: 'https://zendtpayments.com',
+            },
+            publisher: {
+              '@type': 'Organization',
+              name: 'Zendt Payments',
+              url: 'https://zendtpayments.com',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://zendtpayments.com/logo-filled.png',
+              },
+            },
+            inLanguage: 'en',
+          }),
+        }}
+      />
+
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section className="pt-40 pb-16 md:pt-52 md:pb-24 relative overflow-hidden">
         <div className="absolute inset-0 mesh-bg opacity-40 -z-10" />
