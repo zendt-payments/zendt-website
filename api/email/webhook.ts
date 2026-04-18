@@ -1,7 +1,6 @@
 import * as admin from 'firebase-admin';
 import { Webhook } from 'svix';
 import { Resend } from 'resend';
-import Anthropic from '@anthropic-ai/sdk';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import type { IncomingMessage } from 'http';
 
@@ -17,26 +16,18 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
-
-// ── Clients ──────────────────────────────────────────────────
 const resend = new Resend(process.env.RESEND_API_KEY);
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-// ── Constants ────────────────────────────────────────────────
-const ALLOWED_SENDER = 'alen@zendtpayments.com';
-const CONFIRMATION_TO = 'alen@zendtpayments.com';
-const FROM_EMAIL = 'marketing@zendtpayments.com';
 const SITE_URL = 'https://zendtpayments.com';
+const ALEN_EMAIL = 'alen@zendtpayments.com';
+const FROM_EMAIL = 'marketing@zendtpayments.com';
 
-// ── Disable Vercel's automatic body parsing ──────────────────
-// Signature verification requires the raw, unmodified body string.
+// ── Disable Vercel body parsing (required for svix signature verification)
 export const config = {
-  api: {
-    bodyParser: false,
-  },
+  api: { bodyParser: false },
 };
 
-// ── Helper: read raw body from stream ────────────────────────
+// ── Read raw body from stream ────────────────────────────────
 function getRawBody(req: IncomingMessage): Promise<string> {
   return new Promise((resolve, reject) => {
     const chunks: Buffer[] = [];
@@ -46,20 +37,19 @@ function getRawBody(req: IncomingMessage): Promise<string> {
   });
 }
 
-// ── Helper: extract plain email address from "Name <email>" ──
+// ── Extract plain email from "Name <email>" format ───────────
 function extractEmail(from: string): string {
   const match = from.match(/<([^>]+)>/);
   return match ? match[1].toLowerCase() : from.toLowerCase().trim();
 }
 
-// ── Helper: strip email reply quoted text ────────────────────
+// ── Strip quoted reply text to get just the new reply ────────
 function stripQuotedReply(text: string): string {
-  // Remove common reply markers and everything after them
   const markers = [
-    /^On .+ wrote:$/m,           // "On Mon, Apr 7, 2026 ... wrote:"
-    /^-{2,}\s*Original Message/m, // "-- Original Message"
-    /^>{1,}\s/m,                  // "> quoted text"
-    /^From:\s/m,                  // "From: sender"
+    /^On .+ wrote:$/m,
+    /^-{2,}\s*Original Message/m,
+    /^>{1,}\s/m,
+    /^From:\s/m,
   ];
 
   let cleaned = text;
@@ -73,189 +63,24 @@ function stripQuotedReply(text: string): string {
   return cleaned.trim();
 }
 
-// ── Helper: fetch the latest draft blog post ─────────────────
-async function getLatestDraft(): Promise<{
-  id: string;
-  source: 'blog_drafts' | 'blog_posts';
-  data: Record<string, any>;
-} | null> {
-  // 1. Check blog_drafts collection first
-  try {
-    const draftsSnap = await db
-      .collection('blog_drafts')
-      .orderBy('createdAt', 'desc')
-      .limit(1)
-      .get();
-
-    if (!draftsSnap.empty) {
-      const doc = draftsSnap.docs[0];
-      return { id: doc.id, source: 'blog_drafts', data: doc.data() };
-    }
-  } catch (err) {
-    // Collection may not exist yet — that's fine, fall through
-    console.log('blog_drafts collection not found, checking blog_posts...');
-  }
-
-  // 2. Fallback: unpublished blog_posts
-  const postsSnap = await db
-    .collection('blog_posts')
-    .where('published', '==', false)
-    .orderBy('createdAt', 'desc')
-    .limit(1)
-    .get();
-
-  if (!postsSnap.empty) {
-    const doc = postsSnap.docs[0];
-    return { id: doc.id, source: 'blog_posts', data: doc.data() };
-  }
-
-  return null;
-}
-
-// ── Helper: apply edits using Claude ─────────────────────────
-async function applyEditsWithClaude(
-  draft: Record<string, any>,
-  editInstructions: string
-): Promise<Record<string, any>> {
-  const prompt = `You are an expert blog editor for Zendt, a fintech company for freelancers.
-
-Below is a blog post draft in markdown. The author has replied with edit instructions.
-Apply the requested edits to the post and return the COMPLETE updated post.
-
-IMPORTANT RULES:
-- Return ONLY the updated markdown content, nothing else
-- Preserve the overall structure and formatting
-- Apply the edits as faithfully as possible
-- If an edit is unclear, use your best judgment to improve the post
-- Do NOT add any commentary or explanations before/after the content
-
----
-CURRENT DRAFT TITLE: ${draft.title}
-
-CURRENT DRAFT CONTENT:
-${draft.content}
-
----
-EDIT INSTRUCTIONS FROM AUTHOR:
-${editInstructions}`;
-
-  const response = await anthropic.messages.create({
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: 4096,
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  const textBlock = response.content.find((block) => block.type === 'text');
-  return {
-    ...draft,
-    content: textBlock?.text ?? draft.content,
-    updatedAt: new Date().toISOString(),
-  };
-}
-
-// ── Helper: publish the blog post ────────────────────────────
-async function publishPost(postData: Record<string, any>): Promise<{
-  success: boolean;
-  url?: string;
-  id?: string;
-  error?: string;
-}> {
-  const apiKey = process.env.BLOG_API_KEY;
-  if (!apiKey) {
-    throw new Error('BLOG_API_KEY is not configured');
-  }
-
-  const now = new Date().toISOString();
-  const payload = {
-    title: postData.title,
-    slug: postData.slug,
-    content: postData.content,
-    metaDescription: postData.metaDescription,
-    coverImageDescription: postData.coverImageDescription || null,
-    author: postData.author || 'Zendt Team',
-    tags: postData.tags || [],
-    publishDate: now,
-  };
-
-  // Check if slug already exists — if so, update instead of insert
-  const existing = await db
-    .collection('blog_posts')
-    .where('slug', '==', payload.slug)
-    .limit(1)
-    .get();
-
-  if (!existing.empty) {
-    // Update existing post (upsert)
-    const docId = existing.docs[0].id;
-    await db.collection('blog_posts').doc(docId).update({
-      ...payload,
-      published: true,
-      updatedAt: now,
-    });
-
-    return {
-      success: true,
-      url: `${SITE_URL}/blog/${payload.slug}`,
-      id: docId,
-    };
-  }
-
-  // Create new post via internal publish endpoint logic
-  const docRef = await db.collection('blog_posts').add({
-    ...payload,
-    published: true,
-    createdAt: now,
-    updatedAt: now,
-  });
-
-  return {
-    success: true,
-    url: `${SITE_URL}/blog/${payload.slug}`,
-    id: docRef.id,
-  };
-}
-
-// ── Helper: send confirmation email ──────────────────────────
-async function sendConfirmation(title: string, url: string): Promise<void> {
-  await resend.emails.send({
-    from: FROM_EMAIL,
-    to: CONFIRMATION_TO,
-    subject: 'Blog Published ✓',
-    text: `${title} is now live at ${url}`,
-    html: `<p><strong>${title}</strong> is now live at <a href="${url}">${url}</a></p>`,
-  });
-}
-
-// ── Helper: clean up draft after publishing ──────────────────
-async function deleteDraft(
-  id: string,
-  source: 'blog_drafts' | 'blog_posts'
-): Promise<void> {
-  if (source === 'blog_drafts') {
-    await db.collection('blog_drafts').doc(id).delete();
-  }
-  // If source is blog_posts, it's already been updated to published: true
-}
-
 // ── Main handler ─────────────────────────────────────────────
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // ── 1. Read raw body for signature verification ────────────
+  // 1. Read raw body
   let rawBody: string;
   try {
     rawBody = await getRawBody(req);
-  } catch (err) {
-    console.error('Failed to read request body:', err);
+  } catch {
     return res.status(400).json({ error: 'Failed to read request body' });
   }
 
-  // ── 2. Verify webhook signature ────────────────────────────
+  // 2. Verify webhook signature via Svix
   const webhookSecret = process.env.RESEND_WEBHOOK_SECRET;
   if (!webhookSecret) {
-    console.error('RESEND_WEBHOOK_SECRET is not configured');
+    console.error('RESEND_WEBHOOK_SECRET not configured');
     return res.status(500).json({ error: 'Webhook secret not configured' });
   }
 
@@ -264,7 +89,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const svixSignature = req.headers['svix-signature'] as string;
 
   if (!svixId || !svixTimestamp || !svixSignature) {
-    return res.status(400).json({ error: 'Missing webhook signature headers' });
+    return res.status(400).json({ error: 'Missing signature headers' });
   }
 
   let event: any;
@@ -275,130 +100,117 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       'svix-timestamp': svixTimestamp,
       'svix-signature': svixSignature,
     });
-  } catch (err) {
-    console.error('Webhook signature verification failed:', err);
-    return res.status(400).json({ error: 'Invalid webhook signature' });
+  } catch {
+    console.error('Webhook signature verification failed');
+    return res.status(400).json({ error: 'Invalid signature' });
   }
 
-  // ── 3. Only process email.received events ──────────────────
+  // 3. Only handle inbound email events
   if (event.type !== 'email.received') {
     return res.status(200).json({ message: `Ignored event: ${event.type}` });
   }
 
-  const { email_id, from, subject } = event.data;
-  console.log(`Received email from: ${from}, subject: ${subject}`);
+  const { from, subject, text, html } = event.data;
+  console.log(`Email from: ${from}, subject: ${subject}`);
 
-  // ── 4. Validate sender ────────────────────────────────────
+  // 4. Validate sender is Alen
   const senderEmail = extractEmail(from);
-  if (senderEmail !== ALLOWED_SENDER) {
-    console.log(`Ignoring email from unauthorized sender: ${senderEmail}`);
+  if (senderEmail !== ALEN_EMAIL) {
+    console.log(`Unauthorized sender: ${senderEmail}`);
     return res.status(200).json({ message: 'Unauthorized sender, ignored' });
   }
 
-  // ── 5. Fetch full email body via Resend Receiving API ──────
-  let emailBody: string;
-  try {
-    const { data: receivedEmail, error } = await resend.emails.get(email_id);
-
-    if (error || !receivedEmail) {
-      console.error('Failed to fetch received email:', error);
-      return res.status(500).json({ error: 'Failed to fetch email content' });
-    }
-
-    // Use text body; fall back to stripping HTML if needed
-    emailBody = (receivedEmail as any).text || (receivedEmail as any).body || '';
-  } catch (err) {
-    console.error('Error fetching email:', err);
-    return res.status(500).json({ error: 'Failed to fetch email content' });
-  }
-
-  // Strip quoted reply text to get just the new reply content
-  const replyText = stripQuotedReply(emailBody);
+  // 5. Extract reply text — Resend inbound gives us text/html in event.data directly
+  const emailBody = text || '';
+  const replyText = stripQuotedReply(emailBody).toUpperCase();
 
   if (!replyText) {
-    console.log('Empty reply body, ignoring');
+    console.log('Empty reply, ignoring');
     return res.status(200).json({ message: 'Empty reply, ignored' });
   }
 
-  console.log(`Reply text: "${replyText.substring(0, 100)}..."`);
+  console.log(`Reply text: "${replyText.substring(0, 100)}"`);
 
-  // ── 6. Fetch the latest draft ──────────────────────────────
-  const draft = await getLatestDraft();
+  // 6. Check for APPROVE
+  if (!replyText.includes('APPROVE')) {
+    console.log('Reply does not contain APPROVE, ignoring');
+    return res.status(200).json({ message: 'No APPROVE found, ignored' });
+  }
 
-  if (!draft) {
-    console.error('No draft blog post found');
-    // Notify via email that no draft was found
+  // 7. Get the latest unpublished blog post from Firestore
+  const snap = await db
+    .collection('blog_posts')
+    .where('published', '==', false)
+    .orderBy('createdAt', 'desc')
+    .limit(1)
+    .get();
+
+  if (snap.empty) {
+    console.error('No unpublished blog post found');
     await resend.emails.send({
       from: FROM_EMAIL,
-      to: CONFIRMATION_TO,
-      subject: 'Blog Publish Failed ✗',
-      text: 'No draft blog post was found to publish. Please ensure a draft exists in Firestore.',
+      to: ALEN_EMAIL,
+      subject: '❌ Blog Publish Failed',
+      html: '<p>No unpublished blog post found in Firestore. Nothing to publish.</p>',
     });
-    return res.status(404).json({ error: 'No draft blog post found' });
+    return res.status(404).json({ error: 'No unpublished post found' });
   }
 
-  console.log(`Found draft: "${draft.data.title}" from ${draft.source}`);
+  const doc = snap.docs[0];
+  const post = doc.data();
+  const postUrl = `${SITE_URL}/blog/${post.slug}`;
 
-  // ── 7. Process: approve or edit ────────────────────────────
-  const isApproval = /\bAPPROVE\b/i.test(replyText);
-  let postToPublish = draft.data;
+  console.log(`Publishing: "${post.title}" (${doc.id})`);
 
-  if (!isApproval) {
-    console.log('Applying edit suggestions via Claude...');
-    try {
-      postToPublish = await applyEditsWithClaude(draft.data, replyText);
-      console.log('Edits applied successfully');
-    } catch (err) {
-      console.error('Claude edit failed:', err);
-      await resend.emails.send({
-        from: FROM_EMAIL,
-        to: CONFIRMATION_TO,
-        subject: 'Blog Publish Failed ✗',
-        text: `Failed to apply edits to "${draft.data.title}". Error: ${err instanceof Error ? err.message : 'Unknown error'}. Please try again.`,
-      });
-      return res.status(500).json({ error: 'Failed to apply edits' });
-    }
-  } else {
-    console.log('Approval received — publishing as-is');
-  }
-
-  // ── 8. Publish the post ────────────────────────────────────
-  let result;
+  // 8. Set published: true
   try {
-    result = await publishPost(postToPublish);
+    await db.collection('blog_posts').doc(doc.id).update({
+      published: true,
+      publishDate: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
   } catch (err) {
-    console.error('Publish failed:', err);
+    console.error('Firestore update failed:', err);
     await resend.emails.send({
       from: FROM_EMAIL,
-      to: CONFIRMATION_TO,
-      subject: 'Blog Publish Failed ✗',
-      text: `Failed to publish "${draft.data.title}". Error: ${err instanceof Error ? err.message : 'Unknown error'}`,
+      to: ALEN_EMAIL,
+      subject: '❌ Blog Publish Failed',
+      html: `<p>Failed to publish "<strong>${post.title}</strong>". Firestore update error.</p>`,
     });
-    return res.status(500).json({ error: 'Failed to publish post' });
+    return res.status(500).json({ error: 'Failed to update Firestore' });
   }
 
-  // ── 9. Send confirmation email ─────────────────────────────
+  // 9. Send confirmation email
   try {
-    await sendConfirmation(postToPublish.title, result.url!);
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: ALEN_EMAIL,
+      subject: `✅ Blog Published: ${post.title}`,
+      html: `
+        <div style="font-family: -apple-system, sans-serif; max-width: 480px;">
+          <h2 style="color: #1e293b; margin-bottom: 8px;">Blog Published ✅</h2>
+          <p style="color: #64748b; font-size: 16px; line-height: 1.6;">
+            <strong>${post.title}</strong> is now live.
+          </p>
+          <a href="${postUrl}" style="display: inline-block; margin-top: 12px; padding: 10px 20px; background: #7c3aed; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">
+            View Post →
+          </a>
+          <p style="color: #94a3b8; font-size: 13px; margin-top: 20px;">
+            Published at ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
+          </p>
+        </div>
+      `,
+    });
     console.log('Confirmation email sent');
   } catch (err) {
-    console.error('Failed to send confirmation email:', err);
-    // Don't fail the whole request — the post is already published
-  }
-
-  // ── 10. Clean up the draft ─────────────────────────────────
-  try {
-    await deleteDraft(draft.id, draft.source);
-    console.log('Draft cleaned up');
-  } catch (err) {
-    console.error('Failed to delete draft:', err);
-    // Non-critical — don't fail
+    console.error('Confirmation email failed:', err);
+    // Non-critical — post is already published
   }
 
   return res.status(200).json({
     success: true,
-    message: isApproval ? 'Post approved and published' : 'Edits applied and post published',
-    url: result.url,
-    postId: result.id,
+    message: 'Blog post published',
+    title: post.title,
+    url: postUrl,
   });
 }
