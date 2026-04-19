@@ -58,7 +58,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
     
     console.log('Step 4: querying Firestore');
-    const snap = await db.collection('blog_posts').where('published', '==', false).orderBy('createdAt', 'desc').limit(1).get();
+    const snap = await db.collection('blog_posts')
+      .where('published', '==', false)
+      .limit(1)
+      .get();
+      
+    console.log('Step 4b: query complete, empty:', snap.empty, 'size:', snap.size);
+    
     if (snap.empty) {
       return res.status(404).json({ error: 'No unpublished post found' });
     }
