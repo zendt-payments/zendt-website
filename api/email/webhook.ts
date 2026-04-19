@@ -57,32 +57,52 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json({ message: 'Not a reply (missing Re:)' });
     }
     
-    console.log('Step 4: querying Firestore');
-    const snap = await db.collection('blog_posts')
-      .where('published', '==', false)
+    console.log('Step 4: querying blog_drafts');
+    const snap = await db.collection('blog_drafts')
+      .where('status', '==', 'draft')
       .limit(1)
       .get();
       
-    console.log('Step 4b: query complete, empty:', snap.empty, 'size:', snap.size);
-    
     if (snap.empty) {
-      console.log('No unpublished posts in blog_posts collection');
-      console.log('Checking blog_drafts collection...');
-      const draftsSnap = await db.collection('blog_drafts').limit(1).get();
-      console.log('blog_drafts empty:', draftsSnap.empty, 'size:', draftsSnap.size);
-      
-      return res.status(404).json({ error: 'No unpublished post found' });
+      console.log('No drafts found in blog_drafts');
+      return res.status(404).json({ error: 'No draft found' });
     }
     
     const doc = snap.docs[0];
-    const post = doc.data();
-    const postUrl = SITE_URL + '/blog/' + post.slug;
+    const draft = doc.data();
+    const { title, slug, content, metaDescription, publishDate, coverImageDescription } = draft;
     
-    console.log('Step 5: updating Firestore');
-    await db.collection('blog_posts').doc(doc.id).update({ published: true, publishDate: new Date().toISOString(), updatedAt: new Date().toISOString() });
+    console.log('Step 5: POSTing to BLOG_API_URL', process.env.BLOG_API_URL);
+    const publishRes = await fetch(process.env.BLOG_API_URL!, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'x-api-key': process.env.BLOG_API_KEY! 
+      },
+      body: JSON.stringify({ title, slug, content, metaDescription, publishDate, coverImageDescription })
+    });
     
-    console.log('Step 6: sending confirmation email');
-    await resend.emails.send({ from: FROM_EMAIL, to: ALEN_EMAIL, subject: 'Blog Published: ' + post.title, html: '<p><strong>' + post.title + '</strong> is now live. <a href="' + postUrl + '">View Post</a></p>' });
+    if (!publishRes.ok) {
+      const errText = await publishRes.text();
+      console.error('Publish API failed:', publishRes.status, errText);
+      return res.status(500).json({ error: 'Publish API failed', details: errText });
+    }
+    
+    console.log('Step 6: updating blog_drafts status to published');
+    await db.collection('blog_drafts').doc(doc.id).update({ 
+      status: 'published', 
+      updatedAt: new Date().toISOString() 
+    });
+    
+    const postUrl = SITE_URL + '/blog/' + slug;
+    
+    console.log('Step 7: sending confirmation email');
+    await resend.emails.send({ 
+      from: FROM_EMAIL, 
+      to: ALEN_EMAIL, 
+      subject: 'Blog Published: ' + title, 
+      html: '<p><strong>' + title + '</strong> is now live. <a href="' + postUrl + '">View Post</a></p>' 
+    });
     
     return res.status(200).json({ success: true, url: postUrl });
   } catch (err: any) {
