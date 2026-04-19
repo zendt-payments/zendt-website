@@ -2,24 +2,30 @@ import * as admin from 'firebase-admin';
 import { Resend } from 'resend';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-    }),
-  });
-}
-
-const db = admin.firestore();
 const resend = new Resend(process.env.RESEND_API_KEY);
 const SITE_URL = 'https://zendtpayments.com';
 const ALEN_EMAIL = 'alen@zendtpayments.com';
 const FROM_EMAIL = 'marketing@zendtpayments.com';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  console.log('Webhook received');
   try {
+    if (!admin.apps.length) {
+      console.log('Initializing Firebase...');
+      admin.initializeApp({
+        credential: admin.credential.cert({
+          projectId: process.env.FIREBASE_PROJECT_ID,
+          clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+          privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+        }),
+      });
+      console.log('Firebase initialized');
+    }
+    
+    console.log('Firebase project:', process.env.FIREBASE_PROJECT_ID);
+    console.log('Resend key exists:', !!process.env.RESEND_API_KEY);
+    
+    const db = admin.firestore();
     if (req.method !== 'POST') {
       return res.status(405).json({ error: 'Method not allowed' });
     }
