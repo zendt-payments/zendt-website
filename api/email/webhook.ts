@@ -66,6 +66,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log('Step 4b: query complete, empty:', snap.empty, 'size:', snap.size);
     
     if (snap.empty) {
+      console.log('No unpublished posts in blog_posts collection');
+      console.log('Checking blog_drafts collection...');
+      const draftsSnap = await db.collection('blog_drafts').limit(1).get();
+      console.log('blog_drafts empty:', draftsSnap.empty, 'size:', draftsSnap.size);
+      
       return res.status(404).json({ error: 'No unpublished post found' });
     }
     
