@@ -12,6 +12,21 @@
   },
   "redirects": [
     {
+      "source": "/login",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/wp-content/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/wp-admin/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/about",
       "destination": "/about-us",
       "permanent": true
