@@ -29,11 +29,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
   const from = event.data?.from || '';
   const text = event.data?.text || '';
+  
+  console.log('--- RECEIVED EMAIL TEXT ---');
+  console.log(text);
+  console.log('---------------------------');
+  
   const sender = from.match(/<([^>]+)>/) ? from.match(/<([^>]+)>/)[1].toLowerCase() : from.toLowerCase().trim();
   if (sender !== ALEN_EMAIL) {
     return res.status(200).json({ message: 'Unauthorized sender' });
   }
-  if (!text.toUpperCase().includes('APPROVE')) {
+  if (!text.toLowerCase().includes('approve')) {
     return res.status(200).json({ message: 'No APPROVE found' });
   }
   const snap = await db.collection('blog_posts').where('published', '==', false).orderBy('createdAt', 'desc').limit(1).get();
