@@ -28,18 +28,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ message: 'Ignored' });
   }
   const from = event.data?.from || '';
-  const text = event.data?.text || event.data?.html || '';
-  
-  console.log('--- TEXT FIELD ---', event.data?.text);
-  console.log('--- HTML FIELD ---', event.data?.html);
-  console.log('--- ALL DATA KEYS ---', Object.keys(event.data || {}));
+  const to = event.data?.to || [];
+  const subject = event.data?.subject || '';
   
   const sender = from.match(/<([^>]+)>/) ? from.match(/<([^>]+)>/)[1].toLowerCase() : from.toLowerCase().trim();
   if (sender !== ALEN_EMAIL) {
     return res.status(200).json({ message: 'Unauthorized sender' });
   }
-  if (!text.toLowerCase().includes('approve')) {
-    return res.status(200).json({ message: 'No APPROVE found' });
+  
+  const toStr = (Array.isArray(to) ? to.join(' ') : to).toLowerCase();
+  if (!toStr.includes('approve@istiapeleo.resend.app')) {
+    return res.status(200).json({ message: 'Not sent to approve address' });
+  }
+  
+  if (!subject.toLowerCase().includes('re:')) {
+    return res.status(200).json({ message: 'Not a reply (missing Re:)' });
   }
   const snap = await db.collection('blog_posts').where('published', '==', false).orderBy('createdAt', 'desc').limit(1).get();
   if (snap.empty) {
