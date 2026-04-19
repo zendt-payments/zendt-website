@@ -28,11 +28,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ message: 'Ignored' });
   }
   const from = event.data?.from || '';
-  const text = event.data?.text || '';
+  const text = event.data?.text || event.data?.html || '';
   
-  console.log('--- RECEIVED EMAIL TEXT ---');
-  console.log(text);
-  console.log('---------------------------');
+  console.log('--- TEXT FIELD ---', event.data?.text);
+  console.log('--- HTML FIELD ---', event.data?.html);
+  console.log('--- ALL DATA KEYS ---', Object.keys(event.data || {}));
   
   const sender = from.match(/<([^>]+)>/) ? from.match(/<([^>]+)>/)[1].toLowerCase() : from.toLowerCase().trim();
   if (sender !== ALEN_EMAIL) {
