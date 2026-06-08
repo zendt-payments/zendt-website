@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.zendtpayments.com/sitemap.xml
+
+# Block access to uploads folder (raw assets)
+Disallow: /uploads/
