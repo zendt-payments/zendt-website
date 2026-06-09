@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Pricing · Zendt Payments</title>
-<meta name="description" content="Zendt Payments pricing: 4% flat international, 0.6% domestic UPI, transparent card and netbanking rates." />
+<meta name="description" content="Zendt Payments pricing: 4% flat international in 150+ currencies, 0.6% domestic UPI, transparent card and netbanking rates." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
@@ -37,8 +37,8 @@
     --max: 1280px;
     --gutter: clamp(20px, 4vw, 56px);
     --radius: 14px;
-    --nav-bg: rgba(10, 10, 10, 0.6);
-    --nav-bg-scrolled: rgba(10, 10, 10, 0.88);
+    --nav-bg: rgba(12, 12, 12, 0.38);
+    --nav-bg-scrolled: rgba(14, 14, 14, 0.62);
   }
   :root[data-theme="light"] {
     --bg: #F4F1EC;
@@ -59,8 +59,8 @@
     --glow-section-cool: 122, 117, 192;
     --glow-card-warm: 232, 140, 90;
     --glow-card-cool: 122, 117, 192;
-    --nav-bg: rgba(244, 241, 236, 0.65);
-    --nav-bg-scrolled: rgba(244, 241, 236, 0.92);
+    --nav-bg: rgba(252, 248, 242, 0.52);
+    --nav-bg-scrolled: rgba(252, 248, 242, 0.78);
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -126,12 +126,11 @@
     backdrop-filter: blur(14px) saturate(1.2);
     -webkit-backdrop-filter: blur(14px) saturate(1.2);
     background: var(--nav-bg);
-    border-bottom: 1px solid transparent;
-    transition: border-color 240ms ease, background 240ms ease;
+    border-bottom: none;
+    transition: background 240ms ease;
   }
   .nav.scrolled {
     background: var(--nav-bg-scrolled);
-    border-bottom-color: var(--line);
   }
   .nav__inner {
     display: flex;
@@ -214,12 +213,21 @@
   /* ---------- Mobile menu ---------- */
   .nav__toggle {
     display: none;
-    width: 40px; height: 40px;
-    border: 1px solid var(--line); border-radius: 999px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
     color: var(--ink);
-    align-items: center; justify-content: center;
-    flex-direction: column; gap: 5px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
     flex-shrink: 0;
+    transition: color 200ms ease;
+  }
+  .nav__toggle:hover {
+    color: var(--warm);
   }
   .nav__toggle span { display: block; width: 16px; height: 1.5px; background: currentColor; transition: transform .25s ease, opacity .2s ease; }
   .nav.is-open .nav__toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
@@ -227,10 +235,11 @@
   .nav.is-open .nav__toggle span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
   .nav__mobile {
     position: fixed; inset: 68px 0 auto 0;
-    background: var(--nav-bg-scrolled);
-    backdrop-filter: blur(16px) saturate(1.2);
-    -webkit-backdrop-filter: blur(16px) saturate(1.2);
-    border-bottom: 1px solid var(--line);
+    background: rgba(8, 8, 8, 0.78);
+    backdrop-filter: blur(52px) saturate(1.45);
+    -webkit-backdrop-filter: blur(52px) saturate(1.45);
+    border: none;
+    box-shadow: none;
     padding: 8px var(--gutter) 28px;
     display: flex; flex-direction: column;
     transform: translateY(-14px); opacity: 0; pointer-events: none;
@@ -263,15 +272,18 @@
   .theme-toggle {
     width: 40px;
     height: 40px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
     color: var(--ink);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: border-color 220ms ease, background 220ms ease, color 220ms ease;
+    transition: color 200ms ease;
   }
-  .theme-toggle:hover { border-color: var(--warm); color: var(--warm); }
+  .theme-toggle:hover {
+    color: var(--warm);
+  }
   .theme-toggle svg { width: 16px; height: 16px; }
   .theme-toggle__sun { display: none; }
   .theme-toggle__moon { display: block; }
@@ -833,8 +845,9 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
+    min-width: 0;
   }
-  .calc__field { display: flex; flex-direction: column; gap: 11px; }
+  .calc__field { display: flex; flex-direction: column; gap: 11px; min-width: 0; }
   .calc__label {
     font-family: var(--mono);
     font-size: 10.5px;
@@ -845,12 +858,14 @@
   /* Segmented toggle */
   .calc__seg {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 4px;
     padding: 4px;
     border: 1px solid var(--line);
     border-radius: 999px;
     background: var(--bg);
+    width: 100%;
+    min-width: 0;
   }
   .calc__seg button {
     height: 40px;
@@ -913,14 +928,29 @@
     height: 52px;
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: var(--bg);
+    background-color: var(--bg);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A8580' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
     color: var(--ink);
     font-family: var(--sans);
     font-size: 14.5px;
-    padding: 0 16px;
+    line-height: 1.2;
+    padding: 0 40px 0 16px;
     cursor: pointer;
     outline: none;
+    appearance: none;
+    -webkit-appearance: none;
     transition: border-color 200ms ease;
+  }
+  select.calc__cur {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--surface-2);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238A8580' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
   }
   .calc__select:focus { border-color: var(--warm); }
 
@@ -932,6 +962,7 @@
     flex-direction: column;
     position: relative;
     overflow: hidden;
+    min-width: 0;
   }
   .calc__result::before {
     content: "";
@@ -972,6 +1003,8 @@
     display: flex;
     flex-direction: column;
     gap: 1px;
+    width: 100%;
+    min-width: 0;
   }
   .calc__row {
     display: flex;
@@ -981,15 +1014,40 @@
     border-top: 1px solid rgba(255,255,255,0.08);
     font-size: 13.5px;
   }
-  .calc__row span { color: #B5B0A8; }
+  .calc__row span {
+    color: #B5B0A8;
+    flex: 1;
+    min-width: 0;
+    padding-right: 10px;
+  }
   .calc__row b {
     font-family: var(--mono);
     font-weight: 400;
     color: #F2EEE7;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.02em;
+    flex-shrink: 0;
+    text-align: right;
+    white-space: nowrap;
   }
   .calc__row.is-deduct b { color: var(--warm); }
+  .calc__intl-note {
+    margin: 0;
+    padding: 12px 14px;
+    border: 1px solid rgba(232, 183, 150, 0.35);
+    border-radius: 10px;
+    background: rgba(232, 183, 150, 0.08);
+    font-family: var(--sans);
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .calc__intl-note strong {
+    font-weight: 600;
+    color: var(--warm);
+  }
   .calc__note {
     margin-top: 22px;
     font-family: var(--mono);
@@ -1121,27 +1179,21 @@
   .foot__social a:hover { color: var(--ink); border-color: var(--warm); transform: translateY(-2px); }
   .foot__social svg { width: 17px; height: 17px; }
   .foot__legal {
-    margin-top: 32px;
+    margin-top: 24px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    gap: 16px 40px;
-    flex-wrap: wrap;
+    text-align: center;
+    gap: 8px;
   }
-  .foot__note {
-    margin: 0;
-    color: var(--muted);
-    font-size: 12.5px;
-    line-height: 1.5;
-    max-width: 60ch;
-  }
+  .foot__note,
   .foot__copy {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    text-transform: uppercase;
-    white-space: nowrap;
+    margin: 0;
+    font-family: var(--sans);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted-2);
+    max-width: 52ch;
   }
   .foot__col h5 {
     font-family: var(--mono);
@@ -1233,11 +1285,10 @@
 
   /* Reveal */
   .js-ready .reveal {
-    opacity: 0;
     transform: translateY(20px);
-    transition: opacity 700ms cubic-bezier(.2,.7,.2,1), transform 700ms cubic-bezier(.2,.7,.2,1);
+    transition: transform 700ms cubic-bezier(.2,.7,.2,1);
   }
-  .js-ready .reveal.in { opacity: 1; transform: none; }
+  .js-ready .reveal.in { transform: none; }
   .reveal.d1 { transition-delay: 80ms; }
   .reveal.d2 { transition-delay: 160ms; }
   .reveal.d3 { transition-delay: 240ms; }
@@ -1247,6 +1298,7 @@
   }
 </style>
 <link rel="stylesheet" href="assets/css/responsive.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
 </head>
 <body>
 
@@ -1254,12 +1306,13 @@
 <nav class="nav" id="nav">
   <div class="wrap nav__inner">
     <div class="nav__brand">
-      <a class="logo" href="index.html" aria-label="Zendt Payments home">
+      <a class="logo" href="index.html#top" aria-label="Zendt Payments home">
         <span class="logo__mark" aria-hidden="true"></span>
       </a>
       <span class="nav__badge"><span class="nav__badge-dot" aria-hidden="true"></span>Launching soon</span>
     </div>
     <div class="nav__links">
+      <a href="index.html#top">Home</a>
       <a href="index.html#how">How it works</a>
       <a href="index.html#features">Features</a>
       <a href="pricing.html" class="is-active">Pricing</a>
@@ -1268,9 +1321,6 @@
       <a href="contact.html">Contact</a>
     </div>
     <div class="nav__right">
-      <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
         <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
           <circle cx="12" cy="12" r="4"/>
@@ -1279,6 +1329,9 @@
         <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
         </svg>
+      </button>
+      <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
       </button>
       <a class="btn btn--primary" href="index.html#waitlist" style="height:40px;padding:0 18px;font-size:13px;">
         Get Early Access
@@ -1319,7 +1372,7 @@
     <div class="sec__head reveal">
       <h2>International receipts, <span class="italic">priced like infrastructure.</span></h2>
       <p>
-        One number. One rate. Same on a $300 invoice or a $30,000 invoice.
+        One number. One rate across 150+ currencies. Same on a $300 invoice or a $30,000 invoice.
         No SWIFT surcharge, no correspondent bank deduction, no FX markup.
       </p>
     </div>
@@ -1564,12 +1617,15 @@
             <button type="button" data-mode="dom" class="is-active">Domestic</button>
             <button type="button" data-mode="intl">International</button>
           </div>
+          <p class="calc__intl-note" id="calcIntlNote">
+            <strong>Early user testing only.</strong> International payments are not yet available to the public.
+          </p>
         </div>
 
         <div class="calc__field">
           <span class="calc__label" id="calcAmtLabel">Amount (INR)</span>
           <div class="calc__amount">
-            <select class="calc__cur" id="calcCur" aria-label="Currency" style="display:none">
+            <select class="calc__cur" id="calcCur" aria-label="Currency">
               <option value="83.12" data-sym="$">USD</option>
               <option value="105.44" data-sym="£">GBP</option>
               <option value="90.18" data-sym="€">EUR</option>
@@ -1582,11 +1638,11 @@
               <option value="93.40" data-sym="Fr">CHF</option>
             </select>
             <span class="calc__cur" id="calcInr">₹ INR</span>
-            <input type="text" id="calcAmt" inputmode="decimal" value="50,000" aria-label="Amount" />
+            <input type="text" id="calcAmt" inputmode="decimal" placeholder="0" aria-label="Amount" />
           </div>
         </div>
 
-        <div class="calc__field" id="calcMethodField" style="display:flex">
+        <div class="calc__field" id="calcMethodField">
           <span class="calc__label">Payment method</span>
           <select class="calc__select" id="calcMethod">
             <option value="0.006">UPI — 0.6%</option>
@@ -1602,25 +1658,25 @@
 
       <div class="calc__result">
         <div class="calc__result-label">You receive (estimate)</div>
-        <div class="calc__big" id="calcOut">₹49,646</div>
+        <div class="calc__big" id="calcOut">—</div>
         <div class="calc__sub" id="calcRate">Settles T+1 to your INR account</div>
         <div class="calc__rows">
           <div class="calc__row">
             <span id="calcGrossLabel">Amount charged</span>
-            <b id="calcGross">₹50,000</b>
+            <b id="calcGross">—</b>
           </div>
           <div class="calc__row is-deduct">
             <span id="calcFeeLabel">Platform fee (0.6%)</span>
-            <b id="calcFee">−₹300</b>
+            <b id="calcFee">—</b>
           </div>
           <div class="calc__row is-deduct">
             <span>GST on fee (18%)</span>
-            <b id="calcGst">−₹54</b>
+            <b id="calcGst">—</b>
           </div>
         </div>
       </div>
     </div>
-    <p class="calc__note reveal">Indicative only · FX rates are sample mid-market rates · the live rate applies at settlement</p>
+    <p class="calc__note reveal">Mid-market FX · live rate applies at settlement</p>
   </div>
 </section>
 
@@ -1650,7 +1706,7 @@
           </div>
         </details>
         <details class="faq__item">
-          <summary>Why is UPI only 0.6%? How is it the lowest?</summary>
+          <summary>Why is UPI only 0.6% — and why is it among the lowest rates?</summary>
           <div class="faq__answer">
             Most platforms charge 1–2% on UPI, or don't support domestic payments at all.
             Zendt keeps UPI at a flat 0.6%, the lowest rate around, because charging
@@ -1696,7 +1752,7 @@
   <div class="wrap cta__inner">
     <div>
       <h2>Ready to keep more of every rupee?</h2>
-      <p>International payments launching soon. Domestic in early access.</p>
+      <p>International is in early user testing — not public yet. Domestic is in early access.</p>
     </div>
     <div class="cta__actions">
       <a href="index.html#waitlist" class="btn btn--primary">
@@ -1713,7 +1769,7 @@
   <div class="wrap">
     <div class="foot__top">
       <div class="foot__brand">
-        <a class="logo" href="index.html" aria-label="Zendt Payments">
+        <a class="logo" href="index.html#top" aria-label="Zendt Payments">
           <span class="foot__logo-full" aria-hidden="true"></span>
         </a>
         <p class="foot__tagline">Global Payments. Reimagined.<br />Receive · Manage · Spend.</p>
@@ -1767,8 +1823,8 @@
       </div>
     </div>
     <div class="foot__legal">
-      <p class="foot__note">Banking services are offered and hosted by our RBI licensed banking partners.</p>
-      <span class="foot__copy">© 2026 Zendt Payments Pvt. Ltd. All rights reserved.</span>
+      <p class="foot__note">Banking services are offered and hosted by our RBI licensed banking partners. Payment infrastructure is provided by Zwitch.</p>
+      <p class="foot__copy">© 2026 Zendt Payments Pvt. Ltd.</p>
     </div>
   </div>
 </footer>

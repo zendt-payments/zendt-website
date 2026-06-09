@@ -36,8 +36,8 @@
     --max: 1280px;
     --gutter: clamp(20px, 4vw, 56px);
     --radius: 14px;
-    --nav-bg: rgba(10, 10, 10, 0.6);
-    --nav-bg-scrolled: rgba(10, 10, 10, 0.88);
+    --nav-bg: rgba(12, 12, 12, 0.38);
+    --nav-bg-scrolled: rgba(14, 14, 14, 0.62);
   }
   :root[data-theme="light"] {
     --bg: #F4F1EC;
@@ -58,8 +58,8 @@
     --glow-section-cool: 122, 117, 192;
     --glow-card-warm: 232, 140, 90;
     --glow-card-cool: 122, 117, 192;
-    --nav-bg: rgba(244, 241, 236, 0.65);
-    --nav-bg-scrolled: rgba(244, 241, 236, 0.92);
+    --nav-bg: rgba(252, 248, 242, 0.52);
+    --nav-bg-scrolled: rgba(252, 248, 242, 0.78);
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -102,10 +102,10 @@
     backdrop-filter: blur(14px) saturate(1.2);
     -webkit-backdrop-filter: blur(14px) saturate(1.2);
     background: var(--nav-bg);
-    border-bottom: 1px solid transparent;
-    transition: border-color 240ms ease, background 240ms ease;
+    border-bottom: none;
+    transition: background 240ms ease;
   }
-  .nav.scrolled { background: var(--nav-bg-scrolled); border-bottom-color: var(--line); }
+  .nav.scrolled { background: var(--nav-bg-scrolled); }
   .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
   .logo { display: inline-flex; align-items: center; }
   .logo__mark {
@@ -139,12 +139,21 @@
   /* ---------- Mobile menu ---------- */
   .nav__toggle {
     display: none;
-    width: 40px; height: 40px;
-    border: 1px solid var(--line); border-radius: 999px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
     color: var(--ink);
-    align-items: center; justify-content: center;
-    flex-direction: column; gap: 5px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
     flex-shrink: 0;
+    transition: color 200ms ease;
+  }
+  .nav__toggle:hover {
+    color: var(--warm);
   }
   .nav__toggle span { display: block; width: 16px; height: 1.5px; background: currentColor; transition: transform .25s ease, opacity .2s ease; }
   .nav.is-open .nav__toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
@@ -152,10 +161,11 @@
   .nav.is-open .nav__toggle span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
   .nav__mobile {
     position: fixed; inset: 68px 0 auto 0;
-    background: var(--nav-bg-scrolled);
-    backdrop-filter: blur(16px) saturate(1.2);
-    -webkit-backdrop-filter: blur(16px) saturate(1.2);
-    border-bottom: 1px solid var(--line);
+    background: rgba(8, 8, 8, 0.78);
+    backdrop-filter: blur(52px) saturate(1.45);
+    -webkit-backdrop-filter: blur(52px) saturate(1.45);
+    border: none;
+    box-shadow: none;
     padding: 8px var(--gutter) 28px;
     display: flex; flex-direction: column;
     transform: translateY(-14px); opacity: 0; pointer-events: none;
@@ -182,11 +192,20 @@
 
   .nav__right { display: flex; gap: 14px; align-items: center; }
   .theme-toggle {
-    width: 40px; height: 40px; border: 1px solid var(--line); border-radius: 999px;
-    color: var(--ink); display: inline-flex; align-items: center; justify-content: center;
-    transition: border-color 220ms ease, background 220ms ease, color 220ms ease;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 200ms ease;
   }
-  .theme-toggle:hover { border-color: var(--warm); color: var(--warm); }
+  .theme-toggle:hover {
+    color: var(--warm);
+  }
   .theme-toggle svg { width: 16px; height: 16px; }
   .theme-toggle__sun { display: none; }
   .theme-toggle__moon { display: block; }
@@ -275,7 +294,19 @@
     background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px;
   }
   .field input::placeholder, .field textarea::placeholder { color: var(--muted-2); }
-  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--warm); }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+  .field input:focus-visible,
+  .field textarea:focus-visible,
+  .field select:focus-visible {
+    outline: none;
+  }
+  :root[data-theme="light"] .field input:focus,
+  :root[data-theme="light"] .field textarea:focus,
+  :root[data-theme="light"] .field select:focus {
+    border-color: rgba(14, 12, 10, 0.22);
+  }
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; gap: 0; } }
   .contact__submit { margin-top: 6px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
@@ -380,9 +411,8 @@
   .foot__contact .ct { display: flex; flex-direction: column; line-height: 1.3; }
   .foot__contact .ct b { font-weight: 500; color: var(--ink); font-size: 13.5px; }
   .foot__contact .ct span { font-size: 12px; color: var(--muted); }
-  .foot__legal { margin-top: 32px; display: flex; justify-content: space-between; align-items: center; gap: 16px 40px; flex-wrap: wrap; }
-  .foot__note { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.5; max-width: 60ch; }
-  .foot__copy { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+  .foot__legal { margin-top: 24px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+  .foot__note, .foot__copy { margin: 0; font-family: var(--sans); font-size: 12px; line-height: 1.5; color: var(--muted-2); max-width: 52ch; }
 
   :root[data-theme="light"] body {
     background: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(232,140,90,0.05), transparent 70%), var(--bg);
@@ -391,10 +421,10 @@
 
   /* ---------- Reveal ---------- */
   .js-ready .reveal {
-    opacity: 0; transform: translateY(20px);
-    transition: opacity 700ms cubic-bezier(.2,.7,.2,1), transform 700ms cubic-bezier(.2,.7,.2,1);
+    transform: translateY(20px);
+    transition: transform 700ms cubic-bezier(.2,.7,.2,1);
   }
-  .js-ready .reveal.in { opacity: 1; transform: none; }
+  .js-ready .reveal.in { transform: none; }
   .reveal.d1 { transition-delay: 80ms; }
   .reveal.d2 { transition-delay: 160ms; }
   @media (prefers-reduced-motion: reduce) {
@@ -403,6 +433,7 @@
   }
 </style>
 <link rel="stylesheet" href="assets/css/responsive.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
 </head>
 <body>
 
@@ -410,12 +441,13 @@
 <nav class="nav" id="nav">
   <div class="wrap nav__inner">
     <div class="nav__brand">
-      <a class="logo" href="index.html" aria-label="Zendt Payments home">
+      <a class="logo" href="index.html#top" aria-label="Zendt Payments home">
         <span class="logo__mark" aria-hidden="true"></span>
       </a>
       <span class="nav__badge"><span class="nav__badge-dot" aria-hidden="true"></span>Launching soon</span>
     </div>
     <div class="nav__links">
+      <a href="index.html#top">Home</a>
       <a href="index.html#how">How it works</a>
       <a href="index.html#features">Features</a>
       <a href="pricing.html">Pricing</a>
@@ -424,9 +456,6 @@
       <a href="contact.html" class="is-active">Contact</a>
     </div>
     <div class="nav__right">
-      <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
         <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
           <circle cx="12" cy="12" r="4"/>
@@ -435,6 +464,9 @@
         <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
         </svg>
+      </button>
+      <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
       </button>
       <a class="btn btn--primary" href="index.html#waitlist" style="height:40px;padding:0 18px;font-size:13px;">
         Get Early Access
@@ -478,7 +510,7 @@
           <div class="field-row">
             <div class="field">
               <label for="cf-name">Your name</label>
-              <input type="text" id="cf-name" name="name" placeholder="Alex Mathew" required />
+              <input type="text" id="cf-name" name="name" placeholder="Your full name" required />
             </div>
             <div class="field">
               <label for="cf-email">Email</label>
@@ -510,6 +542,8 @@
             </button>
             <span class="note">Or email us directly at hello@zendtpayments.com</span>
           </div>
+
+          <p class="waitlist__note" id="cfError" style="display:none;color:#E85D5D;font-size:13px;margin-top:12px;" role="alert"></p>
         </form>
 
         <div class="form-success" id="formSuccess">
@@ -584,7 +618,7 @@
   <div class="wrap">
     <div class="foot__top">
       <div class="foot__brand">
-        <a class="logo" href="index.html" aria-label="Zendt Payments">
+        <a class="logo" href="index.html#top" aria-label="Zendt Payments">
           <span class="foot__logo-full" aria-hidden="true"></span>
         </a>
         <p class="foot__tagline">Global Payments. Reimagined.<br />Receive · Manage · Spend.</p>
@@ -638,12 +672,13 @@
       </div>
     </div>
     <div class="foot__legal">
-      <p class="foot__note">Banking services are offered and hosted by our RBI licensed banking partners.</p>
-      <span class="foot__copy">© 2026 Zendt Payments Pvt. Ltd. All rights reserved.</span>
+      <p class="foot__note">Banking services are offered and hosted by our RBI licensed banking partners. Payment infrastructure is provided by Zwitch.</p>
+      <p class="foot__copy">© 2026 Zendt Payments Pvt. Ltd.</p>
     </div>
   </div>
 </footer>
 
+<script src="assets/js/form-config.js" defer></script>
 <script src="assets/js/site.js" defer></script>
 
 

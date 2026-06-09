@@ -5,8 +5,34 @@
   'use strict';
 
   const root = document.documentElement;
-  const SHEET_ENDPOINT =
-    'https://script.google.com/macros/s/AKfycbwdbLBVV1lukC1Kf7d8WS3SaVD0Q9OqsEG70lHSysOVyqP5yYh1p_jDALsJbT2UiB_1pg/exec';
+  /* Replace URL in assets/js/form-config.js after deploying google-apps-script.gs */
+  const SHEET_ENDPOINT = window.ZENDT_FORM_ENDPOINT || '';
+
+  const postToSheet = async (fields) => {
+    if (!SHEET_ENDPOINT) {
+      throw new Error('Form endpoint not configured');
+    }
+
+    const payload = new URLSearchParams({
+      ...fields,
+      submitted_at: new Date().toISOString(),
+    });
+
+    const res = await fetch(SHEET_ENDPOINT, {
+      method: 'POST',
+      body: payload,
+      redirect: 'follow',
+    });
+
+    const text = (await res.text()).trim();
+    if (text === 'ok') return;
+
+    if (text.startsWith('error:')) {
+      throw new Error(text.slice(6).trim());
+    }
+
+    throw new Error(text || 'Submit failed');
+  };
 
   const FX_PAIRS = [
     { code: 'USD', label: 'USD/INR' },
@@ -47,17 +73,68 @@
     });
   }
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const navHeight = () => {
+    const raw = getComputedStyle(document.documentElement).getPropertyValue('--nav-h');
+    const parsed = parseInt(raw, 10);
+    return Number.isFinite(parsed) ? parsed : 68;
+  };
+
+  /* ---------- Staggered child reveals ---------- */
+  if (!prefersReducedMotion) {
+    [
+      { parent: '.steps', child: '.step' },
+      { parent: '.features', child: '.feature' },
+      { parent: '.ctable-mobile', child: '.ctable-mobile__card' },
+    ].forEach(({ parent, child }) => {
+      document.querySelectorAll(parent).forEach((container) => {
+        const items = container.querySelectorAll(child);
+        if (!items.length) return;
+        container.classList.remove('reveal', 'in', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6');
+        items.forEach((item, i) => {
+          item.classList.add('reveal');
+          if (i > 0) item.classList.add(`d${Math.min(i, 6)}`);
+        });
+      });
+    });
+  }
+
+  /* ---------- Smooth anchor scroll (fixed nav offset) ---------- */
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+    const hash = link.getAttribute('href');
+    if (!hash || hash === '#') return;
+    const target = document.querySelector(hash);
+    if (!target) return;
+    e.preventDefault();
+    const top = target.getBoundingClientRect().top + window.scrollY - navHeight() - 12;
+    window.scrollTo({ top: Math.max(0, top), behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    history.pushState(null, '', hash);
+  });
+
   /* ---------- Reveal on scroll ---------- */
   document.body.classList.add('js-ready');
+
+  const revealInView = (el, vh) => {
+    const r = el.getBoundingClientRect();
+    return r.top < vh + 120 && r.bottom > -80;
+  };
 
   const revealVisible = () => {
     const vh = window.innerHeight;
     document.querySelectorAll('.reveal:not(.in)').forEach((el) => {
-      const r = el.getBoundingClientRect();
-      if (r.top < vh * 0.92 && r.bottom > 0) el.classList.add('in');
+      if (revealInView(el, vh)) el.classList.add('in');
     });
   };
+
+  const revealAll = () => {
+    document.querySelectorAll('.reveal:not(.in)').forEach((el) => el.classList.add('in'));
+  };
+
   revealVisible();
+  requestAnimationFrame(revealVisible);
 
   const io = new IntersectionObserver(
     (entries) => {
@@ -68,16 +145,77 @@
         }
       });
     },
-    { threshold: 0.05, rootMargin: '0px 0px -8% 0px' }
+    { threshold: 0.01, rootMargin: '0px 0px 10% 0px' }
   );
   document.querySelectorAll('.reveal:not(.in)').forEach((el) => io.observe(el));
 
-  setTimeout(() => {
-    document.querySelectorAll('.reveal:not(.in)').forEach((el) => {
-      const r = el.getBoundingClientRect();
-      if (r.top < window.innerHeight) el.classList.add('in');
-    });
-  }, 1500);
+  let revealTick = false;
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (revealTick) return;
+      revealTick = true;
+      requestAnimationFrame(() => {
+        revealVisible();
+        revealTick = false;
+      });
+    },
+    { passive: true }
+  );
+
+  window.addEventListener('resize', revealVisible, { passive: true });
+
+  setTimeout(revealVisible, 400);
+  setTimeout(revealVisible, 1500);
+  setTimeout(revealAll, 3500);
+
+  /* ---------- Active section in nav ---------- */
+  const spyLinks = Array.from(document.querySelectorAll('.nav__links a[href^="#"]')).filter(
+    (a) => a.getAttribute('href').length > 1
+  );
+  const homeLink = document.querySelector('.nav__links a[href="#top"]');
+
+  if (spyLinks.length || homeLink) {
+    const sections = spyLinks
+      .map((a) => {
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        return el ? { id, el, link: a } : null;
+      })
+      .filter(Boolean);
+
+    const setActiveNav = () => {
+      const offset = navHeight() + 48;
+      if (homeLink && window.scrollY < 120) {
+        spyLinks.forEach((a) => a.classList.remove('is-active'));
+        homeLink.classList.add('is-active');
+        return;
+      }
+      let current = sections[0]?.id;
+      sections.forEach(({ id, el }) => {
+        if (el.getBoundingClientRect().top - offset <= 0) current = id;
+      });
+      if (homeLink) homeLink.classList.remove('is-active');
+      spyLinks.forEach((a) => {
+        a.classList.toggle('is-active', a.getAttribute('href') === `#${current}`);
+      });
+    };
+
+    let spyTick = false;
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (spyTick) return;
+        spyTick = true;
+        requestAnimationFrame(() => {
+          setActiveNav();
+          spyTick = false;
+        });
+      },
+      { passive: true }
+    );
+    setActiveNav();
+  }
 
   /* ---------- Count-up ---------- */
   const countUp = (el) => {
@@ -110,9 +248,16 @@
         }
       });
     },
-    { threshold: 0.5 }
+    { threshold: 0.15 }
   );
-  document.querySelectorAll('[data-count], [data-num]').forEach((el) => countIO.observe(el));
+  document.querySelectorAll('[data-count], [data-num]').forEach((el) => {
+    countIO.observe(el);
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      countUp(el);
+      countIO.unobserve(el);
+    }
+  });
 
   /* ---------- Pricing bars ---------- */
   const barIO = new IntersectionObserver(
@@ -131,6 +276,7 @@
 
   /* ---------- Mobile nav (navToggle + nav__mobile, or legacy hamburger) ---------- */
   const MOBILE_NAV_BP = 820;
+  const MENU_ANIM_MS = 360;
   const navEl = document.getElementById('nav');
   const navToggle = document.getElementById('navToggle');
   const hamburger = document.getElementById('navHamburger');
@@ -166,11 +312,9 @@
     }
 
     let menuScrollY = 0;
+    let closeTimer = null;
 
-    const closeNav = () => {
-      navEl.classList.remove('is-open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      navToggle.setAttribute('aria-label', 'Menu');
+    const finishCloseNav = () => {
       document.body.classList.remove('menu-open');
       document.body.style.top = '';
       if (panel._returnTo) {
@@ -180,17 +324,35 @@
       window.scrollTo(0, menuScrollY);
     };
 
+    const closeNav = () => {
+      if (!navEl.classList.contains('is-open')) return;
+      navEl.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Menu');
+      if (closeTimer) window.clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(() => {
+        closeTimer = null;
+        finishCloseNav();
+      }, MENU_ANIM_MS);
+    };
+
     const openNav = () => {
+      if (closeTimer) {
+        window.clearTimeout(closeTimer);
+        closeTimer = null;
+      }
       menuScrollY = window.scrollY;
       if (window.innerWidth <= MOBILE_NAV_BP && panel.parentElement !== document.body) {
         panel._returnTo = panel.parentElement;
         document.body.appendChild(panel);
       }
-      navEl.classList.add('is-open');
-      navToggle.setAttribute('aria-expanded', 'true');
-      navToggle.setAttribute('aria-label', 'Close menu');
       document.body.classList.add('menu-open');
       document.body.style.top = `-${menuScrollY}px`;
+      requestAnimationFrame(() => {
+        navEl.classList.add('is-open');
+        navToggle.setAttribute('aria-expanded', 'true');
+        navToggle.setAttribute('aria-label', 'Close menu');
+      });
     };
 
     navToggle.addEventListener('click', () => {
@@ -207,12 +369,9 @@
     });
   } else if (hamburger && navLinks) {
     let menuScrollY = 0;
+    let closeTimer = null;
 
-    const closeNav = () => {
-      navLinks.classList.remove('is-open');
-      hamburger.classList.remove('is-open');
-      hamburger.setAttribute('aria-expanded', 'false');
-      hamburger.setAttribute('aria-label', 'Open menu');
+    const finishCloseNav = () => {
       document.body.classList.remove('menu-open');
       document.body.style.top = '';
       if (navLinks._returnTo) {
@@ -222,18 +381,37 @@
       window.scrollTo(0, menuScrollY);
     };
 
+    const closeNav = () => {
+      if (!navLinks.classList.contains('is-open')) return;
+      navLinks.classList.remove('is-open');
+      hamburger.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open menu');
+      if (closeTimer) window.clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(() => {
+        closeTimer = null;
+        finishCloseNav();
+      }, MENU_ANIM_MS);
+    };
+
     const openNav = () => {
+      if (closeTimer) {
+        window.clearTimeout(closeTimer);
+        closeTimer = null;
+      }
       menuScrollY = window.scrollY;
       if (window.innerWidth <= 720 && navLinks.parentElement !== document.body) {
         navLinks._returnTo = navLinks.parentElement;
         document.body.appendChild(navLinks);
       }
-      navLinks.classList.add('is-open');
-      hamburger.classList.add('is-open');
-      hamburger.setAttribute('aria-expanded', 'true');
-      hamburger.setAttribute('aria-label', 'Close menu');
       document.body.classList.add('menu-open');
       document.body.style.top = `-${menuScrollY}px`;
+      requestAnimationFrame(() => {
+        navLinks.classList.add('is-open');
+        hamburger.classList.add('is-open');
+        hamburger.setAttribute('aria-expanded', 'true');
+        hamburger.setAttribute('aria-label', 'Close menu');
+      });
     };
 
     hamburger.addEventListener('click', () => {
@@ -287,7 +465,7 @@
       showSuccess();
     }
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = emailInput ? emailInput.value.trim() : '';
       const valid = /^\S+@\S+\.\S+$/.test(email);
@@ -310,38 +488,88 @@
       }
 
       try {
-        const iframe = document.createElement('iframe');
-        iframe.name = 'wl-target';
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
+        await postToSheet({ email, source: 'waitlist' });
+        localStorage.setItem('zendt-waitlist', '1');
+        showSuccess();
+      } catch (err) {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = defaultBtnHtml;
+        }
+        if (errorEl) {
+          errorEl.textContent =
+            err.message === 'Form endpoint not configured'
+              ? 'Waitlist is not connected yet. Email hello@zendtpayments.com to join.'
+              : 'Something went wrong. Please try again or email hello@zendtpayments.com.';
+          errorEl.style.display = 'block';
+        }
+      }
+    });
+  }
 
-        const hiddenForm = document.createElement('form');
-        hiddenForm.method = 'POST';
-        hiddenForm.action = SHEET_ENDPOINT;
-        hiddenForm.target = 'wl-target';
-        hiddenForm.style.display = 'none';
+  /* ---------- Contact form ---------- */
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    const successEl = document.getElementById('formSuccess');
+    const errorEl = document.getElementById('cfError');
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const defaultBtnHtml = submitBtn ? submitBtn.innerHTML : '';
 
-        [['email', email], ['source', 'waitlist']].forEach(([name, value]) => {
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = name;
-          input.value = value;
-          hiddenForm.appendChild(input);
-        });
+    const showContactSuccess = () => {
+      contactForm.style.display = 'none';
+      if (errorEl) errorEl.style.display = 'none';
+      if (successEl) successEl.style.display = 'flex';
+    };
 
-        document.body.appendChild(hiddenForm);
-        hiddenForm.submit();
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-        setTimeout(() => {
-          document.body.removeChild(hiddenForm);
-          document.body.removeChild(iframe);
-        }, 5000);
-      } catch (_) {
-        /* still show success — sheet may have received it */
+      const name = (document.getElementById('cf-name')?.value || '').trim();
+      const email = (document.getElementById('cf-email')?.value || '').trim();
+      const topic = (document.getElementById('cf-topic')?.value || '').trim();
+      const message = (document.getElementById('cf-message')?.value || '').trim();
+      const validEmail = /^\S+@\S+\.\S+$/.test(email);
+
+      if (!name || !validEmail || !message) {
+        if (errorEl) {
+          errorEl.textContent = 'Please fill in your name, a valid email, and a message.';
+          errorEl.style.display = 'block';
+        }
+        return;
       }
 
-      localStorage.setItem('zendt-waitlist', '1');
-      showSuccess();
+      if (errorEl) errorEl.style.display = 'none';
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+      }
+
+      try {
+        await postToSheet({
+          source: 'contact',
+          name,
+          email,
+          topic,
+          message,
+        });
+        showContactSuccess();
+      } catch (err) {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = defaultBtnHtml;
+        }
+        if (errorEl) {
+          const msg = String(err.message || err);
+          errorEl.textContent =
+            err.message === 'Form endpoint not configured'
+              ? 'Contact form is not connected yet. Email zendtpayments@gmail.com directly.'
+              : msg.includes('MailApp.sendEmail') || msg.includes('script.send_mail')
+                ? 'Contact form saved, but email is not authorized yet. The site owner must run testContactEmail() in Apps Script once, then redeploy.'
+                : 'Could not send your message. Please try again or email zendtpayments@gmail.com.';
+          errorEl.style.display = 'block';
+        }
+      }
     });
   }
 
@@ -438,36 +666,70 @@
     const feeLabel = document.getElementById('calcFeeLabel');
     const feeEl = document.getElementById('calcFee');
     const gstEl = document.getElementById('calcGst');
+    const intlNote = document.getElementById('calcIntlNote');
     if (!seg || !amtInput) return;
 
+    const calcRoot = seg.closest('.calc');
     let mode = 'dom';
+
+    if (!seg.querySelector('.calc__seg-thumb')) {
+      const thumb = document.createElement('span');
+      thumb.className = 'calc__seg-thumb';
+      thumb.setAttribute('aria-hidden', 'true');
+      seg.insertBefore(thumb, seg.firstChild);
+    }
     const inr = (n) => '₹' + Math.round(n).toLocaleString('en-IN');
     const parseAmt = (v) => parseFloat(String(v).replace(/,/g, '')) || 0;
 
     const methodRate = (amountInr) => {
+      if (!methodSel) return 0.006;
       const v = methodSel.value;
       if (v === 'debit') return amountInr < 2000 ? 0.015 : 0.019;
       return parseFloat(v);
     };
 
     const methodPct = (amountInr) => {
+      if (!methodSel) return '0.6%';
       const v = methodSel.value;
       if (v === 'debit') return amountInr < 2000 ? '1.5%' : '1.9%';
       return (parseFloat(v) * 100).toFixed(1).replace(/\.0$/, '') + '%';
     };
 
     const recalc = () => {
-      const amt = parseAmt(amtInput.value);
-      let gross;
-      let rate;
+      const raw = amtInput.value.trim();
+      const isIntl = mode === 'intl';
+
       if (mode === 'intl') {
-        rate = parseFloat(curSel.value);
-        gross = amt * rate;
+        const opt = curSel.options[curSel.selectedIndex];
+        const rate = parseFloat(curSel.value);
+        if (rateLine) {
+          rateLine.textContent =
+            'at ₹' + rate.toFixed(2) + ' / ' + opt.textContent + ' · mid-market';
+        }
+        if (grossLabel) grossLabel.textContent = 'Gross (in INR)';
+        if (feeLabel) feeLabel.textContent = 'Platform fee (4%)';
       } else {
-        rate = 1;
+        if (rateLine) rateLine.textContent = 'Settles T+1 to your INR account';
+        if (grossLabel) grossLabel.textContent = 'Amount charged';
+        if (feeLabel) feeLabel.textContent = 'Platform fee (' + methodPct(parseAmt(raw)) + ')';
+      }
+
+      if (!raw) {
+        if (out) out.textContent = '₹0';
+        if (grossEl) grossEl.textContent = '₹0';
+        if (feeEl) feeEl.textContent = '₹0';
+        if (gstEl) gstEl.textContent = '₹0';
+        return;
+      }
+
+      const amt = parseAmt(raw);
+      let gross;
+      if (isIntl) {
+        gross = amt * parseFloat(curSel.value);
+      } else {
         gross = amt;
       }
-      const feeR = mode === 'intl' ? 0.04 : methodRate(amt);
+      const feeR = isIntl ? 0.04 : methodRate(amt);
       const fee = gross * feeR;
       const gst = fee * 0.18;
       const net = gross - fee - gst;
@@ -477,18 +739,8 @@
       if (feeEl) feeEl.textContent = '−' + inr(fee);
       if (gstEl) gstEl.textContent = '−' + inr(gst);
 
-      if (mode === 'intl') {
-        const opt = curSel.options[curSel.selectedIndex];
-        if (rateLine) {
-          rateLine.textContent =
-            'at ₹' + rate.toFixed(2) + ' / ' + opt.textContent + ' · indicative mid-market';
-        }
-        if (grossLabel) grossLabel.textContent = 'Gross (in INR)';
-        if (feeLabel) feeLabel.textContent = 'Platform fee (4%)';
-      } else {
-        if (rateLine) rateLine.textContent = 'Settles T+1 to your INR account';
-        if (grossLabel) grossLabel.textContent = 'Amount charged';
-        if (feeLabel) feeLabel.textContent = 'Platform fee (' + methodPct(amt) + ')';
+      if (!isIntl && feeLabel) {
+        feeLabel.textContent = 'Platform fee (' + methodPct(amt) + ')';
       }
     };
 
@@ -496,11 +748,11 @@
       mode = m;
       const isIntl = mode === 'intl';
       seg.querySelectorAll('button').forEach((b) => {
-        b.classList.toggle('is-active', b.dataset.mode === m);
+        const active = b.dataset.mode === m;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-pressed', active ? 'true' : 'false');
       });
-      if (curSel) curSel.style.display = isIntl ? '' : 'none';
-      if (inrTag) inrTag.style.display = isIntl ? 'none' : '';
-      if (methodField) methodField.style.display = isIntl ? 'none' : 'flex';
+      if (calcRoot) calcRoot.classList.toggle('calc--intl', isIntl);
       if (amtLabel) amtLabel.textContent = isIntl ? 'Amount received' : 'Amount (INR)';
       recalc();
     };
@@ -508,9 +760,6 @@
     seg.querySelectorAll('button').forEach((btn) => {
       btn.addEventListener('click', () => {
         if (btn.dataset.mode === mode) return;
-        const cur = parseAmt(amtInput.value);
-        if (btn.dataset.mode === 'dom' && cur < 1000) amtInput.value = '50,000';
-        if (btn.dataset.mode === 'intl' && cur >= 20000) amtInput.value = '3,000';
         setMode(btn.dataset.mode);
       });
     });

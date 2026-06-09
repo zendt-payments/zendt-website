@@ -59,8 +59,8 @@
     --gutter: clamp(20px, 4vw, 56px);
     --radius: 14px;
 
-    --nav-bg: rgba(10, 10, 10, 0.6);
-    --nav-bg-scrolled: rgba(10, 10, 10, 0.88);
+    --nav-bg: rgba(12, 12, 12, 0.38);
+    --nav-bg-scrolled: rgba(14, 14, 14, 0.62);
   }
 
   /* ---------- Light mode ---------- */
@@ -91,8 +91,8 @@
     --glow-card-warm: 232, 140, 90;
     --glow-card-cool: 122, 117, 192;
 
-    --nav-bg: rgba(244, 241, 236, 0.65);
-    --nav-bg-scrolled: rgba(244, 241, 236, 0.92);
+    --nav-bg: rgba(252, 248, 242, 0.52);
+    --nav-bg-scrolled: rgba(252, 248, 242, 0.78);
   }
 
   /* ---------- Reset ---------- */
@@ -186,7 +186,7 @@
 
   /* Always-dark surfaces - these stay dark in both modes for visual continuity
      (they represent the Zendt app itself). Scope dark token values inside them. */
-  .pay-card, .phone, .badge, .founder__portrait {
+  .pay-card, .phone, .founder__portrait, .calc__result {
     --ink: #FFFFFF;
     --ink-2: #E8E6E2;
     --muted: #8A8580;
@@ -205,15 +205,9 @@
     position: fixed;
     inset: 0 0 auto 0;
     z-index: 50;
-    backdrop-filter: blur(14px) saturate(1.2);
-    -webkit-backdrop-filter: blur(14px) saturate(1.2);
-    background: var(--nav-bg);
-    border-bottom: 1px solid transparent;
-    transition: border-color 240ms ease, background 240ms ease;
-  }
-  .nav.scrolled {
-    background: var(--nav-bg-scrolled);
-    border-bottom-color: var(--line);
+    border-bottom: none;
+    box-shadow: none;
+    background: transparent;
   }
   .nav__inner {
     display: flex;
@@ -287,20 +281,30 @@
     gap: 32px;
     align-items: center;
     font-size: 13px;
-    color: var(--muted);
+    color: var(--ink-2);
   }
   .nav__links a { transition: color 200ms ease; }
-  .nav__links a:hover { color: var(--ink); }
+  .nav__links a:hover,
+  .nav__links a.is-active { color: var(--ink); }
   
   /* ---------- Mobile menu ---------- */
   .nav__toggle {
     display: none;
-    width: 40px; height: 40px;
-    border: 1px solid var(--line); border-radius: 999px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
     color: var(--ink);
-    align-items: center; justify-content: center;
-    flex-direction: column; gap: 5px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
     flex-shrink: 0;
+    transition: color 200ms ease;
+  }
+  .nav__toggle:hover {
+    color: var(--warm);
   }
   .nav__toggle span { display: block; width: 16px; height: 1.5px; background: currentColor; transition: transform .25s ease, opacity .2s ease; }
   .nav.is-open .nav__toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
@@ -308,18 +312,15 @@
   .nav.is-open .nav__toggle span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
   .nav__mobile {
     position: fixed; inset: 68px 0 auto 0;
-    background: var(--nav-bg-scrolled);
-    backdrop-filter: blur(16px) saturate(1.2);
-    -webkit-backdrop-filter: blur(16px) saturate(1.2);
-    border-bottom: 1px solid var(--line);
+    background: rgba(8, 8, 8, 0.78);
+    backdrop-filter: blur(52px) saturate(1.45);
+    -webkit-backdrop-filter: blur(52px) saturate(1.45);
+    border: none;
+    box-shadow: none;
     padding: 8px var(--gutter) 28px;
-    display: flex; flex-direction: column;
-    transform: translateY(-14px); opacity: 0; pointer-events: none;
-    transition: transform .28s cubic-bezier(.2,.7,.2,1), opacity .24s ease;
     z-index: 49;
     max-height: calc(100vh - 68px); overflow-y: auto;
   }
-  .nav.is-open .nav__mobile { transform: none; opacity: 1; pointer-events: auto; }
   .nav__mobile a:not(.btn) {
     font-family: var(--display); font-weight: 500;
     font-size: 19px; letter-spacing: -0.01em;
@@ -344,17 +345,17 @@
   .theme-toggle {
     width: 40px;
     height: 40px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
     color: var(--ink);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: border-color 220ms ease, background 220ms ease, color 220ms ease;
+    transition: color 200ms ease;
     position: relative;
   }
   .theme-toggle:hover {
-    border-color: var(--warm);
     color: var(--warm);
   }
   .theme-toggle svg { width: 16px; height: 16px; }
@@ -696,9 +697,8 @@
   /* Floating currency badges */
   .badge {
     position: absolute;
-    z-index: 2;
-    background: linear-gradient(160deg, var(--badge-bg-1), var(--badge-bg-2));
-    border: 1px solid var(--line);
+    background: rgba(20, 18, 16, 0.48);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 14px;
     padding: 12px 16px;
     display: flex;
@@ -710,12 +710,25 @@
     font-weight: 600;
     letter-spacing: 0.02em;
     box-shadow:
-      0 14px 40px rgba(0,0,0,0.6),
-      0 0 40px -12px rgba(var(--glow-card-warm), 0.25);
+      inset 0 1px 0 rgba(255, 255, 255, 0.09),
+      0 14px 40px rgba(0, 0, 0, 0.45),
+      0 0 48px -12px rgba(var(--glow-card-warm), 0.28);
     will-change: transform;
     animation: floaty 6s ease-in-out infinite;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
   }
+  :root[data-theme="light"] .badge {
+    background: rgba(255, 255, 255, 0.82);
+    border-color: rgba(14, 12, 10, 0.12);
+    color: var(--ink-2);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      0 14px 40px rgba(80, 50, 20, 0.12),
+      0 0 48px -12px rgba(var(--glow-card-warm), 0.2);
+  }
+  :root[data-theme="light"] .badge .meta b { color: var(--ink); }
+  :root[data-theme="light"] .badge .meta span { color: #6B635A; }
   .badge .sym {
     font-family: var(--display);
     font-weight: 500;
@@ -738,7 +751,7 @@
     letter-spacing: 0.14em;
     margin-top: 2px;
   }
-  .badge.b1 { top: 0%;   left: -2%;  animation-delay: 0s;    }
+  .badge.b1 { top: 0%;   left: -2%;  animation-delay: 0s;    z-index: 2; }
   .badge.b2 { top: 18%;  right: -4%;  animation-delay: -1.2s; }
   .badge.b3 { top: 52%;  left: -8%;  animation-delay: -2.4s; }
   .badge.b4 { bottom: 18%; right: -8%; animation-delay: -3.0s; }
@@ -1504,8 +1517,9 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
+    min-width: 0;
   }
-  .calc__field { display: flex; flex-direction: column; gap: 11px; }
+  .calc__field { display: flex; flex-direction: column; gap: 11px; min-width: 0; }
   .calc__label {
     font-family: var(--mono);
     font-size: 10.5px;
@@ -1515,12 +1529,14 @@
   }
   .calc__seg {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 4px;
     padding: 4px;
     border: 1px solid var(--line);
     border-radius: 999px;
     background: var(--bg);
+    width: 100%;
+    min-width: 0;
   }
   .calc__seg button {
     height: 40px;
@@ -1582,14 +1598,29 @@
     height: 52px;
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: var(--bg);
+    background-color: var(--bg);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A8580' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
     color: var(--ink);
     font-family: var(--sans);
     font-size: 14.5px;
-    padding: 0 16px;
+    line-height: 1.2;
+    padding: 0 40px 0 16px;
     cursor: pointer;
     outline: none;
+    appearance: none;
+    -webkit-appearance: none;
     transition: border-color 200ms ease;
+  }
+  select.calc__cur {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--surface-2);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238A8580' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
   }
   .calc__select:focus { border-color: var(--warm); }
   .calc__result {
@@ -1599,6 +1630,7 @@
     flex-direction: column;
     position: relative;
     overflow: hidden;
+    min-width: 0;
   }
   .calc__result::before {
     content: "";
@@ -1614,7 +1646,7 @@
     font-size: 10.5px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #B5B0A8;
+    color: #D8D3CB;
     margin-bottom: 12px;
   }
   .calc__big {
@@ -1623,15 +1655,16 @@
     font-size: clamp(40px, 5vw, 60px);
     letter-spacing: -0.03em;
     line-height: 0.95;
-    color: #F5F1EA;
+    color: #FFFFFF;
     font-variant-numeric: tabular-nums;
+    min-height: 0.95em;
   }
   .calc__sub {
     margin-top: 10px;
     font-family: var(--mono);
     font-size: 11px;
     letter-spacing: 0.06em;
-    color: #B5B0A8;
+    color: #C8C3BB;
   }
   .calc__rows {
     margin-top: auto;
@@ -1639,6 +1672,8 @@
     display: flex;
     flex-direction: column;
     gap: 1px;
+    width: 100%;
+    min-width: 0;
   }
   .calc__row {
     display: flex;
@@ -1648,15 +1683,40 @@
     border-top: 1px solid rgba(255,255,255,0.08);
     font-size: 13.5px;
   }
-  .calc__row span { color: #B5B0A8; }
+  .calc__row span {
+    color: #D8D3CB;
+    flex: 1;
+    min-width: 0;
+    padding-right: 10px;
+  }
   .calc__row b {
     font-family: var(--mono);
     font-weight: 400;
-    color: #F2EEE7;
+    color: #FFFFFF;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.02em;
+    flex-shrink: 0;
+    text-align: right;
+    white-space: nowrap;
   }
   .calc__row.is-deduct b { color: var(--warm); }
+  .calc__intl-note {
+    margin: 0;
+    padding: 12px 14px;
+    border: 1px solid rgba(232, 183, 150, 0.35);
+    border-radius: 10px;
+    background: rgba(232, 183, 150, 0.08);
+    font-family: var(--sans);
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .calc__intl-note strong {
+    font-weight: 600;
+    color: var(--warm);
+  }
   .calc__note {
     margin-top: 22px;
     font-family: var(--mono);
@@ -1697,26 +1757,28 @@
     border-radius: var(--radius);
     overflow: hidden;
     background: var(--surface-2);
-  }
-  .ctable__row {
     display: grid;
     grid-template-columns: 1.4fr repeat(3, 1fr);
-    align-items: center;
+    align-items: stretch;
   }
-  .ctable__row + .ctable__row {
-    border-top: 1px solid var(--line);
+  .ctable__row {
+    display: contents;
   }
   .ctable__cell {
     padding: 22px 24px;
     font-size: 14px;
     color: var(--muted);
     border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
     display: flex;
     align-items: center;
     gap: 8px;
     min-height: 64px;
+    align-self: stretch;
+    box-sizing: border-box;
   }
-  .ctable__cell:last-child { border-right: none; }
+  .ctable__cell:nth-child(4n) { border-right: none; }
+  .ctable__cell:nth-last-child(-n+4) { border-bottom: none; }
   .ctable__row.is-head .ctable__cell {
     font-family: var(--mono);
     font-size: 10.5px;
@@ -1734,8 +1796,9 @@
   .ctable__cell.is-zendt {
     background: rgba(var(--glow-section-warm), 0.07);
     color: var(--ink);
-    box-shadow: inset 0 0 0 1px rgba(var(--glow-section-warm), 0.10);
   }
+  .ctable__cell.is-zendt:nth-child(2) { border-bottom: none; }
+  .ctable__cell.is-zendt:nth-child(6) { margin-top: -2px; }
   .ctable__cell.is-row-label {
     font-family: var(--sans);
     color: var(--ink);
@@ -1805,41 +1868,144 @@
   }
   .price-pill.dim { color: var(--muted); }
 
-  /* Mobile: stack as cards */
+  /* Mobile: glass comparison cards */
   @media (max-width: 860px) {
-    .ctable { background: transparent; border: none; }
-    .ctable__row { display: none; }
-    .ctable__row.is-head { display: none; }
+    .ctable { display: none; }
     .ctable-mobile {
       display: grid;
-      gap: 14px;
+      gap: 16px;
     }
     .ctable-mobile__card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 22px;
+      background: rgba(18, 16, 14, 0.52);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.07),
+        0 16px 48px rgba(0, 0, 0, 0.28);
     }
     .ctable-mobile__card.is-zendt {
-      background: var(--ink);
-      color: var(--bg);
+      background: rgba(232, 183, 150, 0.1);
+      border-color: rgba(232, 183, 150, 0.32);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 0 1px rgba(232, 183, 150, 0.15),
+        0 20px 56px rgba(0, 0, 0, 0.32),
+        0 0 64px -24px rgba(232, 183, 150, 0.22);
     }
-    .ctable-mobile__card.is-zendt .row,
-    .ctable-mobile__card.is-zendt .name { color: var(--bg); }
-    .ctable-mobile__card.is-zendt .row span:first-child { color: rgba(13,13,13,0.6); }
+    .ctable-mobile__hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .ctable-mobile__card.is-zendt .ctable-mobile__hdr {
+      border-bottom-color: rgba(232, 183, 150, 0.2);
+    }
     .ctable-mobile__card .name {
-      font-size: 18px;
-      font-weight: 600;
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
       color: var(--ink);
-      margin-bottom: 16px;
+    }
+    .ctable-mobile__badge {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      border: 1px solid rgba(232, 183, 150, 0.35);
+      background: rgba(232, 183, 150, 0.1);
+      padding: 5px 9px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .ctable-mobile__rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
     .ctable-mobile__card .row {
       display: flex;
       justify-content: space-between;
-      padding-block: 8px;
-      font-size: 13px;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 0;
+      font-size: 13.5px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
-    .ctable-mobile__card .row span:first-child { color: var(--muted); }
+    .ctable-mobile__card .row:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+    .ctable-mobile__card .row span:first-child {
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .ctable-mobile__card .row span:last-child {
+      color: var(--ink);
+      font-weight: 500;
+      text-align: right;
+      min-width: 0;
+    }
+    .ctable-mobile__card .val--yes { color: var(--warm); }
+    .ctable-mobile__card .val--no { color: var(--muted-2); }
+    .ctable-mobile__card .val--partial {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+    }
+    .ctable-mobile__card.is-zendt .row span:first-child {
+      color: rgba(245, 241, 234, 0.55);
+    }
+    .ctable-mobile__card.is-zendt .row span:last-child {
+      color: #F5F1EA;
+    }
+    .ctable__note {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+    }
+  }
+  :root[data-theme="light"] .ctable-mobile__card {
+    background: rgba(255, 255, 255, 0.62);
+    border-color: rgba(14, 12, 10, 0.09);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 16px 48px rgba(80, 50, 20, 0.08);
+  }
+  :root[data-theme="light"] .ctable-mobile__card.is-zendt {
+    background: rgba(255, 252, 247, 0.82);
+    border-color: rgba(197, 108, 60, 0.28);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 0 0 1px rgba(197, 108, 60, 0.12),
+      0 20px 56px rgba(80, 50, 20, 0.1);
+  }
+  :root[data-theme="light"] .ctable-mobile__card.is-zendt .row span:first-child {
+    color: var(--muted);
+  }
+  :root[data-theme="light"] .ctable-mobile__card.is-zendt .row span:last-child {
+    color: var(--ink);
+  }
+  :root[data-theme="light"] .ctable-mobile__card .row {
+    border-top-color: rgba(14, 12, 10, 0.08);
+  }
+  :root[data-theme="light"] .ctable-mobile__hdr {
+    border-bottom-color: rgba(14, 12, 10, 0.08);
   }
   @media (min-width: 861px) {
     .ctable-mobile { display: none; }
@@ -1903,18 +2069,14 @@
     background: radial-gradient(closest-side, rgba(var(--glow-card-warm), 0.30), transparent 65%);
     pointer-events: none;
   }
-  .founder__photo {
+  .founder__portrait .silhouette {
     position: absolute;
-    inset: 0;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 18%;
-    display: block;
+    inset: 14% 18% 0 18%;
+    background:
+      radial-gradient(ellipse at 50% 18%, rgba(var(--glow-card-warm), 0.22), transparent 50%),
+      radial-gradient(ellipse at 50% 60%, rgba(255,255,255,0.08), transparent 60%);
   }
   .founder__portrait .label {
-    z-index: 2;
     position: absolute;
     bottom: 20px;
     left: 20px;
@@ -1992,59 +2154,110 @@
     max-width: 46ch;
     font-size: clamp(16px, 1.2vw, 18px);
   }
-  .waitlist__form {
-    display: flex;
-    gap: 10px;
+  .waitlist__panel {
     margin-top: 8px;
-    flex-wrap: wrap;
+  }
+  .waitlist__form {
+    margin-top: 0;
+  }
+  .waitlist__combo {
+    display: grid;
+    gap: 10px;
   }
   .waitlist__input {
-    flex: 1;
-    min-width: 200px;
-    height: 56px;
-    padding: 0 22px;
-    background: transparent;
+    width: 100%;
+    min-width: 0;
+    height: 52px;
+    padding: 0 18px;
+    background: rgba(255, 255, 255, 0.04);
     color: var(--ink);
-    border: 1px solid var(--ink);
-    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
     font-family: var(--sans);
     font-size: 15px;
     outline: none;
-    transition: border-color 200ms ease;
+    transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease;
   }
   .waitlist__input::placeholder { color: var(--muted); }
-  .waitlist__input:focus { border-color: var(--ink); }
+  .waitlist__input:focus {
+    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: none;
+  }
   .waitlist__btn {
-    height: 56px;
-    padding: 0 28px;
+    width: 100%;
+    height: 52px;
+    padding: 0 24px;
     font-size: 14px;
+    border-radius: 14px;
+    white-space: nowrap;
+  }
+  @media (min-width: 600px) {
+    .waitlist__combo {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 0;
+      padding: 5px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+    .waitlist__combo:focus-within {
+      border-color: rgba(255, 255, 255, 0.28);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    .waitlist__input {
+      height: 48px;
+      padding: 0 20px;
+      background: transparent;
+      border: none;
+      border-radius: 999px;
+      box-shadow: none;
+    }
+    .waitlist__input:focus {
+      background: transparent;
+      box-shadow: none;
+    }
+    .waitlist__btn {
+      width: auto;
+      height: 48px;
+      border-radius: 999px;
+    }
   }
   .waitlist__note {
-    margin-top: 22px;
+    margin-top: 16px;
     font-size: 13px;
+    line-height: 1.55;
     color: var(--muted);
-    display: flex;
+  }
+  .waitlist__note--domestic {
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    gap: 8px;
     flex-wrap: wrap;
   }
   .waitlist__note .pulse {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: var(--warm);
-    box-shadow: 0 0 0 0 rgba(var(--glow-card-warm), 0.7);
-    animation: pulse 2.2s ease-out infinite;
-  }
-  @keyframes pulse {
-    0%   { box-shadow: 0 0 0 0 rgba(var(--glow-card-warm), 0.55) }
-    70%  { box-shadow: 0 0 0 12px rgba(var(--glow-card-warm), 0) }
-    100% { box-shadow: 0 0 0 0 rgba(var(--glow-card-warm), 0) }
+    box-shadow: 0 0 0 0 rgba(var(--glow-card-warm), 0.6);
+    animation: navpulse 2.4s ease-out infinite;
+    flex-shrink: 0;
   }
   .waitlist__note a {
     color: var(--ink);
     text-decoration: underline;
     text-underline-offset: 4px;
+  }
+  #wlError,
+  #wlSuccess {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 12px;
   }
 
   /* Waitlist big visual */
@@ -2122,27 +2335,21 @@
   .foot__social a:hover { color: var(--ink); border-color: var(--warm); transform: translateY(-2px); }
   .foot__social svg { width: 17px; height: 17px; }
   .foot__legal {
-    margin-top: 32px;
+    margin-top: 24px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    gap: 16px 40px;
-    flex-wrap: wrap;
+    text-align: center;
+    gap: 8px;
   }
-  .foot__note {
-    margin: 0;
-    color: var(--muted);
-    font-size: 12.5px;
-    line-height: 1.5;
-    max-width: 60ch;
-  }
+  .foot__note,
   .foot__copy {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    text-transform: uppercase;
-    white-space: nowrap;
+    margin: 0;
+    font-family: var(--sans);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted-2);
+    max-width: 52ch;
   }
   .foot__col h5 {
     font-family: var(--mono);
@@ -2226,7 +2433,34 @@
   :root[data-theme="light"] .waitlist {
     background: linear-gradient(180deg, #FFFEFB 0%, #FAF5EC 100%);
   }
-  :root[data-theme="light"] .waitlist__input { color: var(--ink); border-color: var(--ink); background: rgba(255,255,255,0.6); }
+  :root[data-theme="light"] .waitlist__input {
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.72);
+    border-color: rgba(14, 12, 10, 0.12);
+  }
+  :root[data-theme="light"] .waitlist__input:focus {
+    background: #fff;
+    border-color: rgba(14, 12, 10, 0.22);
+    box-shadow: none;
+  }
+  :root[data-theme="light"] .waitlist__combo {
+    background: rgba(255, 255, 255, 0.72);
+    border-color: rgba(14, 12, 10, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  }
+  :root[data-theme="light"] .waitlist__combo:focus-within {
+    border-color: rgba(14, 12, 10, 0.22);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  }
+  :root[data-theme="light"] .waitlist__combo .waitlist__input {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+  :root[data-theme="light"] .waitlist__combo .waitlist__input:focus {
+    background: transparent;
+    box-shadow: none;
+  }
   :root[data-theme="light"] .waitlist__input::placeholder { color: var(--muted); }
   :root[data-theme="light"] .waitlist__note a { color: var(--warm); text-decoration-color: var(--warm); }
 
@@ -2278,8 +2512,29 @@
   }
   :root[data-theme="light"] .ctable__row.is-head .ctable__cell { background: #FBF6EC; }
   :root[data-theme="light"] .ctable__row.is-head .ctable__cell.is-zendt { background: var(--ink); color: #FFFFFF; }
-  :root[data-theme="light"] .ctable__cell.is-zendt { background: rgba(232,140,90,0.06); }
-  :root[data-theme="light"] .cross { color: var(--muted-2); opacity: 0.5; }
+  :root[data-theme="light"] .ctable__row.is-head .ctable__cell:not(.is-zendt) {
+    color: #5A534C;
+    font-weight: 500;
+  }
+  :root[data-theme="light"] .ctable__cell.is-zendt {
+    background: rgba(232, 140, 90, 0.10);
+    color: var(--ink);
+  }
+  :root[data-theme="light"] .ctable__cell.is-row-label { color: #1F1C18; }
+  :root[data-theme="light"] .ctable__cell:not(.is-zendt):not(.is-row-label) { color: #3D3832; }
+  :root[data-theme="light"] .price-pill.dim { color: #4A453E; }
+  :root[data-theme="light"] .partial {
+    color: #4A453E;
+    border-color: rgba(14, 12, 10, 0.16);
+    background: rgba(14, 12, 10, 0.04);
+  }
+  :root[data-theme="light"] .ctable__cell:not(.is-zendt) .check { color: #4A453E; }
+  :root[data-theme="light"] .ctable__cell.is-zendt .check { color: #B85530; }
+  :root[data-theme="light"] .cross { color: #6B635A; opacity: 1; }
+  :root[data-theme="light"] .settle-stack { color: #5A534C; }
+  :root[data-theme="light"] .settle-stack b { color: #1F1C18; }
+  :root[data-theme="light"] .ctable__cell.is-zendt .settle-stack { color: #3D3832; }
+  :root[data-theme="light"] .ctable__cell.is-zendt .settle-stack b { color: #0E0C0A; }
 
   /* Section tag border-top - softer in light mode */
   :root[data-theme="light"] .section-tag { border-top-color: var(--line); }
@@ -2299,11 +2554,6 @@
       0 0 0 6px var(--phone-bezel-2),
       0 0 80px -20px rgba(232,140,90,0.25);
   }
-  :root[data-theme="light"] .badge {
-    box-shadow:
-      0 14px 40px -10px rgba(40, 25, 15, 0.45),
-      0 0 40px -12px rgba(232,140,90,0.30);
-  }
   :root[data-theme="light"] .founder__portrait {
     box-shadow:
       0 30px 80px -20px rgba(40, 25, 15, 0.4),
@@ -2319,16 +2569,16 @@
   /* Step descriptions a touch darker */
   :root[data-theme="light"] .step__desc,
   :root[data-theme="light"] .feature__desc { color: #5A554E; }
+  :root[data-theme="light"] .meta__item .lbl { color: #6B635A; }
+  :root[data-theme="light"] .calc__note { color: #6B635A; }
 
   /* ---------- Reveal on scroll ---------- */
   /* Fail-safe: content is visible by default. Only when JS marks body, do we hide for animation. */
   .js-ready .reveal {
-    opacity: 0;
     transform: translateY(24px);
-    transition: opacity 800ms cubic-bezier(.2,.7,.2,1), transform 800ms cubic-bezier(.2,.7,.2,1);
+    transition: transform 800ms cubic-bezier(.2,.7,.2,1);
   }
   .js-ready .reveal.in {
-    opacity: 1;
     transform: none;
   }
   .reveal.d1 { transition-delay: 80ms; }
@@ -2344,6 +2594,7 @@
   }
 </style>
 <link rel="stylesheet" href="assets/css/responsive.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
 </head>
 <body>
 
@@ -2357,6 +2608,7 @@
       <span class="nav__badge"><span class="nav__badge-dot" aria-hidden="true"></span>Launching soon</span>
     </div>
     <div class="nav__links">
+      <a href="#top">Home</a>
       <a href="#how">How it works</a>
       <a href="#features">Features</a>
       <a href="pricing.html">Pricing</a>
@@ -2365,9 +2617,6 @@
       <a href="contact.html">Contact</a>
     </div>
     <div class="nav__right">
-      <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
         <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
           <circle cx="12" cy="12" r="4"/>
@@ -2376,6 +2625,9 @@
         <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
         </svg>
+      </button>
+      <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
       </button>
       <a class="btn btn--primary" href="#waitlist" style="height:40px;padding:0 18px;font-size:13px;">
         Get Early Access
@@ -2537,12 +2789,15 @@
             <button type="button" data-mode="dom" class="is-active">Domestic</button>
             <button type="button" data-mode="intl">International</button>
           </div>
+          <p class="calc__intl-note" id="calcIntlNote">
+            <strong>Early user testing only.</strong> International payments are not yet available to the public.
+          </p>
         </div>
 
         <div class="calc__field">
           <span class="calc__label" id="calcAmtLabel">Amount (INR)</span>
           <div class="calc__amount">
-            <select class="calc__cur" id="calcCur" aria-label="Currency" style="display:none">
+            <select class="calc__cur" id="calcCur" aria-label="Currency">
               <option value="83.12">USD</option>
               <option value="105.44">GBP</option>
               <option value="90.18">EUR</option>
@@ -2555,11 +2810,11 @@
               <option value="93.40">CHF</option>
             </select>
             <span class="calc__cur" id="calcInr">₹ INR</span>
-            <input type="text" id="calcAmt" inputmode="decimal" value="50,000" aria-label="Amount" />
+            <input type="text" id="calcAmt" inputmode="decimal" placeholder="0" aria-label="Amount" />
           </div>
         </div>
 
-        <div class="calc__field" id="calcMethodField" style="display:flex">
+        <div class="calc__field" id="calcMethodField">
           <span class="calc__label">Payment method</span>
           <select class="calc__select" id="calcMethod">
             <option value="0.006">UPI — 0.6%</option>
@@ -2575,25 +2830,25 @@
 
       <div class="calc__result">
         <div class="calc__result-label">You receive (estimate)</div>
-        <div class="calc__big" id="calcOut">₹49,646</div>
+        <div class="calc__big" id="calcOut">₹0</div>
         <div class="calc__sub" id="calcRate">Settles T+1 to your INR account</div>
         <div class="calc__rows">
           <div class="calc__row">
             <span id="calcGrossLabel">Amount charged</span>
-            <b id="calcGross">₹50,000</b>
+            <b id="calcGross">₹0</b>
           </div>
           <div class="calc__row is-deduct">
             <span id="calcFeeLabel">Platform fee (0.6%)</span>
-            <b id="calcFee">−₹300</b>
+            <b id="calcFee">₹0</b>
           </div>
           <div class="calc__row is-deduct">
             <span>GST on fee (18%)</span>
-            <b id="calcGst">−₹54</b>
+            <b id="calcGst">₹0</b>
           </div>
         </div>
       </div>
     </div>
-    <p class="calc__note reveal">Indicative only · FX rates are sample mid-market rates · the live rate applies at settlement</p>
+    <p class="calc__note reveal">Mid-market FX · live rate applies at settlement</p>
   </div>
 </section>
 
@@ -2934,43 +3189,56 @@
       </div>
     </div>
 
-    <p class="ctable__note reveal d2">
-      Fees are indicative. Based on publicly available pricing.
-    </p>
-
     <!-- mobile cards version -->
     <div class="ctable-mobile reveal d2">
       <div class="ctable-mobile__card is-zendt">
-        <div class="name">Zendt</div>
-        <div class="row"><span>Price</span><span>4% flat</span></div>
-        <div class="row"><span>GCC support</span><span>Yes</span></div>
-        <div class="row"><span>150+ currencies</span><span>Yes</span></div>
-        <div class="row"><span>Payment link</span><span>Yes</span></div>
-        <div class="row"><span>Freelancer profile</span><span>Yes</span></div>
-        <div class="row"><span>Domestic pay</span><span>Yes</span></div>
-        <div class="row"><span>Settlement</span><span>T+1 dom · T+3 int'l</span></div>
+        <div class="ctable-mobile__hdr">
+          <div class="name">Zendt</div>
+          <span class="ctable-mobile__badge">Recommended</span>
+        </div>
+        <div class="ctable-mobile__rows">
+          <div class="row"><span>Price</span><span>4% flat</span></div>
+          <div class="row"><span>GCC support</span><span class="val--yes">Yes</span></div>
+          <div class="row"><span>150+ currencies</span><span class="val--yes">Yes</span></div>
+          <div class="row"><span>Payment link</span><span class="val--yes">Yes</span></div>
+          <div class="row"><span>Freelancer profile</span><span class="val--yes">Yes</span></div>
+          <div class="row"><span>Domestic pay</span><span class="val--yes">Yes</span></div>
+          <div class="row"><span>Settlement</span><span>T+1 dom · T+3 int'l</span></div>
+        </div>
       </div>
       <div class="ctable-mobile__card">
-        <div class="name">Most platforms</div>
-        <div class="row"><span>Price</span><span>3–9% + hidden FX</span></div>
-        <div class="row"><span>GCC support</span><span>No</span></div>
-        <div class="row"><span>150+ currencies</span><span>Limited</span></div>
-        <div class="row"><span>Payment link</span><span>Some</span></div>
-        <div class="row"><span>Freelancer profile</span><span>No</span></div>
-        <div class="row"><span>Domestic pay</span><span>No</span></div>
-        <div class="row"><span>Settlement</span><span>3–5 days int'l</span></div>
+        <div class="ctable-mobile__hdr">
+          <div class="name">Most platforms</div>
+        </div>
+        <div class="ctable-mobile__rows">
+          <div class="row"><span>Price</span><span>3–9% + hidden FX</span></div>
+          <div class="row"><span>GCC support</span><span class="val--no">No</span></div>
+          <div class="row"><span>150+ currencies</span><span class="val--partial">Limited</span></div>
+          <div class="row"><span>Payment link</span><span class="val--partial">Some</span></div>
+          <div class="row"><span>Freelancer profile</span><span class="val--no">No</span></div>
+          <div class="row"><span>Domestic pay</span><span class="val--no">No</span></div>
+          <div class="row"><span>Settlement</span><span>3–5 days int'l</span></div>
+        </div>
       </div>
       <div class="ctable-mobile__card">
-        <div class="name">Traditional wire</div>
-        <div class="row"><span>Price</span><span>5% + bank charges</span></div>
-        <div class="row"><span>GCC support</span><span>Yes</span></div>
-        <div class="row"><span>150+ currencies</span><span>Yes</span></div>
-        <div class="row"><span>Payment link</span><span>No</span></div>
-        <div class="row"><span>Freelancer profile</span><span>No</span></div>
-        <div class="row"><span>Domestic pay</span><span>No</span></div>
-        <div class="row"><span>Settlement</span><span>5–7 days int'l</span></div>
+        <div class="ctable-mobile__hdr">
+          <div class="name">Traditional wire</div>
+        </div>
+        <div class="ctable-mobile__rows">
+          <div class="row"><span>Price</span><span>5% + bank charges</span></div>
+          <div class="row"><span>GCC support</span><span class="val--yes">Yes</span></div>
+          <div class="row"><span>150+ currencies</span><span class="val--yes">Yes</span></div>
+          <div class="row"><span>Payment link</span><span class="val--no">No</span></div>
+          <div class="row"><span>Freelancer profile</span><span class="val--no">No</span></div>
+          <div class="row"><span>Domestic pay</span><span class="val--no">No</span></div>
+          <div class="row"><span>Settlement</span><span>5–7 days int'l</span></div>
+        </div>
       </div>
     </div>
+
+    <p class="ctable__note reveal d2">
+      Based on publicly available pricing.
+    </p>
   </div>
 </section>
 
@@ -2982,15 +3250,8 @@
       <span>Built by a freelancer, for freelancers</span>
     </div>
 
-    <div class="founder">
-      <div class="founder__portrait reveal">
-        <picture>
-          <source srcset="assets/images/founder-alen-thomas.webp" type="image/webp" />
-          <img class="founder__photo" src="assets/images/founder-alen-thomas.jpg" alt="Alen Thomas, Founder of Zendt Payments" width="920" height="1150" loading="lazy" decoding="async" />
-        </picture>
-        <div class="label"><span>ALEN THOMAS</span><span>KERALA · 2024</span></div>
-      </div>
-      <div class="reveal d1">
+    <div class="founder founder--noportrait">
+      <div class="reveal">
         <p class="eyebrow no-rule" style="margin-bottom: 22px;">
           <span style="display:inline-block;width:22px;height:1px;background:var(--muted);margin-right:8px;vertical-align:middle"></span>
           A NOTE FROM THE FOUNDER
@@ -3025,33 +3286,38 @@
       <p class="eyebrow reveal">Early Access</p>
       <h2 class="reveal d1" style="margin-top:24px;">
         International payments<br />
-        <span class="italic">launching soon.</span>
+        <span class="italic">in early user testing.</span>
       </h2>
       <p class="waitlist__lede reveal d2">
-        Join the early access list. Be among the first 500 freelancers to
-        receive global payments on Zendt, with a locked-in launch rate.
+        Not available to the public yet. Join the waitlist and we'll let you
+        know when international opens on Zendt.
       </p>
     </div>
     <div class="waitlist__panel reveal d2">
       <form class="waitlist__form" id="wlForm" novalidate>
-        <input
-          class="waitlist__input"
-          type="email"
-          placeholder="you@yourwork.com"
-          required
-          aria-label="Email address"
-          id="wlEmail"
-        />
-        <button class="btn btn--primary waitlist__btn" type="submit">
-          Join Waitlist
-          <span class="btn__arrow" aria-hidden="true">→</span>
-        </button>
+        <div class="waitlist__combo">
+          <input
+            class="waitlist__input"
+            type="email"
+            placeholder="Enter your email"
+            required
+            aria-label="Email address"
+            id="wlEmail"
+          />
+          <button class="btn btn--primary waitlist__btn" type="submit">
+            Join Waitlist
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
       </form>
-      <div class="waitlist__note">
-        <span class="pulse" aria-hidden="true"></span>
-        Domestic payments now in early access. <a href="mailto:hello@zendtpayments.com?subject=Zendt%20Domestic%20Early%20Access%20Request">Request access →</a>
-      </div>
       <div class="waitlist__note" id="wlError" style="display:none;color:#E85D5D;font-size:13px;" role="alert"></div>
+      <p class="waitlist__note waitlist__note--domestic">
+        <span class="pulse" aria-hidden="true"></span>
+        <span>
+          Domestic payments are in early access.
+          <a href="mailto:hello@zendtpayments.com?subject=Zendt%20Domestic%20Early%20Access%20Request">Request access →</a>
+        </span>
+      </p>
       <div class="waitlist__note" id="wlSuccess" style="display:none;color:var(--ink);">
         ✓ You're on the list. We'll reach out soon.
       </div>
@@ -3118,14 +3384,14 @@
       </div>
     </div>
     <div class="foot__legal">
-      <p class="foot__note">Banking services are offered and hosted by our RBI licensed banking partners.</p>
-      <span class="foot__copy">© 2026 Zendt Payments Pvt. Ltd. All rights reserved.</span>
+      <p class="foot__note">Banking services are offered and hosted by our RBI licensed banking partners. Payment infrastructure is provided by Zwitch.</p>
+      <p class="foot__copy">© 2026 Zendt Payments Pvt. Ltd.</p>
     </div>
   </div>
 </footer>
 
+<script src="assets/js/form-config.js" defer></script>
 <script src="assets/js/site.js" defer></script>
-
 
 </body>
 </html>
