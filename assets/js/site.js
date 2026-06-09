@@ -34,18 +34,185 @@
     throw new Error(text || 'Submit failed');
   };
 
-  const FX_PAIRS = [
-    { code: 'USD', label: 'USD/INR' },
-    { code: 'GBP', label: 'GBP/INR' },
-    { code: 'AED', label: 'AED/INR' },
-    { code: 'EUR', label: 'EUR/INR' },
-    { code: 'AUD', label: 'AUD/INR' },
-    { code: 'CAD', label: 'CAD/INR' },
-    { code: 'QAR', label: 'QAR/INR' },
-    { code: 'SGD', label: 'SGD/INR' },
-    { code: 'SAR', label: 'SAR/INR' },
-    { code: 'CHF', label: 'CHF/INR' },
-  ];
+  const INTL_CURRENCIES = window.ZENDT_INTL_CURRENCIES || [];
+  const TICKER_PAIRS = INTL_CURRENCIES.slice(0, 10).map(({ code }) => ({
+    code,
+    label: `${code}/INR`,
+  }));
+
+  const FX = (() => {
+    const CACHE_KEY = 'zendt-inr-rates-v1';
+    const CACHE_TTL_MS = 30 * 60 * 1000;
+    const ENDPOINTS = [
+      'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/inr.json',
+      'https://latest.currency-api.pages.dev/v1/currencies/inr.json',
+    ];
+
+    let memory = null;
+    let inflight = null;
+
+    const inrPerUnit = (inrTable, code) => {
+      const rate = inrTable[String(code || '').toLowerCase()];
+      if (!rate || rate <= 0) return null;
+      return 1 / rate;
+    };
+
+    const formatInrPerUnit = (value) => {
+      if (!Number.isFinite(value) || value <= 0) return '—';
+      if (value >= 100) return value.toFixed(2);
+      if (value >= 1) return value.toFixed(2);
+      if (value >= 0.01) return value.toFixed(4);
+      return value.toFixed(6);
+    };
+
+    const formatRateDate = (dateStr) => {
+      if (!dateStr) return '';
+      const parsed = new Date(`${dateStr}T00:00:00`);
+      if (Number.isNaN(parsed.getTime())) return dateStr;
+      return parsed.toLocaleDateString('en-IN', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      });
+    };
+
+    const readCache = (allowStale = false) => {
+      try {
+        const raw = sessionStorage.getItem(CACHE_KEY);
+        if (!raw) return null;
+        const cached = JSON.parse(raw);
+        if (!cached?.table) return null;
+        if (!allowStale && Date.now() - cached.fetchedAt > CACHE_TTL_MS) return null;
+        return cached;
+      } catch {
+        return null;
+      }
+    };
+
+    const writeCache = (payload) => {
+      memory = payload;
+      try {
+        sessionStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({ ...payload, fetchedAt: Date.now() })
+        );
+      } catch {
+        /* ignore quota errors */
+      }
+    };
+
+    const fetchFromEndpoint = async (url) => {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`Rates HTTP ${res.status}`);
+      const data = await res.json();
+      if (!data?.inr || typeof data.inr !== 'object') {
+        throw new Error('Rates payload invalid');
+      }
+      return {
+        table: data.inr,
+        date: data.date || new Date().toISOString().slice(0, 10),
+        source: url.includes('jsdelivr') ? 'currency-api' : 'currency-api-mirror',
+      };
+    };
+
+    const load = async ({ force = false } = {}) => {
+      if (!force && memory?.table) return memory;
+
+      if (!force) {
+        const cached = readCache();
+        if (cached) {
+          memory = cached;
+          return cached;
+        }
+      }
+
+      if (inflight) return inflight;
+
+      inflight = (async () => {
+        let lastError = null;
+        for (const url of ENDPOINTS) {
+          try {
+            const payload = await fetchFromEndpoint(url);
+            writeCache(payload);
+            return payload;
+          } catch (err) {
+            lastError = err;
+          }
+        }
+
+        const stale = readCache(true) || memory;
+        if (stale?.table) {
+          return { ...stale, stale: true };
+        }
+
+        throw lastError || new Error('Rates unavailable');
+      })();
+
+      try {
+        return await inflight;
+      } finally {
+        inflight = null;
+      }
+    };
+
+    const buildRatesMap = (inrTable, codes) => {
+      const rates = {};
+      codes.forEach((code) => {
+        const rate = inrPerUnit(inrTable, code);
+        if (rate) rates[code] = rate;
+      });
+      return rates;
+    };
+
+    return {
+      load,
+      inrPerUnit,
+      formatInrPerUnit,
+      formatRateDate,
+      buildRatesMap,
+      CACHE_TTL_MS,
+    };
+  })();
+
+  const populateCalcCurrencies = (select, inrTable, selectedCode) => {
+    if (!select || !INTL_CURRENCIES.length) return false;
+
+    const keepCode =
+      selectedCode || select.options[select.selectedIndex]?.dataset?.code || 'USD';
+
+    select.innerHTML = '';
+
+    INTL_CURRENCIES.forEach(({ code, name }) => {
+      const rate = FX.inrPerUnit(inrTable, code);
+      if (!rate) return;
+
+      const opt = document.createElement('option');
+      opt.value = String(rate);
+      opt.textContent = `${code} — ${name}`;
+      opt.dataset.code = code;
+      select.appendChild(opt);
+    });
+
+    if (!select.options.length) return false;
+
+    const match = [...select.options].find((opt) => opt.dataset.code === keepCode);
+    (match || select.options[0]).selected = true;
+    return true;
+  };
+
+  const refreshCalcCurrencyRates = (select, inrTable) => {
+    if (!select) return false;
+
+    let updated = 0;
+    [...select.options].forEach((opt) => {
+      const rate = FX.inrPerUnit(inrTable, opt.dataset.code);
+      if (!rate) return;
+      opt.value = String(rate);
+      updated += 1;
+    });
+
+    return updated > 0;
+  };
 
   /* ---------- Nav scroll ---------- */
   const nav = document.getElementById('nav');
@@ -612,42 +779,35 @@
   /* ---------- Live FX ticker ---------- */
   const tickerTrack = document.getElementById('fxTicker');
   if (tickerTrack) {
-    const formatRate = (n) => n.toFixed(2);
-
     const buildItems = (rates) => {
-      const items = FX_PAIRS.map(({ code, label }) => {
+      const items = TICKER_PAIRS.map(({ code, label }) => {
         const rate = rates[code];
         if (!rate) return '';
-        return `<span class="ticker__item" data-pair="${label}"><b>${label}</b> ${formatRate(rate)} <span class="dot"></span></span>`;
+        return `<span class="ticker__item" data-pair="${label}"><b>${label}</b> ${FX.formatInrPerUnit(rate)} <span class="dot"></span></span>`;
       }).filter(Boolean);
       return items.length ? items.join('') + items.join('') : null;
     };
 
-    const fetchRates = async () => {
-      try {
-        const results = await Promise.all(
-          FX_PAIRS.map(async ({ code }) => {
-            const res = await fetch(
-              `https://api.frankfurter.app/latest?from=${code}&to=INR`
-            );
-            if (!res.ok) return null;
-            const data = await res.json();
-            return { code, rate: data.rates?.INR };
-          })
-        );
-        const rates = {};
-        results.forEach((r) => {
-          if (r?.rate) rates[r.code] = r.rate;
-        });
-        const html = buildItems(rates);
-        if (html) tickerTrack.innerHTML = html;
-      } catch (_) {
-        /* keep static fallback rates in HTML */
-      }
+    const renderTicker = (payload) => {
+      const rates = FX.buildRatesMap(
+        payload.table,
+        TICKER_PAIRS.map(({ code }) => code)
+      );
+      const html = buildItems(rates);
+      if (html) tickerTrack.innerHTML = html;
     };
 
-    fetchRates();
-    setInterval(fetchRates, 5 * 60 * 1000);
+    FX.load()
+      .then(renderTicker)
+      .catch(() => {
+        /* keep static fallback rates in HTML */
+      });
+
+    setInterval(() => {
+      FX.load({ force: true })
+        .then(renderTicker)
+        .catch(() => {});
+    }, FX.CACHE_TTL_MS);
   }
 
   /* ---------- Receive calculator (index + pricing) ---------- */
@@ -671,6 +831,15 @@
 
     const calcRoot = seg.closest('.calc');
     let mode = 'dom';
+    let fxMeta = { date: '', stale: false, ready: false };
+
+    const intlRateLine = (code, rate) => {
+      const formatted = FX.formatInrPerUnit(rate);
+      const dateLabel = fxMeta.date ? FX.formatRateDate(fxMeta.date) : '';
+      const staleLabel = fxMeta.stale ? ' · cached rate' : '';
+      const updatedLabel = dateLabel ? ` · updated ${dateLabel}` : '';
+      return `at ₹${formatted} / ${code} · mid-market${updatedLabel}${staleLabel}`;
+    };
 
     if (!seg.querySelector('.calc__seg-thumb')) {
       const thumb = document.createElement('span');
@@ -700,11 +869,15 @@
       const isIntl = mode === 'intl';
 
       if (mode === 'intl') {
-        const opt = curSel.options[curSel.selectedIndex];
-        const rate = parseFloat(curSel.value);
+        const opt = curSel?.options[curSel.selectedIndex];
+        const rate = parseFloat(curSel?.value);
+        const code = opt?.dataset?.code || opt?.textContent?.split(' — ')[0] || 'USD';
         if (rateLine) {
-          rateLine.textContent =
-            'at ₹' + rate.toFixed(2) + ' / ' + opt.textContent + ' · mid-market';
+          if (!fxMeta.ready || !Number.isFinite(rate)) {
+            rateLine.textContent = 'Loading mid-market rates…';
+          } else {
+            rateLine.textContent = intlRateLine(code, rate);
+          }
         }
         if (grossLabel) grossLabel.textContent = 'Gross (in INR)';
         if (feeLabel) feeLabel.textContent = 'Platform fee (4%)';
@@ -771,6 +944,40 @@
     });
     if (curSel) curSel.addEventListener('change', recalc);
     if (methodSel) methodSel.addEventListener('change', recalc);
+
+    const applyFxRates = (payload) => {
+      fxMeta = {
+        date: payload.date,
+        stale: Boolean(payload.stale),
+        ready: true,
+      };
+
+      if (curSel && INTL_CURRENCIES.length) {
+        if (curSel.options.length <= 1) {
+          populateCalcCurrencies(curSel, payload.table);
+        } else {
+          refreshCalcCurrencyRates(curSel, payload.table);
+        }
+      }
+
+      recalc();
+    };
+
+    if (curSel && INTL_CURRENCIES.length) {
+      FX.load()
+        .then(applyFxRates)
+        .catch(() => {
+          fxMeta.ready = Boolean(curSel.options.length);
+          recalc();
+        });
+
+      setInterval(() => {
+        FX.load({ force: true })
+          .then(applyFxRates)
+          .catch(() => {});
+      }, FX.CACHE_TTL_MS);
+    }
+
     setMode('dom');
   })();
 

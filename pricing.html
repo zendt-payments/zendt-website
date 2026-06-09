@@ -946,6 +946,8 @@
   select.calc__cur {
     appearance: none;
     -webkit-appearance: none;
+    min-width: 11.5rem;
+    max-width: 100%;
     background-color: var(--surface-2);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238A8580' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -1626,16 +1628,7 @@
           <span class="calc__label" id="calcAmtLabel">Amount (INR)</span>
           <div class="calc__amount">
             <select class="calc__cur" id="calcCur" aria-label="Currency">
-              <option value="83.12" data-sym="$">USD</option>
-              <option value="105.44" data-sym="£">GBP</option>
-              <option value="90.18" data-sym="€">EUR</option>
-              <option value="22.61" data-sym="د.إ">AED</option>
-              <option value="22.16" data-sym="﷼">SAR</option>
-              <option value="22.83" data-sym="ر.ق">QAR</option>
-              <option value="54.72" data-sym="A$">AUD</option>
-              <option value="60.86" data-sym="C$">CAD</option>
-              <option value="61.55" data-sym="S$">SGD</option>
-              <option value="93.40" data-sym="Fr">CHF</option>
+              <option value="95.64" data-code="USD">USD — US Dollar</option>
             </select>
             <span class="calc__cur" id="calcInr">₹ INR</span>
             <input type="text" id="calcAmt" inputmode="decimal" placeholder="0" aria-label="Amount" />
@@ -1829,6 +1822,7 @@
   </div>
 </footer>
 
+<script src="assets/js/currencies.js" defer></script>
 <script src="assets/js/site.js" defer></script>
 
 

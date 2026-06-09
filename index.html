@@ -1616,6 +1616,8 @@
   select.calc__cur {
     appearance: none;
     -webkit-appearance: none;
+    min-width: 11.5rem;
+    max-width: 100%;
     background-color: var(--surface-2);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238A8580' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -2745,27 +2747,27 @@
 <div class="ticker" aria-hidden="true">
   <div class="ticker__track" id="fxTicker">
     <!-- repeated twice for seamless loop -->
-    <span class="ticker__item"><b>USD/INR</b> 83.12 <span class="dot"></span></span>
-    <span class="ticker__item"><b>GBP/INR</b> 105.44 <span class="dot"></span></span>
-    <span class="ticker__item"><b>AED/INR</b> 22.61 <span class="dot"></span></span>
-    <span class="ticker__item"><b>EUR/INR</b> 90.18 <span class="dot"></span></span>
-    <span class="ticker__item"><b>AUD/INR</b> 54.72 <span class="dot"></span></span>
-    <span class="ticker__item"><b>CAD/INR</b> 60.86 <span class="dot"></span></span>
-    <span class="ticker__item"><b>QAR/INR</b> 22.83 <span class="dot"></span></span>
-    <span class="ticker__item"><b>SGD/INR</b> 61.55 <span class="dot"></span></span>
-    <span class="ticker__item"><b>SAR/INR</b> 22.16 <span class="dot"></span></span>
-    <span class="ticker__item"><b>CHF/INR</b> 93.40 <span class="dot"></span></span>
+    <span class="ticker__item"><b>USD/INR</b> 95.64 <span class="dot"></span></span>
+    <span class="ticker__item"><b>GBP/INR</b> 127.66 <span class="dot"></span></span>
+    <span class="ticker__item"><b>AED/INR</b> 26.04 <span class="dot"></span></span>
+    <span class="ticker__item"><b>EUR/INR</b> 110.35 <span class="dot"></span></span>
+    <span class="ticker__item"><b>AUD/INR</b> 67.37 <span class="dot"></span></span>
+    <span class="ticker__item"><b>CAD/INR</b> 68.56 <span class="dot"></span></span>
+    <span class="ticker__item"><b>QAR/INR</b> 26.27 <span class="dot"></span></span>
+    <span class="ticker__item"><b>SGD/INR</b> 74.29 <span class="dot"></span></span>
+    <span class="ticker__item"><b>SAR/INR</b> 25.50 <span class="dot"></span></span>
+    <span class="ticker__item"><b>CHF/INR</b> 119.91 <span class="dot"></span></span>
 
-    <span class="ticker__item"><b>USD/INR</b> 83.12 <span class="dot"></span></span>
-    <span class="ticker__item"><b>GBP/INR</b> 105.44 <span class="dot"></span></span>
-    <span class="ticker__item"><b>AED/INR</b> 22.61 <span class="dot"></span></span>
-    <span class="ticker__item"><b>EUR/INR</b> 90.18 <span class="dot"></span></span>
-    <span class="ticker__item"><b>AUD/INR</b> 54.72 <span class="dot"></span></span>
-    <span class="ticker__item"><b>CAD/INR</b> 60.86 <span class="dot"></span></span>
-    <span class="ticker__item"><b>QAR/INR</b> 22.83 <span class="dot"></span></span>
-    <span class="ticker__item"><b>SGD/INR</b> 61.55 <span class="dot"></span></span>
-    <span class="ticker__item"><b>SAR/INR</b> 22.16 <span class="dot"></span></span>
-    <span class="ticker__item"><b>CHF/INR</b> 93.40 <span class="dot"></span></span>
+    <span class="ticker__item"><b>USD/INR</b> 95.64 <span class="dot"></span></span>
+    <span class="ticker__item"><b>GBP/INR</b> 127.66 <span class="dot"></span></span>
+    <span class="ticker__item"><b>AED/INR</b> 26.04 <span class="dot"></span></span>
+    <span class="ticker__item"><b>EUR/INR</b> 110.35 <span class="dot"></span></span>
+    <span class="ticker__item"><b>AUD/INR</b> 67.37 <span class="dot"></span></span>
+    <span class="ticker__item"><b>CAD/INR</b> 68.56 <span class="dot"></span></span>
+    <span class="ticker__item"><b>QAR/INR</b> 26.27 <span class="dot"></span></span>
+    <span class="ticker__item"><b>SGD/INR</b> 74.29 <span class="dot"></span></span>
+    <span class="ticker__item"><b>SAR/INR</b> 25.50 <span class="dot"></span></span>
+    <span class="ticker__item"><b>CHF/INR</b> 119.91 <span class="dot"></span></span>
   </div>
 </div>
 
@@ -2798,16 +2800,7 @@
           <span class="calc__label" id="calcAmtLabel">Amount (INR)</span>
           <div class="calc__amount">
             <select class="calc__cur" id="calcCur" aria-label="Currency">
-              <option value="83.12">USD</option>
-              <option value="105.44">GBP</option>
-              <option value="90.18">EUR</option>
-              <option value="22.61">AED</option>
-              <option value="22.16">SAR</option>
-              <option value="22.83">QAR</option>
-              <option value="54.72">AUD</option>
-              <option value="60.86">CAD</option>
-              <option value="61.55">SGD</option>
-              <option value="93.40">CHF</option>
+              <option value="95.64" data-code="USD">USD — US Dollar</option>
             </select>
             <span class="calc__cur" id="calcInr">₹ INR</span>
             <input type="text" id="calcAmt" inputmode="decimal" placeholder="0" aria-label="Amount" />
@@ -3390,6 +3383,7 @@
   </div>
 </footer>
 
+<script src="assets/js/currencies.js" defer></script>
 <script src="assets/js/form-config.js" defer></script>
 <script src="assets/js/site.js" defer></script>
 
