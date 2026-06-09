@@ -27,9 +27,9 @@
   );
   --glass-nav-border: rgba(255, 255, 255, 0.1);
   --glass-nav-border-scrolled: rgba(255, 255, 255, 0.12);
-  --glass-menu-bg: rgba(10, 10, 10, 0.98);
-  --glass-blur-menu: blur(40px) saturate(1.35);
-  --glass-scrim: rgba(0, 0, 0, 0.72);
+  --glass-menu-bg: rgba(6, 6, 6, 0.72);
+  --glass-blur-menu: blur(64px) saturate(1.3) brightness(0.62);
+  --glass-scrim: rgba(0, 0, 0, 0.58);
   --menu-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --menu-dur: 360ms;
   --glass-border: rgba(255, 255, 255, 0.09);
@@ -50,8 +50,9 @@
   );
   --glass-nav-border: rgba(14, 12, 10, 0.08);
   --glass-nav-border-scrolled: rgba(14, 12, 10, 0.11);
-  --glass-menu-bg: rgba(252, 248, 242, 0.98);
-  --glass-scrim: rgba(14, 12, 10, 0.55);
+  --glass-menu-bg: rgba(252, 248, 242, 0.72);
+  --glass-blur-menu: blur(48px) saturate(1.5) brightness(1.04);
+  --glass-scrim: rgba(14, 12, 10, 0.32);
   --glass-border: rgba(14, 12, 10, 0.09);
   --glass-border-strong: rgba(14, 12, 10, 0.13);
   --glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.72);
@@ -136,6 +137,8 @@
   .nav { background: var(--bg) !important; }
   .nav__mobile,
   .nav__links.is-open { background: var(--surface) !important; }
+  .nav__mobile::before,
+  .nav__links.is-open::before { display: none; }
 }
 
 /* ---------- Mobile navigation (≤820px — nav__mobile pattern) ---------- */
@@ -306,8 +309,8 @@
     inset: 0;
     top: calc(var(--nav-h) + var(--safe-top));
     background: var(--glass-scrim);
-    backdrop-filter: blur(32px) saturate(1.3);
-    -webkit-backdrop-filter: blur(32px) saturate(1.3);
+    backdrop-filter: blur(48px) saturate(1.2) brightness(0.52);
+    -webkit-backdrop-filter: blur(48px) saturate(1.2) brightness(0.52);
     z-index: 299;
     animation: menu-scrim-in var(--menu-dur) var(--menu-ease) both;
   }
@@ -338,29 +341,43 @@
     max-width: 100vw;
     bottom: 0;
     top: calc(var(--nav-h) + var(--safe-top)) !important;
-    background: var(--surface) !important;
-    background: var(--glass-menu-bg) !important;
-    backdrop-filter: var(--glass-blur-menu) !important;
-    -webkit-backdrop-filter: var(--glass-blur-menu) !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    isolation: isolate;
     z-index: 301;
     padding: 8px max(var(--gutter), var(--safe-left), var(--safe-right))
       calc(32px + var(--safe-bottom));
     gap: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
     overscroll-behavior: contain;
     border-top: 1px solid var(--glass-border-strong);
     border-bottom: none;
-    box-shadow: var(--glass-shadow);
+    box-shadow: 0 20px 56px rgba(0, 0, 0, 0.42);
     max-height: none;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform: translateY(-12px);
+    transform: translate3d(0, -12px, 0);
     transition:
       opacity var(--menu-dur) var(--menu-ease),
       transform var(--menu-dur) var(--menu-ease),
       visibility var(--menu-dur) var(--menu-ease);
+  }
+
+  .nav__mobile::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      var(--glass-nav-highlight),
+      var(--glass-menu-bg);
+    backdrop-filter: var(--glass-blur-menu);
+    -webkit-backdrop-filter: var(--glass-blur-menu);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    will-change: backdrop-filter;
   }
 
   body.menu-open .nav__mobile,
@@ -369,7 +386,13 @@
     opacity: 1;
     visibility: visible;
     pointer-events: auto !important;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  .nav__mobile a,
+  .nav__mobile .btn {
+    position: relative;
+    z-index: 1;
   }
 
   .nav__mobile a:not(.btn) {
@@ -459,8 +482,8 @@
     inset: 0;
     top: calc(var(--nav-h) + var(--safe-top));
     background: var(--glass-scrim);
-    backdrop-filter: blur(32px) saturate(1.3);
-    -webkit-backdrop-filter: blur(32px) saturate(1.3);
+    backdrop-filter: blur(48px) saturate(1.2) brightness(0.52);
+    -webkit-backdrop-filter: blur(48px) saturate(1.2) brightness(0.52);
     z-index: 299;
     animation: menu-scrim-in var(--menu-dur) var(--menu-ease) both;
   }
@@ -486,33 +509,54 @@
     max-width: 100vw;
     bottom: 0;
     top: calc(var(--nav-h) + var(--safe-top));
-    background: var(--glass-menu-bg) !important;
-    backdrop-filter: var(--glass-blur-menu) !important;
-    -webkit-backdrop-filter: var(--glass-blur-menu) !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    isolation: isolate;
     z-index: 301;
     padding: 8px max(var(--gutter), var(--safe-left), var(--safe-right)) calc(32px + var(--safe-bottom));
     gap: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
     overscroll-behavior: contain;
-    border-top: none;
+    border-top: 1px solid var(--glass-border-strong);
     border-bottom: none;
-    box-shadow: none;
+    box-shadow: 0 20px 56px rgba(0, 0, 0, 0.42);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform: translateY(-18px);
+    transform: translate3d(0, -18px, 0);
     transition:
       opacity var(--menu-dur) var(--menu-ease),
       transform var(--menu-dur) var(--menu-ease),
       visibility var(--menu-dur) var(--menu-ease);
   }
 
+  .nav__links::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      var(--glass-nav-highlight),
+      var(--glass-menu-bg);
+    backdrop-filter: var(--glass-blur-menu);
+    -webkit-backdrop-filter: var(--glass-blur-menu);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    will-change: backdrop-filter;
+  }
+
   .nav__links.is-open {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  .nav__links.is-open a,
+  .nav__links.is-open .nav__menu-cta {
+    position: relative;
+    z-index: 1;
   }
 
   .nav__links.is-open a:not(.nav__menu-cta) {
