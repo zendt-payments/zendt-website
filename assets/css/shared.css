@@ -123,9 +123,12 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   background: currentColor;
   transition: transform 0.25s ease, opacity 0.2s ease;
 }
-.nav.is-open .nav__toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-.nav.is-open .nav__toggle span:nth-child(2) { opacity: 0; }
-.nav.is-open .nav__toggle span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.nav.is-open .nav__toggle span:nth-child(1),
+.nav__toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav.is-open .nav__toggle span:nth-child(2),
+.nav__toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav.is-open .nav__toggle span:nth-child(3),
+.nav__toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 @media (max-width: 820px) {
   .nav__links { display: none; }
   .nav__toggle { display: inline-flex; }

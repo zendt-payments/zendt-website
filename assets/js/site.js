@@ -449,12 +449,21 @@
   const hamburger = document.getElementById('navHamburger');
   const navLinks = document.getElementById('navLinks');
 
-  const bindMobileNav = ({ isOpen, open, close }) => {
+  const bindMobileNav = ({ isOpen, close, panel, toggleEl }) => {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && isOpen()) close();
     });
+
     window.addEventListener('resize', () => {
       if (window.innerWidth > MOBILE_NAV_BP && isOpen()) close();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!isOpen()) return;
+      const target = e.target;
+      if (panel?.contains(target)) return;
+      if (toggleEl?.contains(target)) return;
+      close();
     });
   };
 
@@ -464,6 +473,7 @@
       panel = document.createElement('div');
       panel.className = 'nav__mobile';
       panel.id = 'navMobile';
+      panel.setAttribute('aria-hidden', 'true');
       document.querySelectorAll('.nav__links a').forEach((a) => {
         panel.appendChild(a.cloneNode(true));
       });
@@ -482,6 +492,8 @@
     let closeTimer = null;
 
     const finishCloseNav = () => {
+      panel.classList.remove('is-open');
+      panel.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('menu-open');
       document.body.style.top = '';
       if (panel._returnTo) {
@@ -515,6 +527,8 @@
       }
       document.body.classList.add('menu-open');
       document.body.style.top = `-${menuScrollY}px`;
+      panel.classList.add('is-open');
+      panel.setAttribute('aria-hidden', 'false');
       requestAnimationFrame(() => {
         navEl.classList.add('is-open');
         navToggle.setAttribute('aria-expanded', 'true');
@@ -522,17 +536,23 @@
       });
     };
 
-    navToggle.addEventListener('click', () => {
+    navToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
       if (navEl.classList.contains('is-open')) closeNav();
       else openNav();
     });
 
-    panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeNav));
+    panel.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', () => {
+        closeNav();
+      });
+    });
 
     bindMobileNav({
       isOpen: () => navEl.classList.contains('is-open'),
-      open: openNav,
       close: closeNav,
+      panel,
+      toggleEl: navToggle,
     });
   } else if (hamburger && navLinks) {
     let menuScrollY = 0;
