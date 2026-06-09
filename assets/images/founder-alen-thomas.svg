@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 1150" role="img" aria-label="Alen Thomas, Founder of Zendt Payments">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1815"/>
+      <stop offset="100%" stop-color="#0d0c0a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="42%" cy="22%" r="55%">
+      <stop offset="0%" stop-color="#E8B796" stop-opacity="0.42"/>
+      <stop offset="70%" stop-color="#E8B796" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="figure" x1="30%" y1="0%" x2="70%" y2="100%">
+      <stop offset="0%" stop-color="#3a342f"/>
+      <stop offset="100%" stop-color="#1f1b18"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="920" height="1150" fill="url(#bg)"/>
+  <rect width="920" height="1150" fill="url(#grid)"/>
+  <rect width="920" height="1150" fill="url(#glow)"/>
+  <ellipse cx="460" cy="470" rx="168" ry="198" fill="url(#figure)"/>
+  <path fill="url(#figure)" d="M248 760c36-118 136-188 212-188s176 70 212 188c-58 42-132 64-212 64s-154-22-212-64z"/>
+  <ellipse cx="460" cy="430" rx="118" ry="138" fill="#2b2622"/>
+  <path fill="#2b2622" d="M310 610c44-24 96-36 150-36s106 12 150 36c-34 28-88 44-150 44s-116-16-150-44z"/>
+</svg>
