@@ -1,0 +1,9 @@
+Contact: mailto:hello@zendtpayments.com
+Contact: tel:+91-73560-04147
+Preferred-Languages: en, hi
+Canonical: https://www.zendtpayments.com/.well-known/security.txt
+Policy: https://www.zendtpayments.com/privacy
+Hiring: https://www.zendtpayments.com/contact
+
+# Zendt Payments Pvt. Ltd. — security contact for responsible disclosure.
+# This is a legitimate Indian freelancer payments platform, not cryptocurrency or investment.

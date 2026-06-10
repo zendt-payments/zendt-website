@@ -1,8 +1,34 @@
+# Zendt Payments — https://www.zendtpayments.com/
+# Legitimate Indian freelancer payment platform (not cryptocurrency or investment)
+
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://www.zendtpayments.com/sitemap.xml
+# AI / LLM site summary
+# See https://www.zendtpayments.com/llms.txt
 
-# Block access to uploads folder (raw assets)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Raw upload assets — not public pages
 Disallow: /uploads/
+
+Sitemap: https://www.zendtpayments.com/sitemap.xml
