@@ -60,6 +60,7 @@ There is **no Bitcoin, crypto, NFT, token, staking, or DeFi** product on this we
 | Terms | /terms | Terms of service and prohibited uses |
 | Refund | /refund | Refund policy |
 | Referral | /referral | Referral fee-credit programme terms |
+| Delete account | /delete-account | How to request permanent account deletion |
 
 ## Social profiles
 
