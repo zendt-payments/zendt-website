@@ -1,0 +1,111 @@
+/* SEO content pages — guides, compare, corridor pages */
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.breadcrumb a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.breadcrumb a:hover { color: var(--ink); }
+.breadcrumb span[aria-hidden="true"] { opacity: 0.45; }
+
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0 32px;
+  font-size: 14px;
+}
+.cmp-table th,
+.cmp-table td {
+  border: 1px solid var(--line);
+  padding: 14px 16px;
+  text-align: left;
+  vertical-align: top;
+}
+.cmp-table th {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface-2);
+}
+.cmp-table td.is-zendt {
+  background: rgba(var(--glow-section-warm, 232, 183, 150), 0.08);
+  font-weight: 500;
+}
+.cmp-table caption {
+  text-align: left;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.guide-list {
+  display: grid;
+  gap: 16px;
+  margin: 32px 0;
+}
+.guide-list a {
+  display: block;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color 200ms ease, background 200ms ease;
+}
+.guide-list a:hover {
+  border-color: var(--warm);
+  background: var(--surface-2);
+}
+.guide-list h3 {
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+.guide-list p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.legal .faq-block {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+.legal .faq-block h2 { margin-bottom: 20px; }
+.legal details {
+  border-bottom: 1px solid var(--line);
+  padding: 16px 0;
+}
+.legal details summary {
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--ink);
+  list-style: none;
+}
+.legal details summary::-webkit-details-marker { display: none; }
+.legal details p {
+  margin: 12px 0 0;
+}
+
+.author-box {
+  margin-top: 40px;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--muted);
+}
+.author-box strong { color: var(--ink); }
