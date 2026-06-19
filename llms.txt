@@ -30,7 +30,7 @@ There is **no Bitcoin, crypto, NFT, token, staking, or DeFi** product on this we
 
 - **Legal entity:** Zendt Payments Pvt. Ltd., India
 - **Location:** Rajagiri Orbiit, Infopark Phase 1, Kakkanad, Kochi, Kerala, India
-- **Founder:** Alen Thomas
+- **Founders:** Alen Thomas & Akshay K Rao
 - **Banking & settlement:** Provided through **RBI-licensed banking and payment partners** (disclosed on site)
 - **Payment infrastructure partner:** Zwitch (disclosed on site)
 - **Compliance:** KYC, AML, and FEMA-aligned onboarding for users; prohibited-use policies in Terms of Service
@@ -61,6 +61,7 @@ There is **no Bitcoin, crypto, NFT, token, staking, or DeFi** product on this we
 | About | /about | Company, founder, regulatory model |
 | Story | /story | Company build journey |
 | Contact | /contact | Support and enquiry form |
+| Compare hub | /compare | Zendt vs Payoneer, Skydo, Wise & BriskPe |
 | Compare vs Payoneer | /compare/zendt-vs-payoneer | Competitor comparison |
 | Compare vs Skydo | /compare/zendt-vs-skydo | Competitor comparison |
 | Compare vs Wise | /compare/zendt-vs-wise | Competitor comparison |

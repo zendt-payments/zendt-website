@@ -11,7 +11,10 @@ export function organizationSchema() {
     url: `${SITE}/`,
     logo: `${SITE}/logo-full.png`,
     foundingDate: '2024-12',
-    founder: { '@type': 'Person', name: 'Alen Thomas' },
+    founder: [
+      { '@type': 'Person', name: 'Alen Thomas' },
+      { '@type': 'Person', name: 'Akshay K Rao' },
+    ],
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Rajagiri Orbiit, Infopark Phase 1',

@@ -76,7 +76,7 @@ function nav(depth) {
       <a href="${r}how-it-works.html">How it works</a>
       <a href="${r}features.html">Features</a>
       <a href="${r}pricing.html">Pricing</a>
-      <a href="${r}compare/zendt-vs-payoneer.html">Compare</a>
+      <a href="${r}compare/index.html">Compare</a>
       <a href="${r}story.html">Story</a>
       <a href="${r}contact.html">Contact</a>
     </div>
@@ -106,7 +106,7 @@ function footer(depth) {
         <ul>
           <li><a href="${r}features.html">Features</a></li>
           <li><a href="${r}pricing.html">Pricing</a></li>
-          <li><a href="${r}compare/zendt-vs-payoneer.html">Compare</a></li>
+          <li><a href="${r}compare/index.html">Compare</a></li>
           <li><a href="${r}how-it-works.html">How it works</a></li>
           <li><a href="${r}guides/index.html">Guides</a></li>
         </ul>
@@ -185,7 +185,6 @@ ${nav(depth)}
     <div class="wrap legal__inner reveal">
       ${body}
       ${faqHtml}
-      <p class="legal__updated">Published: 9 June 2026</p>
     </div>
   </section>
 </main>
@@ -212,7 +211,7 @@ page({
   article: true,
   body: `<p><strong>Zendt Payments Pvt. Ltd.</strong> builds payment infrastructure for Indian freelancers and independent professionals. We help you invoice international clients, share payment links in 150+ fiat currencies, and settle proceeds to your INR bank account — with domestic UPI collections for Indian clients on the same platform.</p>
 <h2>Who we are</h2>
-<p>Founded by <strong>Alen Thomas</strong> in Kochi, Kerala, Zendt was built around a gap other platforms miss: Indian freelancers earning from the Gulf, US, UK, and EU need one place to get paid without losing 6–9% to hidden FX and correspondent bank fees.</p>
+<p>Founded by <strong>Alen Thomas &amp; Akshay K Rao</strong> in Kochi, Kerala, Zendt was built around a gap other platforms miss: Indian freelancers earning from the Gulf, US, UK, and EU need one place to get paid without losing 6–9% to hidden FX and correspondent bank fees.</p>
 <h2>Regulatory model</h2>
 <ul>
 <li><strong>Legal entity:</strong> Zendt Payments Pvt. Ltd., India</li>
@@ -274,6 +273,8 @@ const comparisons = [
     file: 'compare/zendt-vs-payoneer.html',
     slug: 'zendt-vs-payoneer',
     alt: 'Payoneer',
+    blurb: 'GCC corridor support, domestic UPI, and a flat 4% international rate with no hidden FX markup.',
+    tags: ['4% flat fee', 'GCC support', 'UPI included'],
     intro: 'Payoneer is a global payout platform used by many Indian freelancers. Zendt is built specifically for India — GCC corridor support, domestic UPI, and a flat 4% international rate with no hidden FX markup.',
     rows: [
       ['International fee', '4% flat on settlement', '3–5% + FX spread'],
@@ -292,6 +293,8 @@ const comparisons = [
     file: 'compare/zendt-vs-skydo.html',
     slug: 'zendt-vs-skydo',
     alt: 'Skydo',
+    blurb: 'Gulf corridor coverage, domestic UPI at 0.6%, and a freelancer profile in one platform.',
+    tags: ['Gulf corridor', 'Domestic UPI', 'Freelancer profile'],
     intro: 'Skydo and Zendt both serve Indian freelancers receiving international payments. Zendt differentiates on GCC corridor coverage, domestic UPI at 0.6%, and a freelancer profile — in one platform.',
     rows: [
       ['International fee', '4% flat', 'Published tiered rates'],
@@ -309,6 +312,8 @@ const comparisons = [
     file: 'compare/zendt-vs-wise.html',
     slug: 'zendt-vs-wise',
     alt: 'Wise',
+    blurb: 'Purpose-built for Indian freelancers invoicing clients and settling to INR with compliance handled end-to-end.',
+    tags: ['Payment links', 'GCC corridor', 'INR settlement'],
     intro: 'Wise (formerly TransferWise) is excellent for personal transfers and some business use cases. Zendt is purpose-built for Indian freelancers invoicing clients and settling to INR with compliance handled end-to-end.',
     rows: [
       ['Built for freelancers', 'Invoicing + links + profile', 'General transfers'],
@@ -326,6 +331,8 @@ const comparisons = [
     file: 'compare/zendt-vs-briskpe.html',
     slug: 'zendt-vs-briskpe',
     alt: 'BriskPe',
+    blurb: 'Compare fees, GCC support, and whether domestic collections are included on one dashboard.',
+    tags: ['Indian fintech', 'Payment links', 'GCC currencies'],
     intro: 'BriskPe and Zendt both target Indian businesses and freelancers receiving foreign payments. Compare fees, GCC support, and whether domestic collections are included.',
     rows: [
       ['International pricing', '4% flat published', 'Varies — check published rates'],
@@ -341,6 +348,25 @@ const comparisons = [
   },
 ];
 
+page({
+  file: 'compare/index.html',
+  depth: 1,
+  title: 'Compare Zendt — Payoneer, Skydo, Wise &amp; BriskPe',
+  meta: 'Compare Zendt with Payoneer, Skydo, Wise, and BriskPe for Indian freelancers: fees, GCC support, UPI, INR settlement, and payment links.',
+  breadcrumb: [{ name: 'Compare', url: `${SITE}/compare` }],
+  heroMeta: 'Compare · Alternatives',
+  article: true,
+  body: `<p>Choosing how to receive international client payments? Compare Zendt side-by-side with the platforms Indian freelancers use most — fees, Gulf corridor support, domestic UPI, and INR settlement.</p>
+<div class="compare-list">
+${comparisons.map((c) => `<a class="compare-card" href="${c.slug}.html">
+  <div class="compare-card__head"><h3>Zendt vs ${c.alt}</h3><span class="compare-card__arrow" aria-hidden="true">→</span></div>
+  <p>${c.blurb}</p>
+  <div class="compare-card__tags">${c.tags.map((t) => `<span class="compare-card__tag">${t}</span>`).join('')}</div>
+</a>`).join('\n')}
+</div>
+<p>Based on publicly available information as of June 2026. <a href="../pricing.html">See Zendt pricing</a>.</p>`,
+});
+
 for (const c of comparisons) {
   page({
     file: c.file,
@@ -348,7 +374,7 @@ for (const c of comparisons) {
     title: `Zendt vs ${c.alt} for Indian Freelancers`,
     meta: `Compare Zendt and ${c.alt} for Indian freelancers: fees, GCC support, UPI, INR settlement, and payment links.`,
     breadcrumb: [
-      { name: 'Compare', url: `${SITE}/compare/zendt-vs-payoneer` },
+      { name: 'Compare', url: `${SITE}/compare` },
       { name: `Zendt vs ${c.alt}`, url: `${SITE}/compare/${c.slug}` },
     ],
     heroMeta: `Compare · Zendt vs ${c.alt}`,

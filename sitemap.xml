@@ -51,6 +51,13 @@
   </url>
 
   <url>
+    <loc>https://www.zendtpayments.com/compare</loc>
+    <lastmod>2026-06-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
     <loc>https://www.zendtpayments.com/compare/zendt-vs-payoneer</loc>
     <lastmod>2026-06-09</lastmod>
     <changefreq>monthly</changefreq>
