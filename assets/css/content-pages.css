@@ -105,11 +105,12 @@
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
 }
 .compare-card__head {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 36px;
+  column-gap: 20px;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
+  min-height: 36px;
 }
 .compare-card h3 {
   font-family: var(--display);
@@ -117,27 +118,30 @@
   font-weight: 500;
   margin: 0;
   letter-spacing: -0.02em;
+  line-height: 1.25;
   color: var(--ink);
   text-decoration: none;
+  min-width: 0;
 }
 .compare-card__arrow {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--line);
   border-radius: 999px;
   color: var(--muted);
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1;
+  justify-self: end;
   transition: color 220ms ease, border-color 220ms ease, transform 220ms ease;
 }
 .compare-card:hover .compare-card__arrow {
   color: var(--ink);
   border-color: var(--warm);
-  transform: translate(2px, -2px);
+  transform: translateX(2px);
 }
 .compare-card p {
   margin: 0 0 18px;
