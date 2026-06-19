@@ -17,6 +17,10 @@
     { "source": "/refund-policy", "destination": "/refund", "permanent": true },
     { "source": "/referral-policy", "destination": "/referral", "permanent": true },
     { "source": "/careers", "destination": "/contact", "permanent": true },
-    { "source": "/press", "destination": "/contact", "permanent": true }
+    { "source": "/press", "destination": "/contact", "permanent": true },
+    { "source": "/zendt-vs-payoneer", "destination": "/compare/zendt-vs-payoneer", "permanent": true },
+    { "source": "/zendt-vs-skydo", "destination": "/compare/zendt-vs-skydo", "permanent": true },
+    { "source": "/zendt-vs-wise", "destination": "/compare/zendt-vs-wise", "permanent": true },
+    { "source": "/zendt-vs-briskpe", "destination": "/compare/zendt-vs-briskpe", "permanent": true }
   ]
 }

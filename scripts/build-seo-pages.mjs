@@ -13,6 +13,7 @@ import {
   faqSchema,
   articleSchema,
 } from '../assets/seo/schema-snippets.js';
+import { siteFooter } from '../assets/seo/footer-snippet.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
@@ -76,7 +77,7 @@ function nav(depth) {
       <a href="${r}how-it-works.html">How it works</a>
       <a href="${r}features.html">Features</a>
       <a href="${r}pricing.html">Pricing</a>
-      <a href="${r}compare/index.html">Compare</a>
+      <a href="${r}index.html#compare">Compare</a>
       <a href="${r}story.html">Story</a>
       <a href="${r}contact.html">Contact</a>
     </div>
@@ -92,49 +93,16 @@ function nav(depth) {
 </nav>`;
 }
 
-function footer(depth) {
+function localHref(depth, sitePath) {
   const r = rel(depth);
-  return `<footer>
-  <div class="wrap">
-    <div class="foot__top">
-      <div class="foot__brand">
-        <a class="logo" href="${r}index.html#top" aria-label="Zendt Payments"><span class="foot__logo-full" aria-hidden="true"></span></a>
-        <p class="foot__tagline">Global Payments. Reimagined.<br />Receive · Manage · Spend.</p>
-      </div>
-      <div class="foot__col">
-        <h5>Product</h5>
-        <ul>
-          <li><a href="${r}features.html">Features</a></li>
-          <li><a href="${r}pricing.html">Pricing</a></li>
-          <li><a href="${r}compare/index.html">Compare</a></li>
-          <li><a href="${r}how-it-works.html">How it works</a></li>
-          <li><a href="${r}guides/index.html">Guides</a></li>
-        </ul>
-      </div>
-      <div class="foot__col">
-        <h5>Company</h5>
-        <ul>
-          <li><a href="${r}about.html">About</a></li>
-          <li><a href="${r}story.html">Story</a></li>
-          <li><a href="${r}contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="foot__col">
-        <h5>Legal</h5>
-        <ul>
-          <li><a href="${r}privacy.html">Privacy</a></li>
-          <li><a href="${r}terms.html">Terms</a></li>
-          <li><a href="${r}delete-account.html">Delete account</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="foot__legal">
-      <p class="foot__note">Banking services are offered and hosted by our RBI licensed banking partners. Payment infrastructure is provided by Zwitch.</p>
-      <p class="foot__copy">© 2026 Zendt Payments Pvt. Ltd.</p>
-    </div>
-  </div>
-</footer>
-<script src="${r}assets/js/site.js" defer></script>`;
+  if (!sitePath || sitePath === '/') return `${r}index.html`;
+  if (sitePath === 'compare') return `${r}compare/index.html`;
+  return `${r}${sitePath}`;
+}
+
+function footer(depth) {
+  return `${siteFooter(rel(depth))}
+<script src="${rel(depth)}assets/js/site.js" defer></script>`;
 }
 
 function page({ file, depth, title, meta, breadcrumb, heroMeta, body, faqs, article }) {
@@ -157,13 +125,10 @@ function page({ file, depth, title, meta, breadcrumb, heroMeta, body, faqs, arti
   const breadcrumbHtml = crumbs
     .map((c, i) => {
       const isLast = i === crumbs.length - 1;
-      const href = c.url.replace(SITE, rel(depth) || './').replace(/\/$/, '/index.html');
       if (isLast) return `<span aria-current="page">${c.name}</span>`;
-      const link = c.url === `${SITE}/` ? `${rel(depth)}index.html` : href.replace(SITE, rel(depth) ? rel(depth).slice(0, -1) : '') || c.url;
-      const path = c.url.replace(`${SITE}/`, '');
-      const local = path ? `${rel(depth)}${path}${path.includes('.') ? '' : ''}` : `${rel(depth)}index.html`;
-      const finalHref = c.url === `${SITE}/` ? `${rel(depth)}index.html` : `${rel(depth)}${path}`;
-      return `<a href="${finalHref}">${c.name}</a><span aria-hidden="true">/</span>`;
+      const path = c.url.replace(`${SITE}/`, '').replace(/\/$/, '');
+      const href = localHref(depth, path || '/');
+      return `<a href="${href}">${c.name}</a><span aria-hidden="true">/</span>`;
     })
     .join(' ');
 
@@ -358,7 +323,7 @@ page({
   article: true,
   body: `<p>Choosing how to receive international client payments? Compare Zendt side-by-side with the platforms Indian freelancers use most — fees, Gulf corridor support, domestic UPI, and INR settlement.</p>
 <div class="compare-list">
-${comparisons.map((c) => `<a class="compare-card" href="${c.slug}.html">
+${comparisons.map((c) => `<a class="compare-card" href="/compare/${c.slug}">
   <div class="compare-card__head"><h3>Zendt vs ${c.alt}</h3><span class="compare-card__arrow" aria-hidden="true">→</span></div>
   <p>${c.blurb}</p>
   <div class="compare-card__tags">${c.tags.map((t) => `<span class="compare-card__tag">${t}</span>`).join('')}</div>

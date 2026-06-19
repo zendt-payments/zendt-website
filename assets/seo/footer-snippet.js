@@ -1,85 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Page not found · Zendt Payments</title>
-<meta name="robots" content="noindex" />
-<link rel="icon" type="image/png" href="logo-mark.png" />
-<link rel="stylesheet" href="assets/css/shared.css" />
-<link rel="stylesheet" href="assets/css/responsive.css" />
-<link rel="stylesheet" href="assets/css/motion.css" />
-<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500&display=swap" rel="stylesheet" />
-<style>
-  .notfound {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 40px var(--gutter);
-  }
-  .notfound h1 {
-    font-family: var(--display);
-    font-size: clamp(48px, 8vw, 96px);
-    color: var(--ink);
-    margin: 0 0 16px;
-    letter-spacing: -0.04em;
-  }
-  .notfound p { color: var(--muted); max-width: 36ch; margin: 0 0 32px; }
-</style>
-</head>
-<body>
-<nav class="nav" id="nav">
-  <div class="wrap nav__inner">
-    <div class="nav__brand">
-      <a class="logo" href="index.html#top" aria-label="Zendt Payments home">
-        <span class="logo__mark" aria-hidden="true"></span>
-      </a>
-      <span class="nav__badge"><span class="nav__badge-dot" aria-hidden="true"></span>Launching soon</span>
-    </div>
-    <div class="nav__links">
-      <a href="index.html#top">Home</a>
-      <a href="index.html#how">How it works</a>
-      <a href="index.html#features">Features</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="index.html#compare">Compare</a>
-      <a href="story.html">Story</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <div class="nav__right">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
-        <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
-          <circle cx="12" cy="12" r="4"/>
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-        </svg>
-        <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      </button>
-      <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-      <a class="btn btn--primary" href="index.html#waitlist" style="height:40px;padding:0 18px;font-size:13px;">
-        Get Early Access
-        <span class="btn__arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
-  </div>
-</nav>
-<div class="notfound">
-  <h1>404</h1>
-  <p>This page doesn't exist. Maybe it crossed a border we haven't opened yet.</p>
-  <a href="index.html" class="btn btn--primary">Back to home →</a>
-</div>
-
-<footer>
+/** Universal site footer — prefix is relative path to site root (e.g. '' or '../') */
+export function siteFooter(prefix = '') {
+  const r = prefix;
+  return `<footer>
   <div class="wrap">
     <div class="foot__top">
       <div class="foot__brand">
-        <a class="logo" href="index.html#top" aria-label="Zendt Payments">
+        <a class="logo" href="${r}index.html#top" aria-label="Zendt Payments">
           <span class="foot__logo-full" aria-hidden="true"></span>
         </a>
         <p class="foot__tagline">Global Payments. Reimagined.<br />Receive · Manage · Spend.</p>
@@ -98,29 +24,29 @@
       <div class="foot__col">
         <h5>Product</h5>
         <ul>
-          <li><a href="features.html">Features</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="compare/index.html">Compare</a></li>
-          <li><a href="how-it-works.html">How it works</a></li>
-          <li><a href="guides/index.html">Guides</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="${r}features.html">Features</a></li>
+          <li><a href="${r}pricing.html">Pricing</a></li>
+          <li><a href="${r}compare/index.html">Compare</a></li>
+          <li><a href="${r}how-it-works.html">How it works</a></li>
+          <li><a href="${r}guides/index.html">Guides</a></li>
+          <li><a href="${r}contact.html">Contact</a></li>
         </ul>
       </div>
       <div class="foot__col">
         <h5>Company</h5>
         <ul>
-          <li><a href="about.html">About</a></li>
-          <li><a href="story.html">Story</a></li>
+          <li><a href="${r}about.html">About</a></li>
+          <li><a href="${r}story.html">Story</a></li>
         </ul>
       </div>
       <div class="foot__col">
         <h5>Legal</h5>
         <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
-          <li><a href="refund.html">Refund Policy</a></li>
-          <li><a href="referral.html">Referral Policy</a></li>
-          <li><a href="delete-account.html">Delete account</a></li>
+          <li><a href="${r}privacy.html">Privacy Policy</a></li>
+          <li><a href="${r}terms.html">Terms of Service</a></li>
+          <li><a href="${r}refund.html">Refund Policy</a></li>
+          <li><a href="${r}referral.html">Referral Policy</a></li>
+          <li><a href="${r}delete-account.html">Delete account</a></li>
         </ul>
       </div>
       <div class="foot__col">
@@ -146,8 +72,5 @@
       <p class="foot__copy">© 2026 Zendt Payments Pvt. Ltd.</p>
     </div>
   </div>
-</footer>
-
-<script src="assets/js/site.js" defer></script>
-</body>
-</html>
+</footer>`;
+}
