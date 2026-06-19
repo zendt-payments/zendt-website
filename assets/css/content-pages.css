@@ -99,13 +99,3 @@
 .legal details p {
   margin: 12px 0 0;
 }
-
-.author-box {
-  margin-top: 40px;
-  padding: 20px 22px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  font-size: 14px;
-  color: var(--muted);
-}
-.author-box strong { color: var(--ink); }

@@ -185,7 +185,6 @@ ${nav(depth)}
     <div class="wrap legal__inner reveal">
       ${body}
       ${faqHtml}
-      <div class="author-box"><strong>Alen Thomas</strong> · Founder, Zendt Payments Pvt. Ltd. · Last updated: 9 June 2026</div>
       <p class="legal__updated">Published: 9 June 2026</p>
     </div>
   </section>
