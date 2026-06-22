@@ -24,10 +24,10 @@ export function siteFooter(prefix = '') {
         </div>
         <div class="foot__stores">
           <a href="${APP_STORE_URL}" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store">
-            <img src="${r}assets/images/badge-app-store.svg" alt="" width="120" height="40" loading="lazy" decoding="async" />
+            <img src="${r}assets/images/badge-app-store.png" alt="" width="120" height="40" loading="lazy" decoding="async" />
           </a>
           <a href="${PLAY_STORE_URL}" target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play">
-            <img src="${r}assets/images/badge-google-play.svg" alt="" width="135" height="40" loading="lazy" decoding="async" />
+            <img src="${r}assets/images/badge-google-play.png" alt="" width="135" height="40" loading="lazy" decoding="async" />
           </a>
         </div>
       </div>
