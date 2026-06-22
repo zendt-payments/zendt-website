@@ -104,10 +104,16 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .store-icons--nav a:hover {
   color: var(--warm);
 }
-.store-icons--nav svg {
+.store-icons--nav .nav-icon {
   display: block;
   width: 16px;
   height: 16px;
+  flex-shrink: 0;
+}
+.store-icons--hero .nav-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
 }
 .store-icons--hero {
   display: flex;
@@ -125,16 +131,6 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .store-icons--hero a:hover {
   transform: translateY(-1px);
   opacity: 0.92;
-}
-.store-icons--hero img,
-.store-icons--hero svg {
-  display: block;
-  height: 40px;
-  width: auto;
-}
-.store-icons--hero svg {
-  height: 18px;
-  width: 18px;
 }
 .nav__toggle {
   display: none;
