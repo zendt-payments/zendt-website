@@ -70,7 +70,6 @@ function nav(depth) {
   <div class="wrap nav__inner">
     <div class="nav__brand">
       <a class="logo" href="${r}index.html#top" aria-label="Zendt Payments home"><span class="logo__mark" aria-hidden="true"></span></a>
-      <span class="nav__badge"><span class="nav__badge-dot" aria-hidden="true"></span>Launching soon</span>
     </div>
     <div class="nav__links">
       <a href="${r}index.html#top">Home</a>

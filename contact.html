@@ -115,23 +115,6 @@
     mask: url(logo-mark.png) center / contain no-repeat;
   }
   .nav__brand { display: inline-flex; align-items: center; gap: 14px; }
-  .nav__badge {
-    display: inline-flex; align-items: center; gap: 7px;
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--warm); padding: 6px 12px;
-    border: 1px solid rgba(var(--glow-card-warm), 0.4); border-radius: 999px;
-    background: rgba(var(--glow-card-warm), 0.06); white-space: nowrap;
-  }
-  .nav__badge-dot {
-    width: 6px; height: 6px; border-radius: 50%; background: var(--warm);
-    box-shadow: 0 0 8px var(--warm); animation: ndot 2.4s ease-out infinite;
-  }
-  @keyframes ndot {
-    0% { box-shadow: 0 0 0 0 rgba(var(--glow-card-warm), 0.6) }
-    70% { box-shadow: 0 0 0 7px rgba(var(--glow-card-warm), 0) }
-    100% { box-shadow: 0 0 0 0 rgba(var(--glow-card-warm), 0) }
-  }
-  @media (max-width: 600px) { .nav__badge { display: none; } }
   .nav__links { display: flex; gap: 32px; align-items: center; font-size: 13px; color: var(--muted); }
   .nav__links a { transition: color 200ms ease; }
   .nav__links a:hover, .nav__links a.is-active { color: var(--ink); }
@@ -407,7 +390,6 @@
   .reveal.d2 { transition-delay: 160ms; }
   @media (prefers-reduced-motion: reduce) {
     .js-ready .reveal { opacity: 1; transform: none; transition: none; }
-    .nav__badge-dot { animation: none !important; }
   }
 </style>
 <link rel="stylesheet" href="assets/css/responsive.css" />
@@ -422,7 +404,6 @@
       <a class="logo" href="index.html#top" aria-label="Zendt Payments home">
         <span class="logo__mark" aria-hidden="true"></span>
       </a>
-      <span class="nav__badge"><span class="nav__badge-dot" aria-hidden="true"></span>Launching soon</span>
     </div>
     <div class="nav__links">
       <a href="index.html#top">Home</a>

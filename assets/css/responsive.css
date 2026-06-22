@@ -239,7 +239,6 @@
 /* Keep menu readable when content scrolls under frosted glass */
 .nav.scrolled .nav__links a,
 .nav.scrolled .logo,
-.nav.scrolled .nav__badge,
 .nav.scrolled .theme-toggle,
 .nav.scrolled .nav__hamburger,
 .nav.scrolled .nav__toggle {

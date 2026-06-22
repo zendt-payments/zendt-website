@@ -219,30 +219,6 @@
     line-height: 1;
   }
   .nav__brand { display: inline-flex; align-items: center; gap: 14px; }
-  .nav__badge {
-    display: inline-flex; align-items: center; gap: 7px;
-    font-family: var(--mono);
-    font-size: 9.5px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--warm);
-    border: 1px solid rgba(var(--glow-card-warm), 0.35);
-    background: rgba(var(--glow-card-warm), 0.07);
-    padding: 5px 11px;
-    border-radius: 999px;
-    white-space: nowrap;
-  }
-  .nav__badge-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--warm);
-    box-shadow: 0 0 0 0 rgba(var(--glow-card-warm), 0.6);
-    animation: navpulse 2.4s ease-out infinite;
-  }
-  @keyframes navpulse {
-    0% { box-shadow: 0 0 0 0 rgba(var(--glow-card-warm),0.55) }
-    70% { box-shadow: 0 0 0 8px rgba(var(--glow-card-warm),0) }
-    100% { box-shadow: 0 0 0 0 rgba(var(--glow-card-warm),0) }
-  }
   .foot__brand .logo__mark { width: 34px; height: 34px; }
   .foot__brand .logo__word { font-size: 23px; }
   .foot__logo-full {
@@ -253,7 +229,6 @@
     -webkit-mask: url(logo-full.png) left center / contain no-repeat;
     mask: url(logo-full.png) left center / contain no-repeat;
   }
-  @media (max-width: 600px) { .nav__badge { display: none; } }
   .nav__links {
     display: flex;
     gap: 32px;
@@ -1344,7 +1319,6 @@
       <a class="logo" href="index.html#top" aria-label="Zendt Payments home">
         <span class="logo__mark" aria-hidden="true"></span>
       </a>
-      <span class="nav__badge"><span class="nav__badge-dot" aria-hidden="true"></span>Launching soon</span>
     </div>
     <div class="nav__links">
       <a href="index.html#top">Home</a>
