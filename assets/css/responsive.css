@@ -631,11 +631,11 @@
     margin-inline: auto;
   }
 
-  .foot__social {
-    justify-content: center;
+  .foot__connect {
+    align-items: center;
   }
 
-  .foot__stores {
+  .foot__social {
     justify-content: center;
   }
 }

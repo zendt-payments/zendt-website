@@ -192,7 +192,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 /* Footer */
 footer { padding: 80px 0 56px; }
 .foot__top {
-  display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr 1.15fr;
+  display: grid; grid-template-columns: 1.55fr 1fr 1fr 1fr 1.05fr;
   gap: 40px; padding-bottom: 60px; border-bottom: 1px solid var(--line);
 }
 @media (max-width: 860px) { .foot__top { grid-template-columns: 1fr 1fr; } }
@@ -209,7 +209,14 @@ footer { padding: 80px 0 56px; }
   mask: url(../../logo-full.png) left center / contain no-repeat;
 }
 .foot__tagline { margin-top: 18px; color: var(--muted); font-size: 14px; max-width: 28ch; }
-.foot__social { margin-top: 24px; display: flex; gap: 10px; }
+.foot__connect {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+.foot__social { display: flex; gap: 10px; }
 .foot__social a {
   width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 10px;
   display: inline-flex; align-items: center; justify-content: center; color: var(--muted);
@@ -219,13 +226,13 @@ footer { padding: 80px 0 56px; }
 .foot__social svg { width: 17px; height: 17px; }
 .foot__stores {
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: row nowrap;
   align-items: center;
   gap: 10px;
-  margin-top: 22px;
 }
 .foot__stores a {
   display: block;
+  flex: 0 0 auto;
   line-height: 0;
   text-decoration: none;
   transition: transform 200ms ease, opacity 200ms ease;
@@ -238,7 +245,6 @@ footer { padding: 80px 0 56px; }
   display: block;
   height: 40px;
   width: auto;
-  max-width: 100%;
 }
 .foot__col h5 {
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em;

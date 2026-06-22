@@ -11,6 +11,7 @@ export function siteFooter(prefix = '') {
           <span class="foot__logo-full" aria-hidden="true"></span>
         </a>
         <p class="foot__tagline">Global Payments. Reimagined.<br />Receive · Manage · Spend.</p>
+        <div class="foot__connect">
         <div class="foot__social">
           <a href="https://instagram.com/zendtpayments" target="_blank" rel="noopener" aria-label="Zendt on Instagram">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
@@ -24,11 +25,12 @@ export function siteFooter(prefix = '') {
         </div>
         <div class="foot__stores">
           <a href="${APP_STORE_URL}" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store">
-            <img src="${r}assets/images/badge-app-store.png" alt="" width="120" height="40" loading="lazy" decoding="async" />
+            <img src="${r}assets/images/badge-app-store.svg" alt="" width="120" height="40" loading="lazy" decoding="async" />
           </a>
           <a href="${PLAY_STORE_URL}" target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play">
-            <img src="${r}assets/images/badge-google-play.png" alt="" width="135" height="40" loading="lazy" decoding="async" />
+            <img src="${r}assets/images/badge-google-play.svg" alt="" width="135" height="40" loading="lazy" decoding="async" />
           </a>
+        </div>
         </div>
       </div>
       <div class="foot__col">
