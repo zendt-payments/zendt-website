@@ -477,14 +477,12 @@
       document.querySelectorAll('.nav__links a').forEach((a) => {
         panel.appendChild(a.cloneNode(true));
       });
-      const cta = document.createElement('a');
-      cta.className = 'btn btn--primary';
-      cta.href =
-        document.querySelector('.nav__right .btn--primary')?.getAttribute('href') ||
-        'index.html#waitlist';
-      cta.innerHTML =
-        'Get Early Access <span class="btn__arrow" aria-hidden="true">→</span>';
-      panel.appendChild(cta);
+      const navStores = document.querySelector('.nav__right .store-badges');
+      if (navStores) {
+        const stores = navStores.cloneNode(true);
+        stores.classList.add('store-badges--mobile');
+        panel.appendChild(stores);
+      }
       navEl.appendChild(panel);
     }
 

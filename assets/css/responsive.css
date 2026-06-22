@@ -280,7 +280,7 @@
     order: 2;
   }
 
-  .nav__right > .btn--primary {
+  .nav__right > .store-badges {
     display: none;
     order: 3;
   }
@@ -407,6 +407,17 @@
     letter-spacing: 0;
   }
 
+  .nav__mobile .store-badges {
+    margin-top: 28px;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .nav__mobile .store-badges img {
+    height: 40px;
+    width: auto;
+  }
+
   .nav__mobile .btn {
     margin-top: 28px;
     width: 100%;
@@ -466,7 +477,7 @@
     order: 2;
   }
 
-  .nav__right > .btn--primary {
+  .nav__right > .store-badges {
     display: none;
     order: 3;
   }
@@ -771,10 +782,8 @@
     font-size: 12px;
   }
 
-  .nav__right .btn--primary {
-    height: 38px;
-    padding: 0 16px;
-    font-size: 12px;
+  .nav__right .store-badges--nav img {
+    height: 30px;
   }
 
   .hero__grid {
