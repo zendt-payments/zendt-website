@@ -477,10 +477,10 @@
       document.querySelectorAll('.nav__links a').forEach((a) => {
         panel.appendChild(a.cloneNode(true));
       });
-      const navStores = document.querySelector('.nav__right .store-badges');
+      const navStores = document.querySelector('.nav__right .store-icons');
       if (navStores) {
         const stores = navStores.cloneNode(true);
-        stores.classList.add('store-badges--mobile');
+        stores.classList.add('store-icons--mobile');
         panel.appendChild(stores);
       }
       navEl.appendChild(panel);

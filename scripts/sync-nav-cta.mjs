@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Replace nav / hero download CTAs with App Store + Play Store badges. */
+/** Sync nav / hero store icon buttons across static HTML pages. */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -7,11 +7,7 @@ import { navStoreBadges, heroStoreBadges } from '../assets/seo/store-badges.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-const NAV_BTN =
-  /<a class="btn btn--primary" href="[^"]*" target="_blank" rel="noopener noreferrer" style="height:40px;padding:0 18px;font-size:13px;">(?:Download Now <span class="btn__arrow" aria-hidden="true">→<\/span>|\s*Download Now\s*<span class="btn__arrow" aria-hidden="true">→<\/span>\s*)<\/a>/g;
-
-const HERO_BTN =
-  /<a href="https:\/\/apps\.apple\.com\/[^"]*" target="_blank" rel="noopener noreferrer" class="btn btn--primary">\s*Download Now\s*<span class="btn__arrow" aria-hidden="true">→<\/span>\s*<\/a>/g;
+const BADGE_BLOCK = /<div class="store-(?:badges|icons) store-(?:badges|icons)--(nav|hero)">[\s\S]*?<\/div>/g;
 
 function prefixFor(file) {
   const depth = path.relative(ROOT, path.dirname(file)).split(path.sep).filter(Boolean).length;
@@ -32,8 +28,9 @@ function syncFile(file) {
   const before = text;
   const prefix = prefixFor(file);
 
-  text = text.replace(NAV_BTN, navStoreBadges(prefix));
-  text = text.replace(HERO_BTN, heroStoreBadges(prefix));
+  text = text.replace(BADGE_BLOCK, (match, variant) => {
+    return variant === 'hero' ? heroStoreBadges(prefix) : navStoreBadges(prefix);
+  });
 
   if (text !== before) {
     fs.writeFileSync(file, text);

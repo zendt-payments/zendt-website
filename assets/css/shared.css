@@ -82,31 +82,41 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .nav__links a:hover { color: var(--ink); }
 .nav__links a.is-active { color: var(--ink); }
 .nav__right { display: flex; gap: 14px; align-items: center; }
-.store-badges {
+.store-icons {
   display: flex;
-  flex-flow: row nowrap;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
-.store-badges a {
-  display: block;
-  line-height: 0;
-  text-decoration: none;
-  transition: transform 200ms ease, opacity 200ms ease;
-}
-.store-badges a:hover {
-  transform: translateY(-1px);
-  opacity: 0.92;
-}
-.store-badges--nav img {
-  display: block;
-  height: 32px;
-  width: auto;
-}
-.store-badges--hero img {
-  display: block;
+.store-icons a {
+  width: 40px;
   height: 40px;
-  width: auto;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: color 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+.store-icons a:hover {
+  color: var(--ink);
+  border-color: var(--warm);
+  transform: translateY(-2px);
+}
+.store-icons svg {
+  display: block;
+  width: 17px;
+  height: 17px;
+}
+.store-icons--hero a {
+  width: 44px;
+  height: 44px;
+}
+.store-icons--hero svg {
+  width: 18px;
+  height: 18px;
 }
 .nav__toggle {
   display: none;
@@ -140,7 +150,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 @media (max-width: 820px) {
   .nav__links { display: none; }
   .nav__toggle { display: inline-flex; }
-  .nav__right > .store-badges { display: none; }
+  .nav__right > .store-icons { display: none; }
 }
 @media (min-width: 821px) {
   .nav__mobile { display: none; }
