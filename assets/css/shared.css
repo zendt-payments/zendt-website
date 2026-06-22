@@ -85,38 +85,56 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .store-icons {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0;
 }
-.store-icons a {
+.store-icons--nav a {
   width: 40px;
   height: 40px;
-  border: 1px solid var(--line);
-  border-radius: 50%;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--muted);
   text-decoration: none;
   flex-shrink: 0;
-  transition: color 200ms ease, border-color 200ms ease, transform 200ms ease;
+  transition: color 200ms ease;
 }
-.store-icons a:hover {
-  color: var(--ink);
-  border-color: var(--warm);
-  transform: translateY(-2px);
+.store-icons--nav a:hover {
+  color: var(--warm);
 }
-.store-icons svg {
+.store-icons--nav svg {
   display: block;
-  width: 17px;
-  height: 17px;
+  width: 16px;
+  height: 16px;
+}
+.store-icons--hero {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .store-icons--hero a {
-  width: 44px;
-  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  text-decoration: none;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+.store-icons--hero a:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+.store-icons--hero img,
+.store-icons--hero svg {
+  display: block;
+  height: 40px;
+  width: auto;
 }
 .store-icons--hero svg {
-  width: 18px;
   height: 18px;
+  width: 18px;
 }
 .nav__toggle {
   display: none;

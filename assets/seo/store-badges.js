@@ -17,10 +17,6 @@ export function navStoreBadges(prefix = '') {
   return storeIconButtons(prefix, 'nav');
 }
 
-export function heroStoreBadges(prefix = '') {
-  return storeIconButtons(prefix, 'hero');
-}
-
 /** Full-width badges — footer only. */
 export function storeBadges(prefix = '', variant = 'footer') {
   const r = prefix;

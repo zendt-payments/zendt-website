@@ -102,7 +102,8 @@
 /* ---------- Nav icon controls (flat, no pills) ---------- */
 .nav__toggle,
 .theme-toggle,
-.nav__hamburger {
+.nav__hamburger,
+.store-icons--nav a {
   width: 40px;
   height: 40px;
   padding: 0;
@@ -118,7 +119,8 @@
 
 .nav__toggle:hover,
 .theme-toggle:hover,
-.nav__hamburger:hover {
+.nav__hamburger:hover,
+.store-icons--nav a:hover {
   color: var(--warm);
   background: transparent !important;
   border: none !important;
@@ -410,17 +412,6 @@
   .nav__mobile .store-icons {
     margin-top: 28px;
     justify-content: center;
-    gap: 12px;
-  }
-
-  .nav__mobile .store-icons a {
-    width: 44px;
-    height: 44px;
-  }
-
-  .nav__mobile .store-icons svg {
-    width: 18px;
-    height: 18px;
   }
 
   .nav__mobile .btn {
@@ -785,11 +776,6 @@
   .nav__links {
     gap: 20px;
     font-size: 12px;
-  }
-
-  .nav__right .store-icons a {
-    width: 38px;
-    height: 38px;
   }
 
   .hero__grid {

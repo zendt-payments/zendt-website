@@ -1,13 +1,14 @@
 #!/usr/bin/env node
-/** Sync nav / hero store icon buttons across static HTML pages. */
+/** Sync nav store icon buttons across static HTML pages. */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { navStoreBadges, heroStoreBadges } from '../assets/seo/store-badges.js';
+import { navStoreBadges } from '../assets/seo/store-badges.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-const BADGE_BLOCK = /<div class="store-(?:badges|icons) store-(?:badges|icons)--(nav|hero)">[\s\S]*?<\/div>/g;
+const NAV_BLOCK = /<div class="store-(?:badges|icons) store-(?:badges|icons)--nav">[\s\S]*?<\/div>/g;
+const HERO_BLOCK = /<div class="store-icons store-icons--hero">[\s\S]*?<\/div>\s*/g;
 
 function prefixFor(file) {
   const depth = path.relative(ROOT, path.dirname(file)).split(path.sep).filter(Boolean).length;
@@ -28,9 +29,10 @@ function syncFile(file) {
   const before = text;
   const prefix = prefixFor(file);
 
-  text = text.replace(BADGE_BLOCK, (match, variant) => {
-    return variant === 'hero' ? heroStoreBadges(prefix) : navStoreBadges(prefix);
-  });
+  text = text.replace(NAV_BLOCK, navStoreBadges(prefix));
+  if (file.endsWith(`${path.sep}index.html`)) {
+    text = text.replace(HERO_BLOCK, '');
+  }
 
   if (text !== before) {
     fs.writeFileSync(file, text);
