@@ -1,4 +1,6 @@
 /** Universal site footer — prefix is relative path to site root (e.g. '' or '../') */
+import { APP_STORE_URL, PLAY_STORE_URL } from './store-links.js';
+
 export function siteFooter(prefix = '') {
   const r = prefix;
   return `<footer>
@@ -18,6 +20,14 @@ export function siteFooter(prefix = '') {
           </a>
           <a href="https://x.com/zendtpayments" target="_blank" rel="noopener" aria-label="Zendt on X">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+        <div class="foot__stores">
+          <a href="${APP_STORE_URL}" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store">
+            <img src="${r}assets/images/badge-app-store.svg" alt="" width="120" height="40" loading="lazy" decoding="async" />
+          </a>
+          <a href="${PLAY_STORE_URL}" target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play">
+            <img src="${r}assets/images/badge-google-play.svg" alt="" width="135" height="40" loading="lazy" decoding="async" />
           </a>
         </div>
       </div>

@@ -634,6 +634,10 @@
   .foot__social {
     justify-content: center;
   }
+
+  .foot__stores {
+    justify-content: center;
+  }
 }
 
 /* ---------- Small phones (≤480px) ---------- */
