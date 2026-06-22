@@ -1,19 +1,16 @@
 #!/usr/bin/env node
-/** Sync nav store icon buttons across static HTML pages. */
+/** Sync nav Download Now CTA and remove store icon buttons from nav/CTAs. */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { navStoreBadges } from '../assets/seo/store-badges.js';
+import { navDownloadCta } from '../assets/seo/store-badges.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-const NAV_BLOCK = /<div class="store-(?:badges|icons) store-(?:badges|icons)--nav">[\s\S]*?<\/div>/g;
-const HERO_BLOCK = /<div class="store-icons store-icons--hero">[\s\S]*?<\/div>\s*/g;
-
-function prefixFor(file) {
-  const depth = path.relative(ROOT, path.dirname(file)).split(path.sep).filter(Boolean).length;
-  return depth ? '../'.repeat(depth) : '';
-}
+const NAV_ICONS = /<div class="store-icons store-icons--nav">[\s\S]*?<\/div>/g;
+const HERO_ICONS = /<div class="store-icons store-icons--hero">[\s\S]*?<\/div>/g;
+const CTA_BTN =
+  `<a href="#download" class="btn btn--primary">\n        Download Now\n        <span class="btn__arrow" aria-hidden="true">→</span>\n      </a>`;
 
 function walkHtml(dir, files = []) {
   for (const name of fs.readdirSync(dir)) {
@@ -27,12 +24,13 @@ function walkHtml(dir, files = []) {
 function syncFile(file) {
   let text = fs.readFileSync(file, 'utf8');
   const before = text;
-  const prefix = prefixFor(file);
 
-  text = text.replace(NAV_BLOCK, navStoreBadges(prefix));
-  if (file.endsWith(`${path.sep}index.html`)) {
-    text = text.replace(HERO_BLOCK, '');
-  }
+  text = text.replace(NAV_ICONS, navDownloadCta());
+  text = text.replace(HERO_ICONS, CTA_BTN);
+  text = text.replace(
+    /<div class="foot__stores">/g,
+    '<div class="foot__stores" id="download">'
+  );
 
   if (text !== before) {
     fs.writeFileSync(file, text);

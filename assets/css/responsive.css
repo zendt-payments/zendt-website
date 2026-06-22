@@ -102,8 +102,7 @@
 /* ---------- Nav icon controls (flat, no pills) ---------- */
 .nav__toggle,
 .theme-toggle,
-.nav__hamburger,
-.store-icons--nav a {
+.nav__hamburger {
   width: 40px;
   height: 40px;
   padding: 0;
@@ -119,8 +118,7 @@
 
 .nav__toggle:hover,
 .theme-toggle:hover,
-.nav__hamburger:hover,
-.store-icons--nav a:hover {
+.nav__hamburger:hover {
   color: var(--warm);
   background: transparent !important;
   border: none !important;
@@ -282,7 +280,7 @@
     order: 2;
   }
 
-  .nav__right > .store-icons {
+  .nav__right > .btn--primary {
     display: none;
     order: 3;
   }
@@ -409,11 +407,6 @@
     letter-spacing: 0;
   }
 
-  .nav__mobile .store-icons {
-    margin-top: 28px;
-    justify-content: center;
-  }
-
   .nav__mobile .btn {
     margin-top: 28px;
     width: 100%;
@@ -473,7 +466,7 @@
     order: 2;
   }
 
-  .nav__right > .store-icons {
+  .nav__right > .btn--primary {
     display: none;
     order: 3;
   }

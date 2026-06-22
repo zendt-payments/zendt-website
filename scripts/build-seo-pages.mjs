@@ -14,7 +14,7 @@ import {
   articleSchema,
 } from '../assets/seo/schema-snippets.js';
 import { siteFooter } from '../assets/seo/footer-snippet.js';
-import { navStoreBadges } from '../assets/seo/store-badges.js';
+import { navDownloadCta } from '../assets/seo/store-badges.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
@@ -87,7 +87,7 @@ function nav(depth) {
         <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
       <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-      ${navStoreBadges(r)}
+      ${navDownloadCta()}
     </div>
   </div>
 </nav>`;

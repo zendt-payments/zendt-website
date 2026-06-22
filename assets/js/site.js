@@ -477,12 +477,11 @@
       document.querySelectorAll('.nav__links a').forEach((a) => {
         panel.appendChild(a.cloneNode(true));
       });
-      const navStores = document.querySelector('.nav__right .store-icons');
-      if (navStores) {
-        const stores = navStores.cloneNode(true);
-        stores.classList.add('store-icons--mobile');
-        panel.appendChild(stores);
-      }
+      const cta = document.createElement('a');
+      cta.className = 'btn btn--primary';
+      cta.href = document.querySelector('.nav__right .btn--primary')?.getAttribute('href') || '#download';
+      cta.innerHTML = 'Download Now <span class="btn__arrow" aria-hidden="true">→</span>';
+      panel.appendChild(cta);
       navEl.appendChild(panel);
     }
 
