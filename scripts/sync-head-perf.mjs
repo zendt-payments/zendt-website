@@ -66,6 +66,38 @@ function syncFile(file) {
     }
   }
 
+  const sharedCss = html.match(
+    /<link rel="stylesheet" href="([^"]*assets\/css\/shared\.css)" \/>/,
+  );
+  if (sharedCss && !html.includes('preload" href="' + sharedCss[1])) {
+    const href = sharedCss[1];
+    const prefix = href.replace('assets/css/shared.css', '');
+    const logo = `${prefix}logo-mark.png`;
+    const block =
+      `<link rel="preload" href="${logo}" as="image" type="image/png" />\n` +
+      `<link rel="preload" href="${href}" as="style" />\n` +
+      sharedCss[0];
+    html = html.replace(sharedCss[0], block);
+    changed = true;
+  }
+
+  if (
+    html.includes('logo-mark.png') &&
+    !html.includes('preload" href="logo-mark.png') &&
+    !html.includes('preload" href="../logo-mark.png')
+  ) {
+    const depth = path.relative(ROOT, file).split(path.sep).length - 1;
+    const prefix = depth ? '../'.repeat(depth) : '';
+    const logo = `${prefix}logo-mark.png`;
+    if (!html.includes(`preload" href="${logo}`)) {
+      html = html.replace(
+        /<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com" \/>/,
+        `<link rel="preload" href="${logo}" as="image" type="image/png" />\n<link rel="preconnect" href="https://fonts.googleapis.com" />`,
+      );
+      changed = true;
+    }
+  }
+
   if (changed) {
     fs.writeFileSync(file, html);
     console.log('updated', path.relative(ROOT, file));

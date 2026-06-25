@@ -69,6 +69,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .logo__mark {
   width: 30px;
   height: 30px;
+  aspect-ratio: 296 / 303;
   flex-shrink: 0;
   display: block;
   background-color: var(--ink);
@@ -204,6 +205,7 @@ footer { padding: 80px 0 56px; }
   display: block;
   width: 150px;
   height: 61px;
+  aspect-ratio: 2161 / 873;
   background-color: var(--ink);
   -webkit-mask: url(../../logo-full.png) left center / contain no-repeat;
   mask: url(../../logo-full.png) left center / contain no-repeat;

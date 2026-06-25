@@ -15,6 +15,7 @@ import {
 } from '../assets/seo/schema-snippets.js';
 import { siteFooter } from '../assets/seo/footer-snippet.js';
 import { navDownloadCta } from '../assets/seo/store-badges.js';
+import { AHREFS_ANALYTICS } from '../assets/seo/analytics-snippet.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
@@ -61,6 +62,8 @@ ${ldJson(schemas.length === 1 ? schemas[0] : { '@context': 'https://schema.org',
 <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+<link rel="preload" href="${r}logo-mark.png" as="image" type="image/png" />
+<link rel="preload" href="${r}assets/css/shared.css" as="style" />
 <link rel="stylesheet" href="${r}assets/css/shared.css" />
 <link rel="stylesheet" href="${r}assets/css/content-pages.css" />
 <link rel="stylesheet" href="${r}assets/css/responsive.css" />
@@ -105,7 +108,8 @@ function localHref(depth, sitePath) {
 
 function footer(depth) {
   return `${siteFooter(rel(depth))}
-<script src="${rel(depth)}assets/js/site.js" defer></script>`;
+<script src="${rel(depth)}assets/js/site.js" defer></script>
+${AHREFS_ANALYTICS}`;
 }
 
 function page({ file, depth, title, meta, breadcrumb, heroMeta, body, faqs, article }) {
