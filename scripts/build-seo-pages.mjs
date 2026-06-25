@@ -55,7 +55,10 @@ function head({ depth, title, description, canonical, extraSchema = [] }) {
 <meta name="twitter:description" content="${description}" />
 <meta name="twitter:image" content="${SITE}/logo-full.png" />
 ${ldJson(schemas.length === 1 ? schemas[0] : { '@context': 'https://schema.org', '@graph': schemas })}
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="${r}assets/css/shared.css" />
