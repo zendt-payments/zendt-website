@@ -8,19 +8,29 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
 <meta name="referrer" content="no-referrer" />
+<meta name="theme-color" content="#0A0A0A" />
 <link rel="icon" type="image/png" href="logo-mark.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #f7f8fb;
-    --navy: #0e1733;
-    --ink: #0e1733;
-    --muted: #6b7280;
-    --accent: #7c3aed;
-    --accent-soft: #f5f3ff;
-    --accent-line: #c4b5fd;
-    --neutral: #e3e7ef;
-    --neutral-line: #0e1733;
-    --line: #c9cfdb;
+    --bg: #0A0A0A;
+    --surface: #161514;
+    --surface-2: #121110;
+    --ink: #FFFFFF;
+    --ink-2: #E8E6E2;
+    --muted: #8A8580;
+    --line: #262422;
+    --warm: #E8B796;
+    --warm-2: #C99A78;
+    --warm-soft: rgba(232, 183, 150, 0.16);
+    --warm-faint: rgba(232, 183, 150, 0.06);
+    --display: "Clash Display", "Inter", "Helvetica Neue", Arial, sans-serif;
+    --sans: "Cairo", "Helvetica Neue", Arial, sans-serif;
   }
 
   * { box-sizing: border-box; }
@@ -28,35 +38,48 @@
   html, body {
     margin: 0;
     padding: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(1100px 620px at 50% -8%, var(--warm-faint), transparent 60%),
+      var(--bg);
+    color: var(--ink-2);
+    font-family: var(--sans);
     -webkit-font-smoothing: antialiased;
+    min-height: 100%;
   }
 
   .pf-header {
-    background: var(--navy);
-    color: #fff;
     text-align: center;
-    padding: 28px 20px;
-    border-bottom: 4px solid var(--accent);
+    padding: 44px 20px 30px;
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(700px 240px at 50% 0%, var(--warm-soft), transparent 70%);
+  }
+  .pf-header .pf-logo {
+    width: 34px;
+    height: 35px;
+    margin: 0 auto 18px;
+    background-color: var(--warm);
+    -webkit-mask: url(logo-mark.png) center / contain no-repeat;
+    mask: url(logo-mark.png) center / contain no-repeat;
   }
   .pf-header h1 {
     margin: 0;
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
+    font-family: var(--display);
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink);
   }
   .pf-header p {
-    margin: 8px 0 0;
-    font-size: 13.5px;
-    color: #aab2c8;
+    margin: 10px 0 0;
+    font-size: 14px;
+    color: var(--muted);
   }
 
   .pf-wrap {
-    max-width: 660px;
+    max-width: 640px;
     margin: 0 auto;
-    padding: 48px 20px 64px;
+    padding: 46px 20px 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -65,36 +88,36 @@
   .pf-node {
     width: 100%;
     max-width: 460px;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 18px 22px;
     text-align: center;
-    border: 1.5px solid var(--neutral-line);
-    background: var(--neutral);
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
   }
   .pf-node h3 {
     margin: 0;
-    font-size: 16px;
-    font-weight: 700;
+    font-family: var(--display);
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     color: var(--ink);
   }
   .pf-node p {
-    margin: 5px 0 0;
+    margin: 6px 0 0;
     font-size: 12.5px;
     color: var(--muted);
   }
 
+  /* Accent nodes — warm glow border like the app cards */
   .pf-node.is-accent {
-    background: var(--accent-soft);
-    border-color: var(--accent-line);
+    border-color: rgba(232, 183, 150, 0.38);
+    background:
+      radial-gradient(120% 140% at 50% -20%, var(--warm-soft), transparent 60%),
+      linear-gradient(180deg, var(--surface), var(--surface-2));
+    box-shadow: 0 0 0 1px var(--warm-faint), 0 14px 40px -22px rgba(232, 183, 150, 0.5);
   }
+  .pf-node.is-accent h3 { color: var(--warm); }
 
-  /* Connector + label between stacked nodes */
-  .pf-step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
   .pf-arrow {
     display: flex;
     flex-direction: column;
@@ -105,11 +128,12 @@
     font-size: 11px;
     color: var(--muted);
     margin-bottom: 4px;
+    letter-spacing: 0.01em;
   }
   .pf-arrow .pf-line {
     width: 2px;
     height: 26px;
-    background: #9aa3b5;
+    background: linear-gradient(180deg, var(--warm-2), var(--line));
     position: relative;
   }
   .pf-arrow .pf-line::after {
@@ -120,10 +144,9 @@
     transform: translateX(-50%);
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-top: 7px solid #9aa3b5;
+    border-top: 7px solid var(--warm-2);
   }
 
-  /* Branch row of payment options */
   .pf-options {
     width: 100%;
     display: flex;
@@ -135,54 +158,52 @@
     flex: 1 1 140px;
     min-width: 140px;
     max-width: 200px;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 16px 14px;
     text-align: center;
-    background: var(--accent-soft);
-    border: 1.5px solid var(--accent-line);
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
   }
   .pf-option h4 {
     margin: 0;
-    font-size: 14px;
-    font-weight: 700;
+    font-family: var(--display);
+    font-size: 14.5px;
+    font-weight: 600;
     color: var(--ink);
   }
   .pf-option p {
-    margin: 5px 0 0;
+    margin: 6px 0 0;
     font-size: 11.5px;
     color: var(--muted);
   }
 
-  /* Sub account framed under nodal */
   .pf-frame {
     width: 100%;
     max-width: 500px;
-    border: 1.5px dashed var(--accent-line);
-    border-radius: 14px;
-    padding: 28px 16px 16px;
+    border: 1px dashed rgba(232, 183, 150, 0.4);
+    border-radius: 16px;
+    padding: 30px 16px 16px;
     position: relative;
+    background: var(--warm-faint);
   }
   .pf-frame__label {
     position: absolute;
-    top: 8px;
+    top: 9px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 11px;
     color: var(--muted);
   }
-  .pf-frame .pf-node {
-    max-width: 100%;
-  }
+  .pf-frame .pf-node { max-width: 100%; }
 
   .pf-foot {
     text-align: center;
     color: var(--muted);
     font-size: 11.5px;
-    padding: 0 20px 40px;
+    padding: 0 20px 44px;
   }
 
   @media (max-width: 520px) {
-    .pf-header h1 { font-size: 19px; }
     .pf-options { gap: 10px; }
     .pf-option { flex-basis: 45%; min-width: 0; }
   }
@@ -190,6 +211,7 @@
 </head>
 <body>
   <header class="pf-header">
+    <span class="pf-logo" aria-hidden="true"></span>
     <h1>Zendt — Payment Flow</h1>
     <p>How a client payment reaches a freelancer's savings account</p>
   </header>
@@ -234,7 +256,7 @@
     <div class="pf-arrow"><span>funds forwarded</span><div class="pf-line"></div></div>
 
     <div class="pf-node is-accent">
-      <h3>Zendt nodal account</h3>
+      <h3>Nodal Account</h3>
       <p>RBI-regulated · holds all client funds</p>
     </div>
 
