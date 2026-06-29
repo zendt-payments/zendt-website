@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zendt — Payment Flow</title>
+<meta name="description" content="How a client payment reaches a freelancer's savings account on Zendt." />
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+<meta name="referrer" content="no-referrer" />
+<link rel="icon" type="image/png" href="logo-mark.png" />
+<style>
+  :root {
+    --bg: #f7f8fb;
+    --navy: #0e1733;
+    --ink: #0e1733;
+    --muted: #6b7280;
+    --accent: #7c3aed;
+    --accent-soft: #f5f3ff;
+    --accent-line: #c4b5fd;
+    --neutral: #e3e7ef;
+    --neutral-line: #0e1733;
+    --line: #c9cfdb;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .pf-header {
+    background: var(--navy);
+    color: #fff;
+    text-align: center;
+    padding: 28px 20px;
+    border-bottom: 4px solid var(--accent);
+  }
+  .pf-header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .pf-header p {
+    margin: 8px 0 0;
+    font-size: 13.5px;
+    color: #aab2c8;
+  }
+
+  .pf-wrap {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 48px 20px 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pf-node {
+    width: 100%;
+    max-width: 460px;
+    border-radius: 12px;
+    padding: 18px 22px;
+    text-align: center;
+    border: 1.5px solid var(--neutral-line);
+    background: var(--neutral);
+  }
+  .pf-node h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .pf-node p {
+    margin: 5px 0 0;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  .pf-node.is-accent {
+    background: var(--accent-soft);
+    border-color: var(--accent-line);
+  }
+
+  /* Connector + label between stacked nodes */
+  .pf-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .pf-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 0;
+  }
+  .pf-arrow span {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .pf-arrow .pf-line {
+    width: 2px;
+    height: 26px;
+    background: #9aa3b5;
+    position: relative;
+  }
+  .pf-arrow .pf-line::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid #9aa3b5;
+  }
+
+  /* Branch row of payment options */
+  .pf-options {
+    width: 100%;
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .pf-option {
+    flex: 1 1 140px;
+    min-width: 140px;
+    max-width: 200px;
+    border-radius: 12px;
+    padding: 16px 14px;
+    text-align: center;
+    background: var(--accent-soft);
+    border: 1.5px solid var(--accent-line);
+  }
+  .pf-option h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .pf-option p {
+    margin: 5px 0 0;
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+
+  /* Sub account framed under nodal */
+  .pf-frame {
+    width: 100%;
+    max-width: 500px;
+    border: 1.5px dashed var(--accent-line);
+    border-radius: 14px;
+    padding: 28px 16px 16px;
+    position: relative;
+  }
+  .pf-frame__label {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .pf-frame .pf-node {
+    max-width: 100%;
+  }
+
+  .pf-foot {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11.5px;
+    padding: 0 20px 40px;
+  }
+
+  @media (max-width: 520px) {
+    .pf-header h1 { font-size: 19px; }
+    .pf-options { gap: 10px; }
+    .pf-option { flex-basis: 45%; min-width: 0; }
+  }
+</style>
+</head>
+<body>
+  <header class="pf-header">
+    <h1>Zendt — Payment Flow</h1>
+    <p>How a client payment reaches a freelancer's savings account</p>
+  </header>
+
+  <main class="pf-wrap">
+    <div class="pf-node">
+      <h3>Client</h3>
+      <p>Anywhere in the world</p>
+    </div>
+
+    <div class="pf-arrow"><span>clicks payment link</span><div class="pf-line"></div></div>
+
+    <div class="pf-node is-accent">
+      <h3>Zendt payment link</h3>
+      <p>Hosted checkout · all options below</p>
+    </div>
+
+    <div class="pf-arrow"><div class="pf-line"></div></div>
+
+    <div class="pf-options">
+      <div class="pf-option">
+        <h4>Domestic card</h4>
+        <p>Indian card · INR</p>
+      </div>
+      <div class="pf-option">
+        <h4>UPI</h4>
+        <p>Instant · INR</p>
+      </div>
+      <div class="pf-option">
+        <h4>Bank transfer</h4>
+        <p>NEFT · RTGS · IMPS</p>
+      </div>
+    </div>
+
+    <div class="pf-arrow"><div class="pf-line"></div></div>
+
+    <div class="pf-node">
+      <h3>Payment processor</h3>
+      <p>Authorises and processes the transaction</p>
+    </div>
+
+    <div class="pf-arrow"><span>funds forwarded</span><div class="pf-line"></div></div>
+
+    <div class="pf-node is-accent">
+      <h3>Zendt nodal account</h3>
+      <p>RBI-regulated · holds all client funds</p>
+    </div>
+
+    <div class="pf-arrow"><span>allocated to freelancer</span><div class="pf-line"></div></div>
+
+    <div class="pf-frame">
+      <span class="pf-frame__label">under nodal account</span>
+      <div class="pf-node is-accent">
+        <h3>Sub account</h3>
+        <p>Unique to each freelancer · holds their balance</p>
+      </div>
+    </div>
+
+    <div class="pf-arrow"><span>settlement triggered</span><div class="pf-line"></div></div>
+
+    <div class="pf-node">
+      <h3>Settlement</h3>
+      <p>INR transferred out of nodal</p>
+    </div>
+
+    <div class="pf-arrow"><div class="pf-line"></div></div>
+
+    <div class="pf-node">
+      <h3>Freelancer's savings account</h3>
+      <p>INR lands · Indian bank</p>
+    </div>
+  </main>
+
+  <p class="pf-foot">© 2026 Zendt Payments Pvt. Ltd. · Confidential overview</p>
+</body>
+</html>
