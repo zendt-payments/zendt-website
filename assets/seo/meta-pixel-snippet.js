@@ -1,4 +1,12 @@
-/** Meta Pixel — exact inline snippet for sync-meta-pixel.mjs */
+/**
+ * Meta Pixel — exact inline snippet for sync-meta-pixel.mjs
+ *
+ * CSP note: the script is emitted as `<script>\n{INLINE}\n</script>`, so the
+ * CSP hash in vercel.json must be computed over the leading/trailing newlines
+ * too. Current hash: sha256-o8t+fP7/6+y6JG+fxszXC8glDlQ6esdI+0lr5ApJbMU=
+ * If META_PIXEL_INLINE changes, recompute with:
+ *   printf '\n%s\n' "$INLINE" | openssl dgst -sha256 -binary | openssl base64
+ */
 export const META_PIXEL_ID = '1334086671603194';
 
 export const META_PIXEL_INLINE = `!function(f,b,e,v,n,t,s)
