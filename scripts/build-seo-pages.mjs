@@ -37,6 +37,10 @@ function head({ depth, title, description, canonical, extraSchema = [] }) {
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- Meta Pixel Code -->
+<script src="${r}assets/js/meta-pixel.js"></script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1" /></noscript>
+<!-- End Meta Pixel Code -->
 <title>${title}</title>
 <meta name="description" content="${description}" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
