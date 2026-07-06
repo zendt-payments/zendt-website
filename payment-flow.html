@@ -31,6 +31,7 @@
     --warm-faint: rgba(232, 183, 150, 0.06);
     --display: "Clash Display", "Inter", "Helvetica Neue", Arial, sans-serif;
     --sans: "Cairo", "Helvetica Neue", Arial, sans-serif;
+    --max: 720px;
   }
 
   * { box-sizing: border-box; }
@@ -76,10 +77,38 @@
     color: var(--muted);
   }
 
-  .pf-wrap {
-    max-width: 640px;
+  .pf-intro,
+  .pf-wrap,
+  .pf-codes {
+    max-width: var(--max);
     margin: 0 auto;
-    padding: 46px 20px 60px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .pf-intro {
+    padding-top: 36px;
+    padding-bottom: 8px;
+  }
+  .pf-intro h2 {
+    margin: 0 0 12px;
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .pf-intro p {
+    margin: 0 0 14px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+  .pf-intro p:last-child { margin-bottom: 0; }
+  .pf-intro strong { color: var(--ink); font-weight: 600; }
+
+  .pf-wrap {
+    padding: 36px 20px 48px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -108,7 +137,6 @@
     color: var(--muted);
   }
 
-  /* Accent nodes — warm glow border like the app cards */
   .pf-node.is-accent {
     border-color: rgba(232, 183, 150, 0.38);
     background:
@@ -149,18 +177,14 @@
 
   .pf-options {
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 14px;
-    justify-content: center;
-    flex-wrap: wrap;
   }
   .pf-option {
-    flex: 1 1 140px;
-    min-width: 140px;
-    max-width: 200px;
     border-radius: 14px;
     padding: 16px 14px;
-    text-align: center;
+    text-align: left;
     border: 1px solid var(--line);
     background: linear-gradient(180deg, var(--surface), var(--surface-2));
   }
@@ -171,9 +195,43 @@
     font-weight: 600;
     color: var(--ink);
   }
-  .pf-option p {
-    margin: 6px 0 0;
+  .pf-option .pf-rate {
+    margin: 8px 0 0;
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--warm);
+    letter-spacing: -0.02em;
+  }
+  .pf-option .pf-sub {
+    margin: 4px 0 0;
     font-size: 11.5px;
+    color: var(--muted);
+  }
+  .pf-option ul {
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .pf-option li {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 4px 0;
+    border-top: 1px solid var(--line);
+  }
+  .pf-option li span:last-child {
+    color: var(--ink-2);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .pf-option .pf-settle {
+    margin-top: 10px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     color: var(--muted);
   }
 
@@ -196,6 +254,64 @@
   }
   .pf-frame .pf-node { max-width: 100%; }
 
+  .pf-codes {
+    padding-bottom: 48px;
+    border-top: 1px solid var(--line);
+    padding-top: 40px;
+  }
+  .pf-codes h2 {
+    margin: 0 0 8px;
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .pf-codes > p {
+    margin: 0 0 24px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .pf-codes__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .pf-code-group {
+    border-radius: 14px;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  }
+  .pf-code-group h3 {
+    margin: 0 0 12px;
+    font-family: var(--display);
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--warm);
+    letter-spacing: -0.01em;
+  }
+  .pf-code-group ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .pf-code-group li {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    padding: 5px 0;
+    border-top: 1px solid var(--line);
+  }
+  .pf-code-group li:first-child { border-top: none; padding-top: 0; }
+  .pf-code-group code {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11px;
+    color: var(--warm-2);
+    margin-right: 6px;
+  }
+
   .pf-foot {
     text-align: center;
     color: var(--muted);
@@ -203,9 +319,9 @@
     padding: 0 20px 44px;
   }
 
-  @media (max-width: 520px) {
-    .pf-options { gap: 10px; }
-    .pf-option { flex-basis: 45%; min-width: 0; }
+  @media (max-width: 680px) {
+    .pf-options { grid-template-columns: 1fr; }
+    .pf-codes__grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -215,6 +331,20 @@
     <h1>Zendt — Payment Flow</h1>
     <p>How a client payment reaches a freelancer's savings account</p>
   </header>
+
+  <section class="pf-intro">
+    <h2>What we do</h2>
+    <p>
+      <strong>Zendt Payments</strong> is licensed payment infrastructure for Indian freelancers and independent professionals.
+      We provide invoicing, hosted payment links, and a single dashboard for domestic and international client payments —
+      with INR settlement to your Indian savings account through RBI-regulated banking partners.
+    </p>
+    <p>
+      <strong>Who we onboard:</strong> Indian freelancers, consultants, designers, developers, educators, and other
+      independent professionals who earn from clients in India and abroad — across software &amp; IT, creative services,
+      management consulting, and education &amp; training.
+    </p>
+  </section>
 
   <main class="pf-wrap">
     <div class="pf-node">
@@ -234,15 +364,38 @@
     <div class="pf-options">
       <div class="pf-option">
         <h4>Domestic card</h4>
-        <p>Indian card · INR</p>
+        <div class="pf-rate">1.5 – 3.0%</div>
+        <p class="pf-sub">Indian debit &amp; credit · INR</p>
+        <ul>
+          <li><span>Debit · below ₹2,000</span><span>1.5%</span></li>
+          <li><span>Debit · above ₹2,000</span><span>1.9%</span></li>
+          <li><span>Credit · personal</span><span>2.2%</span></li>
+          <li><span>Credit · corporate</span><span>2.6%</span></li>
+          <li><span>Amex / Diners</span><span>3.0%</span></li>
+        </ul>
+        <div class="pf-settle">T+1 settlement</div>
       </div>
       <div class="pf-option">
         <h4>UPI</h4>
-        <p>Instant · INR</p>
+        <div class="pf-rate">0.6%</div>
+        <p class="pf-sub">Instant · INR · all UPI apps</p>
+        <ul>
+          <li><span>Google Pay</span><span>0.6%</span></li>
+          <li><span>PhonePe</span><span>0.6%</span></li>
+          <li><span>Paytm</span><span>0.6%</span></li>
+          <li><span>BHIM &amp; any UPI app</span><span>0.6%</span></li>
+        </ul>
+        <div class="pf-settle">T+1 settlement</div>
       </div>
       <div class="pf-option">
         <h4>Bank transfer</h4>
-        <p>NEFT · RTGS · IMPS</p>
+        <div class="pf-rate">1.9 – 2.1%</div>
+        <p class="pf-sub">NEFT · RTGS · IMPS</p>
+        <ul>
+          <li><span>HDFC · ICICI · Kotak</span><span>2.1%</span></li>
+          <li><span>All other banks</span><span>1.9%</span></li>
+        </ul>
+        <div class="pf-settle">T+1 settlement</div>
       </div>
     </div>
 
@@ -284,6 +437,45 @@
       <p>INR lands · Indian bank</p>
     </div>
   </main>
+
+  <section class="pf-codes">
+    <h2>RBI purpose codes</h2>
+    <p>We support the following RBI purpose codes, covering the full range of our freelancer base:</p>
+    <div class="pf-codes__grid">
+      <div class="pf-code-group">
+        <h3>Software &amp; IT Services</h3>
+        <ul>
+          <li><code>P0802</code> Software Consultancy &amp; Implementation</li>
+          <li><code>P0803</code> Database &amp; Network Administration</li>
+          <li><code>P0804</code> Repair &amp; Maintenance of Computer/Software</li>
+          <li><code>P0807</code> IT Services (Other)</li>
+          <li><code>P0899</code> Other Software &amp; IT Services</li>
+        </ul>
+      </div>
+      <div class="pf-code-group">
+        <h3>Creative, Design &amp; Content</h3>
+        <ul>
+          <li><code>P0806</code> Advertising, Market Research &amp; Public Opinion</li>
+          <li><code>P1007</code> Other Professional &amp; Technical Services</li>
+          <li><code>P1006</code> Other Business Services</li>
+        </ul>
+      </div>
+      <div class="pf-code-group">
+        <h3>Consulting &amp; Management</h3>
+        <ul>
+          <li><code>P0805</code> Business &amp; Management Consultancy</li>
+          <li><code>P1003</code> Research &amp; Development Services</li>
+          <li><code>P1004</code> Architectural, Engineering &amp; Other Technical Services</li>
+        </ul>
+      </div>
+      <div class="pf-code-group">
+        <h3>Education &amp; Training</h3>
+        <ul>
+          <li><code>P1201</code> Educational Services</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
   <p class="pf-foot">© 2026 Zendt Payments Pvt. Ltd. · Confidential overview</p>
 </body>
