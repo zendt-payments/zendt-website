@@ -178,7 +178,7 @@ const compareTable = (rows) => `<table class="cmp-table"><thead><tr><th>Feature<
 page({
   file: 'about.html',
   depth: 0,
-  title: 'About Zendt Payments — Indian Freelancer Payment Platform',
+  title: 'About Zendt Payments — Indian Freelancer Payments Toolkit', // TEMP-ZWITCH: revert after approval
   meta: 'Zendt Payments Pvt. Ltd. is a Kochi-based fintech building the invoicing and payments toolkit for Indian freelancers billing international and domestic clients.',
   breadcrumb: [{ name: 'About', url: `${SITE}/about` }],
   heroMeta: 'Company',

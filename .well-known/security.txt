@@ -6,4 +6,6 @@ Policy: https://www.zendtpayments.com/privacy
 Hiring: https://www.zendtpayments.com/contact
 
 # Zendt Payments Pvt. Ltd. — security contact for responsible disclosure.
-# This is a legitimate Indian freelancer payments platform, not cryptocurrency or investment.
+# This is a legitimate Indian freelancer payments toolkit, not cryptocurrency or investment.
+
+# TEMP-ZWITCH: revert after approval
