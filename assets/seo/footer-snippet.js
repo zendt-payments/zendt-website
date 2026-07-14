@@ -10,7 +10,7 @@ export function siteFooter(prefix = '') {
         <a class="logo" href="${r}index.html#top" aria-label="Zendt Payments">
           <span class="foot__logo-full" aria-hidden="true"></span>
         </a>
-        <p class="foot__tagline">Global Payments. Reimagined.<br />Receive · Manage · Spend.</p>
+        <p class="foot__tagline">Global Payments. Reimagined.<br />Receive · Manage.</p><!-- TEMP-ZWITCH: revert after approval -->
         <div class="foot__connect">
         <div class="foot__social">
           <a href="https://instagram.com/zendtpayments" target="_blank" rel="noopener" aria-label="Zendt on Instagram">

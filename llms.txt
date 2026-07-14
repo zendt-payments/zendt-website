@@ -5,15 +5,16 @@
 
 ## What this website is
 
-Zendt Payments (Zendt Payments Pvt. Ltd.) is a **legitimate Indian fintech company** building **payment infrastructure for freelancers and independent professionals in India**.
+Zendt Payments (Zendt Payments Pvt. Ltd.) is a **legitimate Indian fintech company** building an **invoicing and payments toolkit for freelancers and independent professionals in India**.
+# TEMP-ZWITCH: revert after approval
 
 The product helps users:
 - Send professional invoices to clients in India and abroad
 - Share payment links in 150+ fiat currencies (USD, EUR, GBP, AED, SAR, QAR, etc.)
-- Receive client payments and **settle proceeds to the user's Indian bank account in INR**
+- Receive client payments with **INR settlement to the user's Indian bank account through licensed banking partners**
 - Manage domestic UPI collections from Indian clients
 
-This is **B2B / B2C payment collection and settlement software** — similar in category to international invoicing and freelancer payout platforms.
+This is **B2B / B2C invoicing and payment-collection software** — a freelancer toolkit, with settlement operated by RBI-licensed partners (payment infrastructure provided by Zwitch).
 
 ## What this website is NOT
 

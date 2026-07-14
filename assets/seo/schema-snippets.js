@@ -24,8 +24,9 @@ export function organizationSchema() {
       addressCountry: 'IN',
     },
     areaServed: { '@type': 'Country', name: 'India' },
+    // TEMP-ZWITCH: revert after approval
     description:
-      'Payment infrastructure for Indian freelancers to receive international client payments in fiat currencies and settle to INR bank accounts. Not cryptocurrency or investment.',
+      'Invoicing and payments toolkit for Indian freelancers to bill international clients and receive INR settlements through licensed banking partners. Not cryptocurrency or investment.',
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '+91-73560-04147',

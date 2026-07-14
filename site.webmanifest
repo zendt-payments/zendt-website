@@ -1,7 +1,7 @@
 {
-  "name": "Zendt Payments — Freelancer Payment Platform",
+  "name": "Zendt Payments — Freelancer Toolkit",
   "short_name": "Zendt",
-  "description": "Licensed-payment infrastructure for Indian freelancers: receive international client payments in 150+ currencies, settle to INR bank accounts, and collect domestic UPI. Not cryptocurrency or investment.",
+  "description": "Invoicing and payments toolkit for Indian freelancers: bill international clients in 150+ currencies, receive INR settlements through licensed banking partners, and collect domestic UPI. Not cryptocurrency or investment.",
   "start_url": "/",
   "id": "/",
   "display": "standalone",
