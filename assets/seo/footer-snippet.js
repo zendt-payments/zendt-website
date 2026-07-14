@@ -45,13 +45,6 @@ export function siteFooter(prefix = '') {
         </ul>
       </div>
       <div class="foot__col">
-        <h5>Company</h5>
-        <ul>
-          <li><a href="${r}about.html">About</a></li>
-          <li><a href="${r}story.html">Story</a></li>
-        </ul>
-      </div>
-      <div class="foot__col">
         <h5>Legal</h5>
         <ul>
           <li><a href="${r}privacy.html">Privacy Policy</a></li>

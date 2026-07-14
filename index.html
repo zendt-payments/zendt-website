@@ -848,35 +848,6 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
     display: none;
   }
 
-  .ticker {
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    overflow: hidden;
-    background: var(--surface-2);
-  }
-  .ticker__track {
-    display: flex;
-    gap: 56px;
-    padding-block: 16px;
-    animation: tick 40s linear infinite;
-    white-space: nowrap;
-    width: max-content;
-  }
-  .ticker__item {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.12em;
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .ticker__item b { color: var(--ink); font-weight: 500; }
-  .ticker__item .dot { width: 4px; height: 4px; background: var(--muted-2); border-radius: 50%; }
-  @keyframes tick {
-    from { transform: translateX(0) }
-    to   { transform: translateX(-50%) }
-  }
 
   /* Apply warm gradient header treatment to every major section, app-style */
   .sec { padding-block: clamp(72px, 9vw, 120px); position: relative; }
@@ -2197,7 +2168,7 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
   }
   .foot__top {
     display: grid;
-    grid-template-columns: 1.55fr 1fr 1fr 1fr 1.05fr;
+    grid-template-columns: 1.55fr 1fr 1fr 1.05fr;
     gap: 40px;
     padding-bottom: 60px;
     border-bottom: 1px solid var(--line);
@@ -2348,12 +2319,6 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
       var(--bg);
     background-attachment: fixed;
   }
-  :root[data-theme="light"] .ticker {
-    background: var(--surface);
-    border-top-color: var(--line);
-    border-bottom-color: var(--line);
-  }
-  :root[data-theme="light"] .ticker__item b { color: var(--ink); }
   :root[data-theme="light"] .waitlist {
     background: linear-gradient(180deg, #FFFEFB 0%, #FAF5EC 100%);
   }
@@ -2512,7 +2477,7 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
   .reveal.d6 { transition-delay: 480ms; }
 
   @media (prefers-reduced-motion: reduce) {
-    .badge, .ticker__track, .waitlist__note .pulse { animation: none !important; }
+    .badge, .waitlist__note .pulse { animation: none !important; }
     .js-ready .reveal { opacity: 1; transform: none; transition: none; }
   }
 
@@ -2639,34 +2604,6 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
     </div>
   </div>
 </header>
-
-<!-- ===================== TICKER ===================== -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker__track" id="fxTicker">
-    <!-- repeated twice for seamless loop -->
-    <span class="ticker__item"><b>USD/INR</b> 95.64 <span class="dot"></span></span>
-    <span class="ticker__item"><b>GBP/INR</b> 127.66 <span class="dot"></span></span>
-    <span class="ticker__item"><b>AED/INR</b> 26.04 <span class="dot"></span></span>
-    <span class="ticker__item"><b>EUR/INR</b> 110.35 <span class="dot"></span></span>
-    <span class="ticker__item"><b>AUD/INR</b> 67.37 <span class="dot"></span></span>
-    <span class="ticker__item"><b>CAD/INR</b> 68.56 <span class="dot"></span></span>
-    <span class="ticker__item"><b>QAR/INR</b> 26.27 <span class="dot"></span></span>
-    <span class="ticker__item"><b>SGD/INR</b> 74.29 <span class="dot"></span></span>
-    <span class="ticker__item"><b>SAR/INR</b> 25.50 <span class="dot"></span></span>
-    <span class="ticker__item"><b>CHF/INR</b> 119.91 <span class="dot"></span></span>
-
-    <span class="ticker__item"><b>USD/INR</b> 95.64 <span class="dot"></span></span>
-    <span class="ticker__item"><b>GBP/INR</b> 127.66 <span class="dot"></span></span>
-    <span class="ticker__item"><b>AED/INR</b> 26.04 <span class="dot"></span></span>
-    <span class="ticker__item"><b>EUR/INR</b> 110.35 <span class="dot"></span></span>
-    <span class="ticker__item"><b>AUD/INR</b> 67.37 <span class="dot"></span></span>
-    <span class="ticker__item"><b>CAD/INR</b> 68.56 <span class="dot"></span></span>
-    <span class="ticker__item"><b>QAR/INR</b> 26.27 <span class="dot"></span></span>
-    <span class="ticker__item"><b>SGD/INR</b> 74.29 <span class="dot"></span></span>
-    <span class="ticker__item"><b>SAR/INR</b> 25.50 <span class="dot"></span></span>
-    <span class="ticker__item"><b>CHF/INR</b> 119.91 <span class="dot"></span></span>
-  </div>
-</div>
 
 
 <!-- ===================== HOW IT WORKS ===================== -->
@@ -3232,13 +3169,6 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
           <li><a href="how-it-works.html">How it works</a></li>
           <li><a href="guides/index.html">Guides</a></li>
           <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="foot__col">
-        <h5>Company</h5>
-        <ul>
-          <li><a href="about.html">About</a></li>
-          <li><a href="story.html">Story</a></li>
         </ul>
       </div>
       <div class="foot__col">

@@ -791,7 +791,7 @@ h3 { font-size: clamp(20px, 1.8vw, 24px); letter-spacing: -0.015em; line-height:
 footer { padding: 80px 0 56px; }
 .foot__top {
   display: grid;
-  grid-template-columns: 1.55fr 1fr 1fr 1fr 1.05fr;
+  grid-template-columns: 1.55fr 1fr 1fr 1.05fr;
   gap: 40px;
   padding-bottom: 60px;
   border-bottom: 1px solid var(--line);

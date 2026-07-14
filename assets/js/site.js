@@ -35,10 +35,6 @@
   };
 
   const INTL_CURRENCIES = window.ZENDT_INTL_CURRENCIES || [];
-  const TICKER_PAIRS = INTL_CURRENCIES.slice(0, 10).map(({ code }) => ({
-    code,
-    label: `${code}/INR`,
-  }));
 
   const FX = (() => {
     const CACHE_KEY = 'zendt-inr-rates-v1';
@@ -791,40 +787,6 @@
     calcAmount.addEventListener('input', updateCalc);
     calcType.addEventListener('change', updateCalc);
     updateCalc();
-  }
-
-  /* ---------- Live FX ticker ---------- */
-  const tickerTrack = document.getElementById('fxTicker');
-  if (tickerTrack) {
-    const buildItems = (rates) => {
-      const items = TICKER_PAIRS.map(({ code, label }) => {
-        const rate = rates[code];
-        if (!rate) return '';
-        return `<span class="ticker__item" data-pair="${label}"><b>${label}</b> ${FX.formatInrPerUnit(rate)} <span class="dot"></span></span>`;
-      }).filter(Boolean);
-      return items.length ? items.join('') + items.join('') : null;
-    };
-
-    const renderTicker = (payload) => {
-      const rates = FX.buildRatesMap(
-        payload.table,
-        TICKER_PAIRS.map(({ code }) => code)
-      );
-      const html = buildItems(rates);
-      if (html) tickerTrack.innerHTML = html;
-    };
-
-    FX.load()
-      .then(renderTicker)
-      .catch(() => {
-        /* keep static fallback rates in HTML */
-      });
-
-    setInterval(() => {
-      FX.load({ force: true })
-        .then(renderTicker)
-        .catch(() => {});
-    }, FX.CACHE_TTL_MS);
   }
 
   /* ---------- Receive calculator (index + pricing) ---------- */
