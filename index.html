@@ -1946,6 +1946,73 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
   .founder__sig .nm { color: var(--ink); font-weight: 500; }
   .founder__sig .pipe { width: 1px; height: 14px; background: var(--line); }
 
+  /* ---------- FAQ ---------- */
+  .faq {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr);
+    gap: clamp(32px, 6vw, 80px);
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .faq { grid-template-columns: 1fr; }
+  }
+  .faq__intro h2 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(28px, 3.2vw, 44px);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+  .faq__intro p {
+    margin-top: 16px;
+    color: var(--muted);
+    max-width: 32ch;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--line);
+  }
+  .faq__item {
+    border-bottom: 1px solid var(--line);
+    padding: 22px 0;
+  }
+  .faq__item summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(17px, 1.4vw, 20px);
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .faq__item summary::-webkit-details-marker { display: none; }
+  .faq__item summary::after {
+    content: "+";
+    font-family: var(--display);
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 22px;
+    transition: transform 220ms ease, color 220ms ease;
+    flex-shrink: 0;
+  }
+  .faq__item[open] summary::after { content: "−"; color: var(--warm); }
+  .faq__answer {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 56ch;
+  }
+  :root[data-theme="light"] .faq__answer { color: #5A554E; }
+
   /* ---------- Waitlist ---------- */
   .waitlist {
     background: var(--surface);
@@ -2850,50 +2917,43 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
   <div class="wrap">
     <div class="section-tag reveal">
       <span>(04) · Versus</span>
-      <span>Like-for-like comparison</span>
+      <span>Toolkit comparison</span>
     </div>
     <div class="sec__head">
-      <h2 class="sec__title reveal">The only one that <span class="italic">covers the Gulf.</span></h2>
+      <h2 class="sec__title reveal">One workspace. <span class="italic">Not three apps.</span></h2>
       <p class="sec__lede reveal d1">
-        We built Zendt because the alternatives quietly drop the regions where
-        Indian freelancers actually earn.
+        Most freelancers juggle invoicing software, a spreadsheet for projects,
+        and a separate payment tool. Zendt keeps clients, milestones, and payouts together.
       </p>
     </div>
 
-    <div class="ctable reveal d2" role="table" aria-label="Pricing comparison">
+    <div class="ctable reveal d2" role="table" aria-label="Toolkit comparison">
       <div class="ctable__row is-head" role="row">
-        <div class="ctable__cell" role="columnheader">Feature</div>
+        <div class="ctable__cell" role="columnheader">Capability</div>
         <div class="ctable__cell is-zendt" role="columnheader">Zendt</div>
-        <div class="ctable__cell" role="columnheader">Most platforms</div>
-        <div class="ctable__cell" role="columnheader">Traditional wire</div>
+        <div class="ctable__cell" role="columnheader">Invoice-only tools</div>
+        <div class="ctable__cell" role="columnheader">Spreadsheets + wire</div>
       </div>
 
       <div class="ctable__row" role="row">
-        <div class="ctable__cell is-row-label" role="cell">Price</div>
-        <div class="ctable__cell is-zendt" role="cell"><span class="price-pill">4% flat</span></div>
-        <div class="ctable__cell" role="cell"><span class="price-pill dim">3–9% + hidden FX</span></div>
-        <div class="ctable__cell" role="cell"><span class="price-pill dim">5% + bank charges</span></div>
+        <div class="ctable__cell is-row-label" role="cell">Client &amp; project management</div>
+        <div class="ctable__cell is-zendt" role="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></div>
+        <div class="ctable__cell" role="cell"><span class="partial">Contacts only</span></div>
+        <div class="ctable__cell" role="cell"><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M6 18L18 6"/></svg></span></div>
       </div>
 
       <div class="ctable__row" role="row">
-        <div class="ctable__cell is-row-label" role="cell">GCC support</div>
+        <div class="ctable__cell is-row-label" role="cell">Milestone tracking</div>
         <div class="ctable__cell is-zendt" role="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></div>
         <div class="ctable__cell" role="cell"><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M6 18L18 6"/></svg></span></div>
-        <div class="ctable__cell" role="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></div>
+        <div class="ctable__cell" role="cell"><span class="partial">Manual</span></div>
       </div>
 
       <div class="ctable__row" role="row">
-        <div class="ctable__cell is-row-label" role="cell">150+ currencies</div>
+        <div class="ctable__cell is-row-label" role="cell">Invoice + payment link</div>
         <div class="ctable__cell is-zendt" role="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></div>
-        <div class="ctable__cell" role="cell"><span class="partial">Limited</span></div>
         <div class="ctable__cell" role="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></div>
-      </div>
-
-      <div class="ctable__row" role="row">
-        <div class="ctable__cell is-row-label" role="cell">Payment link</div>
-        <div class="ctable__cell is-zendt" role="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></div>
-        <div class="ctable__cell" role="cell"><span class="partial">Some</span></div>
-        <div class="ctable__cell" role="cell"><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M6 18L18 6"/></svg></span></div>
+        <div class="ctable__cell" role="cell"><span class="partial">Manual</span></div>
       </div>
 
       <div class="ctable__row" role="row">
@@ -2904,30 +2964,24 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
       </div>
 
       <div class="ctable__row" role="row">
-        <div class="ctable__cell is-row-label" role="cell">Domestic payments</div>
+        <div class="ctable__cell is-row-label" role="cell">150+ currencies</div>
         <div class="ctable__cell is-zendt" role="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></div>
-        <div class="ctable__cell" role="cell"><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M6 18L18 6"/></svg></span></div>
-        <div class="ctable__cell" role="cell"><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M6 18L18 6"/></svg></span></div>
+        <div class="ctable__cell" role="cell"><span class="partial">Limited</span></div>
+        <div class="ctable__cell" role="cell"><span class="partial">Wire only</span></div>
       </div>
 
       <div class="ctable__row" role="row">
-        <div class="ctable__cell is-row-label" role="cell">Settlement speed</div>
-        <div class="ctable__cell is-zendt" role="cell">
-          <div class="settle-stack">
-            <span><b>T+1</b> domestic</span>
-            <span><b>T+3</b> international</span>
-          </div>
-        </div>
-        <div class="ctable__cell" role="cell">
-          <div class="settle-stack">
-            <span>3–5 days int'l</span>
-          </div>
-        </div>
-        <div class="ctable__cell" role="cell">
-          <div class="settle-stack">
-            <span>5–7 days int'l</span>
-          </div>
-        </div>
+        <div class="ctable__cell is-row-label" role="cell">GCC corridor</div>
+        <div class="ctable__cell is-zendt" role="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></div>
+        <div class="ctable__cell" role="cell"><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M6 18L18 6"/></svg></span></div>
+        <div class="ctable__cell" role="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></div>
+      </div>
+
+      <div class="ctable__row" role="row">
+        <div class="ctable__cell is-row-label" role="cell">Domestic UPI</div>
+        <div class="ctable__cell is-zendt" role="cell"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span></div>
+        <div class="ctable__cell" role="cell"><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M6 18L18 6"/></svg></span></div>
+        <div class="ctable__cell" role="cell"><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M6 18L18 6"/></svg></span></div>
       </div>
     </div>
 
@@ -2936,86 +2990,157 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
       <div class="ctable-mobile__card is-zendt">
         <div class="ctable-mobile__hdr">
           <div class="name">Zendt</div>
-          <span class="ctable-mobile__badge">Recommended</span>
+          <span class="ctable-mobile__badge">All-in-one</span>
         </div>
         <div class="ctable-mobile__rows">
-          <div class="row"><span>Price</span><span>4% flat</span></div>
-          <div class="row"><span>GCC support</span><span class="val--yes">Yes</span></div>
-          <div class="row"><span>150+ currencies</span><span class="val--yes">Yes</span></div>
-          <div class="row"><span>Payment link</span><span class="val--yes">Yes</span></div>
+          <div class="row"><span>Client &amp; projects</span><span class="val--yes">Yes</span></div>
+          <div class="row"><span>Milestones</span><span class="val--yes">Yes</span></div>
+          <div class="row"><span>Invoice + link</span><span class="val--yes">Yes</span></div>
           <div class="row"><span>Freelancer profile</span><span class="val--yes">Yes</span></div>
-          <div class="row"><span>Domestic pay</span><span class="val--yes">Yes</span></div>
-          <div class="row"><span>Settlement</span><span>T+1 dom · T+3 int'l</span></div>
-        </div>
-      </div>
-      <div class="ctable-mobile__card">
-        <div class="ctable-mobile__hdr">
-          <div class="name">Most platforms</div>
-        </div>
-        <div class="ctable-mobile__rows">
-          <div class="row"><span>Price</span><span>3–9% + hidden FX</span></div>
-          <div class="row"><span>GCC support</span><span class="val--no">No</span></div>
-          <div class="row"><span>150+ currencies</span><span class="val--partial">Limited</span></div>
-          <div class="row"><span>Payment link</span><span class="val--partial">Some</span></div>
-          <div class="row"><span>Freelancer profile</span><span class="val--no">No</span></div>
-          <div class="row"><span>Domestic pay</span><span class="val--no">No</span></div>
-          <div class="row"><span>Settlement</span><span>3–5 days int'l</span></div>
-        </div>
-      </div>
-      <div class="ctable-mobile__card">
-        <div class="ctable-mobile__hdr">
-          <div class="name">Traditional wire</div>
-        </div>
-        <div class="ctable-mobile__rows">
-          <div class="row"><span>Price</span><span>5% + bank charges</span></div>
-          <div class="row"><span>GCC support</span><span class="val--yes">Yes</span></div>
           <div class="row"><span>150+ currencies</span><span class="val--yes">Yes</span></div>
-          <div class="row"><span>Payment link</span><span class="val--no">No</span></div>
+          <div class="row"><span>GCC corridor</span><span class="val--yes">Yes</span></div>
+          <div class="row"><span>Domestic UPI</span><span class="val--yes">Yes</span></div>
+        </div>
+      </div>
+      <div class="ctable-mobile__card">
+        <div class="ctable-mobile__hdr">
+          <div class="name">Invoice-only tools</div>
+        </div>
+        <div class="ctable-mobile__rows">
+          <div class="row"><span>Client &amp; projects</span><span class="val--partial">Contacts only</span></div>
+          <div class="row"><span>Milestones</span><span class="val--no">No</span></div>
+          <div class="row"><span>Invoice + link</span><span class="val--yes">Yes</span></div>
           <div class="row"><span>Freelancer profile</span><span class="val--no">No</span></div>
-          <div class="row"><span>Domestic pay</span><span class="val--no">No</span></div>
-          <div class="row"><span>Settlement</span><span>5–7 days int'l</span></div>
+          <div class="row"><span>150+ currencies</span><span class="val--partial">Limited</span></div>
+          <div class="row"><span>GCC corridor</span><span class="val--no">No</span></div>
+          <div class="row"><span>Domestic UPI</span><span class="val--no">No</span></div>
+        </div>
+      </div>
+      <div class="ctable-mobile__card">
+        <div class="ctable-mobile__hdr">
+          <div class="name">Spreadsheets + wire</div>
+        </div>
+        <div class="ctable-mobile__rows">
+          <div class="row"><span>Client &amp; projects</span><span class="val--no">No</span></div>
+          <div class="row"><span>Milestones</span><span class="val--partial">Manual</span></div>
+          <div class="row"><span>Invoice + link</span><span class="val--partial">Manual</span></div>
+          <div class="row"><span>Freelancer profile</span><span class="val--no">No</span></div>
+          <div class="row"><span>150+ currencies</span><span class="val--partial">Wire only</span></div>
+          <div class="row"><span>GCC corridor</span><span class="val--yes">Yes</span></div>
+          <div class="row"><span>Domestic UPI</span><span class="val--no">No</span></div>
         </div>
       </div>
     </div>
 
     <p class="ctable__note reveal d2">
-      Based on publicly available pricing.
+      Compared to commonly used freelancer invoicing and payment workflows.
     </p>
   </div>
 </section>
 
-<!-- ===================== FOUNDER ===================== -->
-<section class="sec sec--glow" id="founder">
+<!-- ===================== FAQ ===================== -->
+<section class="sec sec--glow" id="faq">
   <div class="wrap">
     <div class="section-tag reveal">
-      <span>(05) · Origin</span>
-      <span>Built by a freelancer, for freelancers</span>
+      <span>(05) · FAQ</span>
+      <span>The toolkit, partners, and the fine print</span>
     </div>
 
-    <div class="founder founder--noportrait">
-      <div class="reveal">
-        <p class="eyebrow no-rule" style="margin-bottom: 22px;">
-          <span style="display:inline-block;width:22px;height:1px;background:var(--muted);margin-right:8px;vertical-align:middle"></span>
-          A NOTE FROM THE FOUNDER
+    <div class="faq">
+      <div class="faq__intro reveal">
+        <h2>Common questions.</h2>
+        <p>
+          Still curious?
+          <a href="mailto:hello@zendtpayments.com" style="color:var(--ink);text-decoration:underline;text-underline-offset:4px;">hello@zendtpayments.com</a>
         </p>
-        <blockquote class="founder__quote">
-          "I spent <span class="italic">five years</span> freelancing for clients
-          in the GCC, UK, US, Canada and beyond. I watched a third of my income
-          disappear into fees, FX markups, and bank transfers that took weeks.
-          So we're building the product I wished existed."
-        </blockquote>
-        <p class="founder__body">
-          Zendt isn't a payments dashboard built by people who read about freelancing.
-          It is the tool I needed at 2 AM, chasing a wire transfer that had stalled
-          at a correspondent bank somewhere in London. Every decision,
-          from the 4% flat rate to the GCC corridor support to the settlement speed,
-          comes from a real invoice that cost me real money.
-        </p>
-        <div class="founder__sig">
-          <span class="nm">Alen Thomas</span>
-          <span class="pipe"></span>
-          <span>Founder, Zendt Payments</span>
-        </div>
+      </div>
+
+      <div class="faq__list reveal d1">
+        <details class="faq__item" open>
+          <summary>What is Zendt?</summary>
+          <div class="faq__answer">
+            Zendt is software — a freelancer toolkit for clients, projects, invoices,
+            and earnings. We're not a bank, we don't hold your money, and we're not
+            a payment aggregator.
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary>What's included in the toolkit?</summary>
+          <div class="faq__answer">
+            Invoicing, client management, projects and milestones, an earnings dashboard,
+            and a public freelancer profile — all in one workspace. Get paid is built in
+            when you need it, handled by licensed partners.
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary>How do clients and projects work?</summary>
+          <div class="faq__answer">
+            Add contacts, open a project for each engagement, and keep notes on every
+            relationship. Track milestones and deliverables so you always know what's due,
+            what's done, and what each project is worth — without a separate CRM or spreadsheet.
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary>Can I invoice directly from a project?</summary>
+          <div class="faq__answer">
+            Yes. When work is complete, turn a project into a polished invoice in seconds.
+            A payment link is generated automatically — ready for domestic or international clients.
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary>What is the freelancer profile?</summary>
+          <div class="faq__answer">
+            A public page for your services, portfolio, and contact details. Share one link
+            when pitching work — separate from your invoices and payment links.
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary>Can I track earnings and export for my CA?</summary>
+          <div class="faq__answer">
+            The earnings dashboard shows income by client, currency, and month. Export clean
+            reports when tax season comes — without reconciling three different tools.
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary>Do I still need separate tools for project management?</summary>
+          <div class="faq__answer">
+            No. Clients, milestones, invoices, and earnings live in one workspace —
+            so you're not switching between a CRM, a spreadsheet, and a payment platform.
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary>Who handles payments and settlement?</summary>
+          <div class="faq__answer">
+            Payment collection and INR settlement are operated through
+            <strong>Zwitch</strong>, a licensed payment aggregator, and our RBI-licensed
+            banking partners. Zendt provides the software layer — invoices, links,
+            and your workspace. Zwitch and our banking partners handle compliance,
+            collection, and settlement.
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary>Is Zendt a licensed payment aggregator?</summary>
+          <div class="faq__answer">
+            No. Zendt is software only. Payment infrastructure is provided by
+            <strong>Zwitch</strong>. Banking services are offered and hosted by our
+            RBI-licensed banking partners. Zendt does not hold or aggregate client funds.
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary>What does the toolkit cost?</summary>
+          <div class="faq__answer">
+            The software is free. Payment processing is priced separately when you get paid —
+            see the <a href="#pricing" style="color:var(--ink);text-decoration:underline;text-underline-offset:3px;">pricing section</a>
+            for current rates on domestic and international receipts.
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary>How quickly do payments settle?</summary>
+          <div class="faq__answer">
+            When clients pay through your invoice link, settlement to your INR bank account
+            is handled by licensed partners: T+1 for domestic, T+3 for international.
+          </div>
+        </details>
       </div>
     </div>
   </div>
