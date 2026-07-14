@@ -38,9 +38,7 @@ export function siteFooter(prefix = '') {
         <ul>
           <li><a href="${r}features.html">Features</a></li>
           <li><a href="${r}pricing.html">Pricing</a></li>
-          <li><a href="${r}compare/index.html">Compare</a></li>
           <li><a href="${r}how-it-works.html">How it works</a></li>
-          <li><a href="${r}guides/index.html">Guides</a></li>
           <li><a href="${r}contact.html">Contact</a></li>
         </ul>
       </div>
