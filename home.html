@@ -603,6 +603,14 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
     .hero__visual { margin: 0 auto; max-width: 480px; }
   }
 
+  /* TEMP-ZWITCH: reversible hide utility — restore after approval */
+  .temp-zwitch-hidden { display: none !important; }
+  .hero__visual.temp-zwitch-no-card .phone {
+    inset: 6% 16% 6% 16%;
+    transform: rotate(2deg);
+    z-index: 1;
+  }
+
   .card-stack {
     position: absolute;
     inset: 16% 18% 16% 18%;
@@ -2780,7 +2788,7 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
       </div>
     </div>
 
-    <div class="hero__visual reveal d2" aria-hidden="true">
+    <div class="hero__visual reveal d2 temp-zwitch-no-card" aria-hidden="true">
       <!-- Floating currency badges -->
       <div class="badge b1">
         <span class="sym">$</span>
@@ -2807,7 +2815,7 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
         <span class="meta"><b>QAR</b><span>QATAR</span></span>
       </div>
 
-      <!-- Phone behind card -->
+      <!-- Phone receipt panel -->
       <div class="phone">
         <div class="phone__screen">
           <div class="phone__hdr">
@@ -2825,8 +2833,8 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
         </div>
       </div>
 
-      <!-- Foreground card -->
-      <div class="card-stack">
+      <!-- TEMP-ZWITCH: card hidden for review, restore after approval -->
+      <div class="card-stack temp-zwitch-hidden">
         <div class="pay-card">
           <div class="pay-card__row">
             <span class="pay-card__brand">ZENDT</span>
