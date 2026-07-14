@@ -293,7 +293,7 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
 
   /* Always-dark surfaces - these stay dark in both modes for visual continuity
      (they represent the Zendt app itself). Scope dark token values inside them. */
-  .pay-card, .phone, .founder__portrait, .calc__result {
+  .pay-card, .phone, .founder__portrait {
     --ink: #FFFFFF;
     --ink-2: #E8E6E2;
     --muted: #8A8580;
@@ -1579,260 +1579,6 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
     background: linear-gradient(180deg, #FFFFFF 0%, #FDFAF3 100%);
   }
 
-  /* ---------- Receive calculator ---------- */
-  .calc {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  @media (max-width: 760px) {
-    .calc { grid-template-columns: 1fr; }
-  }
-  .calc__panel {
-    background: var(--surface);
-    padding: clamp(28px, 3.5vw, 44px);
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    min-width: 0;
-  }
-  .calc__field { display: flex; flex-direction: column; gap: 11px; min-width: 0; }
-  .calc__label {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .calc__seg {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 4px;
-    padding: 4px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: var(--bg);
-    width: 100%;
-    min-width: 0;
-  }
-  .calc__seg button {
-    height: 40px;
-    border-radius: 999px;
-    font-family: var(--sans);
-    font-size: 13.5px;
-    font-weight: 500;
-    color: var(--muted);
-    transition: background 200ms ease, color 200ms ease;
-  }
-  .calc__seg button.is-active {
-    background: var(--ink);
-    color: var(--bg);
-  }
-  .calc__amount {
-    display: flex;
-    align-items: stretch;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--bg);
-    transition: border-color 200ms ease;
-  }
-  .calc__amount:focus-within { border-color: var(--warm); }
-  .calc__cur {
-    border: none;
-    background: var(--surface-2);
-    color: var(--ink);
-    font-family: var(--mono);
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    padding: 0 16px;
-    border-right: 1px solid var(--line);
-    cursor: pointer;
-    outline: none;
-    min-width: 92px;
-  }
-  span.calc__cur {
-    display: flex;
-    align-items: center;
-    cursor: default;
-  }
-  .calc__amount input {
-    flex: 1;
-    min-width: 0;
-    border: none;
-    background: transparent;
-    color: var(--ink);
-    font-family: var(--display);
-    font-weight: 500;
-    font-size: clamp(22px, 2.4vw, 30px);
-    letter-spacing: -0.02em;
-    padding: 16px 18px;
-    outline: none;
-  }
-  .calc__amount input::placeholder { color: var(--muted-2); }
-  .calc__select {
-    width: 100%;
-    height: 52px;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background-color: var(--bg);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A8580' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 16px center;
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 14.5px;
-    line-height: 1.2;
-    padding: 0 40px 0 16px;
-    cursor: pointer;
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-    transition: border-color 200ms ease;
-  }
-  select.calc__cur {
-    appearance: none;
-    -webkit-appearance: none;
-    min-width: 11.5rem;
-    max-width: 100%;
-    background-color: var(--surface-2);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238A8580' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    padding-right: 28px;
-  }
-  .calc__select:focus { border-color: var(--warm); }
-  .calc__result {
-    background: linear-gradient(160deg, #1a1815 0%, #100d0b 100%);
-    padding: clamp(28px, 3.5vw, 44px);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-    min-width: 0;
-  }
-  .calc__result::before {
-    content: "";
-    position: absolute;
-    top: -30%; right: -20%;
-    width: 70%; height: 80%;
-    background: radial-gradient(closest-side, rgba(232,183,150,0.20), transparent 65%);
-    pointer-events: none;
-  }
-  .calc__result > * { position: relative; z-index: 1; }
-  .calc__result-label {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #D8D3CB;
-    margin-bottom: 12px;
-  }
-  .calc__big {
-    font-family: var(--display);
-    font-weight: 500;
-    font-size: clamp(40px, 5vw, 60px);
-    letter-spacing: -0.03em;
-    line-height: 0.95;
-    color: #FFFFFF;
-    font-variant-numeric: tabular-nums;
-    min-height: 0.95em;
-  }
-  .calc__sub {
-    margin-top: 10px;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: #C8C3BB;
-  }
-  .calc__rows {
-    margin-top: auto;
-    padding-top: 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    width: 100%;
-    min-width: 0;
-  }
-  .calc__row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 12px 0;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    font-size: 13.5px;
-  }
-  .calc__row span {
-    color: #D8D3CB;
-    flex: 1;
-    min-width: 0;
-    padding-right: 10px;
-  }
-  .calc__row b {
-    font-family: var(--mono);
-    font-weight: 400;
-    color: #FFFFFF;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.02em;
-    flex-shrink: 0;
-    text-align: right;
-    white-space: nowrap;
-  }
-  .calc__row.is-deduct b { color: var(--warm); }
-  .calc__intl-note {
-    margin: 0;
-    padding: 12px 14px;
-    border: 1px solid rgba(232, 183, 150, 0.35);
-    border-radius: 10px;
-    background: rgba(232, 183, 150, 0.08);
-    font-family: var(--sans);
-    font-size: 13px;
-    line-height: 1.45;
-    color: var(--ink);
-    letter-spacing: 0;
-    text-transform: none;
-  }
-  .calc__intl-note strong {
-    font-weight: 600;
-    color: var(--warm);
-  }
-  .calc__note {
-    margin-top: 22px;
-    font-family: var(--mono);
-    font-size: 10.5px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .calc__head {
-    text-align: center;
-    margin: clamp(56px, 7vw, 88px) 0 clamp(28px, 3vw, 40px);
-  }
-  .calc__head h3 {
-    font-family: var(--display);
-    font-weight: 500;
-    font-size: clamp(26px, 3vw, 40px);
-    letter-spacing: -0.025em;
-    color: var(--ink);
-    line-height: 1.1;
-    text-wrap: balance;
-  }
-  .calc__head h3 .italic { color: var(--warm); }
-  .calc__head p {
-    margin-top: 14px;
-    color: var(--muted);
-    font-size: 15px;
-    line-height: 1.55;
-    max-width: 52ch;
-    margin-inline: auto;
-  }
-  :root[data-theme="light"] .calc { box-shadow: 0 20px 60px -40px rgba(80, 50, 20, 0.22); }
-  :root[data-theme="light"] .calc__panel { background: linear-gradient(180deg, #FFFFFF 0%, #FDFAF3 100%); }
-  :root[data-theme="light"] .calc__cur { background: #FBF6EC; }
 
   /* ---------- Comparison Table ---------- */
   .ctable {
@@ -2681,7 +2427,6 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
   :root[data-theme="light"] .step__desc,
   :root[data-theme="light"] .feature__desc { color: #5A554E; }
   :root[data-theme="light"] .meta__item .lbl { color: #6B635A; }
-  :root[data-theme="light"] .calc__note { color: #6B635A; }
 
   /* ---------- Reveal on scroll ---------- */
   /* Fail-safe: content is visible by default. Only when JS marks body, do we hide for animation. */
@@ -2856,92 +2601,19 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
   </div>
 </div>
 
-<!-- ===================== CALCULATOR ===================== -->
-<section class="sec sec--glow" id="calculator">
-  <div class="wrap">
-    <div class="section-tag reveal">
-      <span>Calculator</span>
-      <span>See what lands in your account</span>
-    </div>
-    <div class="calc__head reveal" style="margin-top:0">
-      <h3>Estimate what you'll <span class="italic">actually receive.</span></h3>
-      <p>Punch in an amount and a method. We'll show the platform fee, the 18% GST on it, and the rupees that land in your account.</p>
-    </div>
-
-    <div class="calc reveal d1">
-      <div class="calc__panel">
-        <div class="calc__field">
-          <span class="calc__label">Payment type</span>
-          <div class="calc__seg" id="calcSeg">
-            <button type="button" data-mode="dom" class="is-active">Domestic</button>
-            <button type="button" data-mode="intl">International</button>
-          </div>
-          <p class="calc__intl-note" id="calcIntlNote">
-            <strong>Early user testing only.</strong> International payments are not yet available to the public.
-          </p>
-        </div>
-
-        <div class="calc__field">
-          <span class="calc__label" id="calcAmtLabel">Amount (INR)</span>
-          <div class="calc__amount">
-            <select class="calc__cur" id="calcCur" aria-label="Currency">
-              <option value="95.64" data-code="USD">USD — US Dollar</option>
-            </select>
-            <span class="calc__cur" id="calcInr">₹ INR</span>
-            <input type="text" id="calcAmt" inputmode="decimal" placeholder="0" aria-label="Amount" />
-          </div>
-        </div>
-
-        <div class="calc__field" id="calcMethodField">
-          <span class="calc__label">Payment method</span>
-          <select class="calc__select" id="calcMethod">
-            <option value="0.006">UPI — 0.6%</option>
-            <option value="debit">Debit card — 1.5–1.9%</option>
-            <option value="0.022">Credit card — 2.2%</option>
-            <option value="0.026">Corporate credit card — 2.6%</option>
-            <option value="0.030">Amex / Diners — 3.0%</option>
-            <option value="0.021">Netbanking · HDFC / ICICI / Kotak — 2.1%</option>
-            <option value="0.019">Netbanking · other banks — 1.9%</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="calc__result">
-        <div class="calc__result-label">You receive (estimate)</div>
-        <div class="calc__big" id="calcOut">₹0</div>
-        <div class="calc__sub" id="calcRate">Settles T+1 to your INR account</div>
-        <div class="calc__rows">
-          <div class="calc__row">
-            <span id="calcGrossLabel">Amount charged</span>
-            <b id="calcGross">₹0</b>
-          </div>
-          <div class="calc__row is-deduct">
-            <span id="calcFeeLabel">Platform fee (0.6%)</span>
-            <b id="calcFee">₹0</b>
-          </div>
-          <div class="calc__row is-deduct">
-            <span>GST on fee (18%)</span>
-            <b id="calcGst">₹0</b>
-          </div>
-        </div>
-      </div>
-    </div>
-    <p class="calc__note reveal">Mid-market FX · live rate applies at settlement</p>
-  </div>
-</section>
 
 <!-- ===================== HOW IT WORKS ===================== -->
 <section class="sec sec--glow" id="how">
   <div class="wrap">
     <div class="section-tag reveal">
       <span>(01) · How it works</span>
-      <span>Four steps · Two minutes</span>
+      <span>Four steps · One workspace</span>
     </div>
     <div class="sec__head">
-      <h2 class="sec__title reveal">Four steps. <span class="italic">Zero friction.</span></h2>
+      <h2 class="sec__title reveal">Run every engagement. <span class="italic">Start to finish.</span></h2>
       <p class="sec__lede reveal d1">
-        No bank visits. No SWIFT forms. No paperwork. Just a link, a payment,
-        and a settlement straight into your Indian bank account.
+        Clients, projects, milestones, and invoices — organised in one quiet workspace.
+        When the work is done, get paid without leaving the flow.
       </p>
     </div>
 
@@ -2950,58 +2622,60 @@ src="https://www.facebook.com/tr?id=1334086671603194&ev=PageView&noscript=1"
         <div class="step__num">STEP 01</div>
         <div class="step__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
-            <path d="M14 3v6h6" />
-            <path d="M9 13h6M9 17h6M9 9h2" />
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
           </svg>
         </div>
-        <h3 class="step__title">Create &amp; send an invoice</h3>
+        <h3 class="step__title">Add clients &amp; open a project</h3>
         <p class="step__desc">
-          Build a polished invoice in seconds. The payment link is generated
-          automatically and built right in. Works for domestic and international clients alike.
+          Import contacts, spin up an engagement, and keep notes on every relationship —
+          no scattered spreadsheets or lost context.
         </p>
       </article>
       <article class="step">
         <div class="step__num">STEP 02</div>
         <div class="step__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07L11 5" />
-            <path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07L13 19" />
+            <path d="M9 11l3 3L22 4" />
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
           </svg>
         </div>
-        <h3 class="step__title">Share your Zendt payment link</h3>
+        <h3 class="step__title">Track milestones &amp; deliverables</h3>
         <p class="step__desc">
-          One link works for every client, every currency. Send it via WhatsApp,
-          email, or attached to your invoice.
+          See what's due, what's done, and what each project is worth —
+          a clear view of your pipeline without a separate PM tool.
         </p>
       </article>
       <article class="step">
         <div class="step__num">STEP 03</div>
         <div class="step__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="9" />
-            <path d="M12 6v6l4 2" />
+            <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+            <path d="M14 3v6h6" />
+            <path d="M9 13h6M9 17h6M9 9h2" />
           </svg>
         </div>
-        <h3 class="step__title">Client pays in their currency</h3>
+        <h3 class="step__title">Invoice from the project</h3>
         <p class="step__desc">
-          Your client sees a clean checkout in their local currency: USD, AED,
-          GBP, AUD, CAD, and 145 more. UPI, card, or bank.
+          Turn completed work into a polished invoice in seconds. A payment link
+          is built in — ready for domestic or international clients.
         </p>
       </article>
       <article class="step">
         <div class="step__num">STEP 04</div>
         <div class="step__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 12h14" />
-            <path d="M13 6l6 6-6 6" />
-            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14" />
+            <rect x="2" y="5" width="20" height="14" rx="2" />
+            <path d="M2 10h20" />
+            <path d="M6 15h2M10 15h4" />
           </svg>
         </div>
-        <h3 class="step__title">Money hits your account in INR</h3>
+        <h3 class="step__title">Get paid to your INR account</h3>
         <p class="step__desc">
-          Funds settle in your Indian bank account at live FX. T+3 for
-          international, T+1 for domestic. Our licensed partners handle settlement and compliance.
+          Clients pay in their currency or via UPI. Settlement to your Indian bank
+          account is handled by licensed partners — you stay focused on the work.
         </p>
       </article>
     </div>
