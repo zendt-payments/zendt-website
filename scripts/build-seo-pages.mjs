@@ -178,12 +178,12 @@ const compareTable = (rows) => `<table class="cmp-table"><thead><tr><th>Feature<
 page({
   file: 'about.html',
   depth: 0,
-  title: 'About Zendt Payments — Indian Freelancer Payments Toolkit', // TEMP-ZWITCH: revert after approval
-  meta: 'Zendt Payments Pvt. Ltd. is a Kochi-based fintech building the invoicing and payments toolkit for Indian freelancers billing international and domestic clients.',
+  title: 'About Zendt Payments — Indian Freelancer Payment Platform',
+  meta: 'Zendt Payments Pvt. Ltd. is a Kochi-based fintech building licensed payment infrastructure for Indian freelancers receiving international and domestic client payments.',
   breadcrumb: [{ name: 'About', url: `${SITE}/about` }],
   heroMeta: 'Company',
   article: true,
-  body: `<p><strong>Zendt Payments Pvt. Ltd.</strong> builds the invoicing and payments toolkit for Indian freelancers and independent professionals. We help you invoice international clients, share payment links in 150+ fiat currencies, and receive proceeds settled to your INR bank account by licensed partners — with domestic UPI collections for Indian clients in the same toolkit.</p>
+  body: `<p><strong>Zendt Payments Pvt. Ltd.</strong> builds payment infrastructure for Indian freelancers and independent professionals. We help you invoice international clients, share payment links in 150+ fiat currencies, and settle proceeds to your INR bank account — with domestic UPI collections for Indian clients on the same platform.</p>
 <h2>Who we are</h2>
 <p>Founded by <strong>Alen Thomas &amp; Akshay K Rao</strong> in Kochi, Kerala, Zendt was built around a gap other platforms miss: Indian freelancers earning from the Gulf, US, UK, and EU need one place to get paid without losing 6–9% to hidden FX and correspondent bank fees.</p>
 <h2>Regulatory model</h2>
@@ -227,7 +227,7 @@ page({
   breadcrumb: [{ name: 'Features', url: `${SITE}/features` }],
   heroMeta: 'Product · Features',
   article: true,
-  body: `<p>Zendt is the toolkit for Indian freelancers — not a workaround. Everything you need to earn, invoice, and settle in one surface.</p>
+  body: `<p>Zendt is payment infrastructure for Indian freelancers — not a workaround. Everything you need to earn, invoice, and settle in one surface.</p>
 <h2>Payment links</h2>
 <p>Shareable, brandable links to accept any supported currency with one click for your client.</p>
 <h2>Invoice management</h2>
@@ -374,7 +374,7 @@ const corridors = [
     slug: 'saudi-arabia',
     country: 'Saudi Arabia',
     currency: 'SAR',
-    intro: 'Receive Saudi Riyal payments from Riyadh and GCC clients. Payments settle to your Indian bank account in INR through licensed partners, with a transparent 4% platform fee and T+3 international settlement.',
+    intro: 'Receive Saudi Riyal payments from Riyadh and GCC clients. Zendt settles to your Indian bank account in INR with transparent 4% platform fee and T+3 international settlement.',
   },
   {
     file: 'receive-payments/qatar.html',
@@ -406,7 +406,7 @@ for (const c of corridors) {
 <ol>
 <li>Create an invoice or payment link in Zendt</li>
 <li>Your ${c.country} client pays in ${c.currency}</li>
-<li>FX converts at live mid-market rates; INR settles to your bank account through licensed partners (T+3 international)</li><!-- TEMP-ZWITCH: revert after approval -->
+<li>Zendt converts at live mid-market FX and settles INR to your bank account (T+3 international)</li>
 </ol>
 <h2>Why freelancers choose Zendt for the Gulf</h2>
 <p>Most global platforms under-support GCC corridors. Zendt was built where Indian freelancers actually earn — UAE, Saudi, and Qatar included in 150+ supported currencies.</p>
@@ -429,7 +429,7 @@ const guides = [
 <li>CA audit and FEMA compliance records</li>
 </ul>
 <h2>How Zendt helps</h2>
-<p>Your international receipts settle to your Indian bank account through licensed partners, with transaction records in your dashboard for reconciliation and export documentation.</p>
+<p>Zendt settles international receipts to your Indian bank account through licensed partners, with transaction records in your dashboard for reconciliation and export documentation.</p>
 <p>This guide is general information, not tax or legal advice. Consult your CA for your specific situation.</p>`,
   },
   {

@@ -1,6 +1,5 @@
 # Zendt Payments — https://www.zendtpayments.com/
-# Legitimate Indian freelancer payments toolkit (not cryptocurrency or investment)
-# TEMP-ZWITCH: revert after approval
+# Legitimate Indian freelancer payment platform (not cryptocurrency or investment)
 
 User-agent: *
 Allow: /
